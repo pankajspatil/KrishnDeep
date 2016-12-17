@@ -1,0 +1,93 @@
+body{
+    
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    padding: 0; /* Gets rid of the automatic padding */
+    margin: 0;	/*	on HTML documents */
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+     background: #F9f9f9;
+}
+
+
+h1, h2, h3, h4, h5, h6{
+    
+    font-family: 'Roboto Condensed', sans-serif;
+    
+}
+
+h2.content-title{
+    
+     font-family: 'Roboto Condensed', sans-serif;
+     font-size: 18px;
+     font-weight: 700;
+     text-align: center;
+     margin: 12px 0 32px 0;
+     position: relative;
+}
+
+h2.content-title:after{
+    position: absolute;
+    content: '';
+    width: 50px;
+    height: 3px;
+    bottom: -12px;
+    left: 50%;
+    margin-left: -25px;
+    background: #cccccc;
+    
+}
+
+
+#content {
+    max-width: 100%;
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 48px 0;
+}
+
+ 
+
+.align-center{
+    
+    text-align: center;
+    
+}
+.dn{
+    display: none;
+}
+
+/*------------------------------  CTA ---------------------------------*/
+
+.cta-box{
+    display: block;
+}
+
+.cta-box a{
+    text-decoration: none;
+    font-size: 24px;
+    padding: 12px;
+    display: block;
+    text-align: center;
+    background: #1796c6;
+    color: #FFF;
+  -webkit-transition: 0.5s 0.2s ease-out;
+  -moz-transition: 0.5s 0.2s ease-out;
+  -o-transition: 0.5s 0.2s ease-out;
+  transition: 0.5s 0.2s ease-out;
+}
+
+.cta-box a:hover{
+    background: #117195;
+}
+
+.cta-box-green a{
+    background: #82b440;
+}
+
+.cta-box-green a:hover{
+    background: #749f39;
+}

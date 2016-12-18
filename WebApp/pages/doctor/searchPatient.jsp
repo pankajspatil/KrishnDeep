@@ -1,3 +1,5 @@
+<%@page import="com.org.krishnadeep.models.Patient"%>
+<%@page import="java.util.List"%>
 <%@page import="com.org.krishnadeep.generic.ConnectionsUtil"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="com.org.krishnadeep.modules.Search"%>
@@ -66,31 +68,22 @@ $(document).ready(function() {
 	Search searchPatient = new Search();
 	Integer searchKey = Integer.parseInt(request.getParameter("searchKey"));
 	String searchValue = request.getParameter("searchValue");
-	ResultSet dataRS = null;
-	try{
-		dataRS = searchPatient.searchPatient(searchKey, searchValue);
-	if(dataRS != null){
-		while(dataRS.next()){
+	List<Patient> patientList = searchPatient.searchPatient(searchKey, searchValue);
+	if(patientList.size() != 0){
+		for(Patient patient : patientList){
 			%><tr>
-			<th><%=dataRS.getString("firstName") %></th>
-			<th><%=dataRS.getString("middleName") %></th>
-			<th><%=dataRS.getString("lastName") %></th>
-			<th><%=dataRS.getString("phone") %></th>
+			<th><%=patient.getFirstName() %></th>
+			<th><%=patient.getMiddleName() %></th>
+			<th><%=patient.getLastName() %></th>
+			<th><%=patient.getContactNo() %></th>
 			<th>
-				<input type="button" name="Edit" value="E" onclick="openPage('edit','<%=dataRS.getString("userId") %>')" />
-				<input type="button" name="Delete" value="D" onclick="openPage('delete','<%=dataRS.getString("userId") %>')" />
-				<input type="button" name="NewVisit" value="NV" onclick="openPage('vNew','<%=dataRS.getString("userId") %>')" />
-				<input type="button" name="Visit History" value="VH" onclick="openPage('vHistory','<%=dataRS.getString("userId") %>')" />
+				<input type="button" name="Edit" value="E" onclick="openPage('edit','<%=patient.getPatientId() %>')" />
+				<input type="button" name="Delete" value="D" onclick="openPage('delete','<%=patient.getPatientId() %>')" />
+				<input type="button" name="NewVisit" value="NV" onclick="openPage('vNew','<%=patient.getPatientId() %>')" />
+				<input type="button" name="Visit History" value="VH" onclick="openPage('vHistory','<%=patient.getPatientId() %>')" />
 			</th>
 		</tr><%}
 	}	
-	
-	}catch(Exception e){
-		e.printStackTrace();
-	}finally{
-		connectionsUtil.closeResultSet(dataRS);
-		dataRS= null;
-	}
 	%></tbody>
 				
 			</table><%

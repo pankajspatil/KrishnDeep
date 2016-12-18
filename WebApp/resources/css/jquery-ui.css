@@ -845,7 +845,7 @@ body .ui-tooltip {
 }
 .ui-widget-content {
 	border: 1px solid #dddddd;
-	background: #f2f5f7 url("/AgriTadka/resources/images/ui-bg_highlight-hard_100_f2f5f7_1x100.png") 50% top repeat-x;
+	background: #f2f5f7 url("../images/ui-bg_highlight-hard_100_f2f5f7_1x100.png") 50% top repeat-x;
 	color: #362b36;
 }
 .ui-widget-content a {
@@ -853,7 +853,7 @@ body .ui-tooltip {
 }
 .ui-widget-header {
 	border: 1px solid #aed0ea;
-	background: #deedf7 url("/AgriTadka/resources/images/ui-bg_highlight-soft_100_deedf7_1x100.png") 50% 50% repeat-x;
+	background: #deedf7 url("../images/ui-bg_highlight-soft_100_deedf7_1x100.png") 50% 50% repeat-x;
 	color: #222222;
 	font-weight: bold;
 }
@@ -920,7 +920,7 @@ body .ui-tooltip {
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
 	border: 1px solid #f9dd34;
-	background: #ffef8f url("/AgriTadka/resources/images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x;
+	background: #ffef8f url("../images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x;
 	color: #363636;
 }
 .ui-state-highlight a,
@@ -932,7 +932,7 @@ body .ui-tooltip {
 .ui-widget-content .ui-state-error,
 .ui-widget-header .ui-state-error {
 	border: 1px solid #cd0a0a;
-	background: #cd0a0a url("/AgriTadka/resources/images/ui-bg_flat_15_cd0a0a_40x100.png") 50% 50% repeat-x;
+	background: #cd0a0a url("../images/ui-bg_flat_15_cd0a0a_40x100.png") 50% 50% repeat-x;
 	color: #ffffff;
 }
 .ui-state-error a,
@@ -1211,14 +1211,14 @@ body .ui-tooltip {
 
 /* Overlays */
 .ui-widget-overlay {
-	background: #eeeeee url("/AgriTadka/resources/images/ui-bg_diagonals-thick_90_eeeeee_40x40.png") 50% 50% repeat;
+	background: #eeeeee url("../images/ui-bg_diagonals-thick_90_eeeeee_40x40.png") 50% 50% repeat;
 	opacity: .8;
 	filter: Alpha(Opacity=80); /* support: IE8 */
 }
 .ui-widget-shadow {
 	margin: -7px 0 0 -7px;
 	padding: 7px;
-	background: #000000 url("/AgriTadka/resources/images/ui-bg_highlight-hard_70_000000_1x100.png") 50% top repeat-x;
+	background: #000000 url("../images/ui-bg_highlight-hard_70_000000_1x100.png") 50% top repeat-x;
 	opacity: .3;
 	filter: Alpha(Opacity=30); /* support: IE8 */
 	border-radius: 8px;

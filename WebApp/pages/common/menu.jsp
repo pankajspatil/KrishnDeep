@@ -25,10 +25,10 @@
 			</li>
 			<%}%>
 			<%
-				if (menulist.contains("Order")) {
+				if (menulist.contains("Search")) {
 			%>
 			<li><a
-				href='<%=request.getContextPath()%>/pages/order/orderDashboard.jsp'><span>Order</span></a>
+				href='<%=request.getContextPath()%>/pages/doctor/searchPatient.jsp'><span>Search</span></a>
 			</li>
 			<%
 				}

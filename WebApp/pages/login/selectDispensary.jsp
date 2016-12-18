@@ -14,37 +14,37 @@
 <%
 
 if(request.getParameter("page1") != null){
-	String userTeamId = request.getParameter("userTeamId");
+	String userDispensaryId = request.getParameter("userDispensaryId");
 	
-	//System.out.println("userTeamId===>" + userTeamId);
+	//System.out.println("userDispensaryId===>" + userDispensaryId);
 	
-	session.setAttribute(Constants.USER_ID, userTeamId.split("##")[0]);
-	session.setAttribute(Constants.TEAM_ID, userTeamId.split("##")[1]);
+	session.setAttribute(Constants.USER_ID, userDispensaryId.split("##")[0]);
+	session.setAttribute(Constants.DISPENSARY_ID, userDispensaryId.split("##")[1]);
 	%><script>
 	callHomePage();
 	</script><%
 	//response.sendRedirect(request.getContextPath()+"/pages/home/home.jsp");	
 }
 
-if(session.getAttribute(Constants.USER_TEAM_DETAILS) != null){
+if(session.getAttribute(Constants.USER_DISPENSARY_DETAILS) != null){
 	%>
-	<form method="post"><h1 style="margin-top: 30px; margin-bottom:10px;text-align: center;">Team Selection</h1>
+	<form method="post"><h1 style="margin-top: 30px; margin-bottom:10px;text-align: center;">Dispensary Selection</h1>
 	<table align="center" border="1" width="30%">
 		<tr class="headerTR">
-			<td>Please Select Your Team</td>
+			<td>Please Select Your Dispensary</td>
 		</tr>
 		<tr>
 			<td>
-			<select name="userTeamId" id="userTeamId" style="width: 100%">
-			<option value="-1" style="text-align: center;">Select Team</option>
+			<select name="userDispensaryId" id="userDispensaryId" style="width: 100%">
+			<option value="-1" style="text-align: center;">Select Dispensary</option>
 	<%
-	LinkedHashMap<String, String> userTeamMap = (LinkedHashMap<String, String>)session.getAttribute(Constants.USER_TEAM_DETAILS);
-	String teamDetails = "";
-	String[] teamArray = new String[0];
-	for(String key : userTeamMap.keySet()){
-		teamDetails = userTeamMap.get(key);
-		teamArray = teamDetails.split("##");
-		%><option value='<%=key + "##" + teamArray[0] %>'><%=teamArray[1] %></option><%
+	LinkedHashMap<String, String> userDispensaryMap = (LinkedHashMap<String, String>)session.getAttribute(Constants.USER_DISPENSARY_DETAILS);
+	String dispensaryDetails = "";
+	String[] dispensaryArray = new String[0];
+	for(String key : userDispensaryMap.keySet()){
+		dispensaryDetails = userDispensaryMap.get(key);
+		dispensaryArray = dispensaryDetails.split("##");
+		%><option value='<%=key + "##" + dispensaryArray[0] %>'><%=dispensaryArray[1] %></option><%
 	}
 	%></select>
 	</td>
@@ -54,7 +54,7 @@ if(session.getAttribute(Constants.USER_TEAM_DETAILS) != null){
 	</tr>	
 	</table>
 	</form><%
-	session.removeAttribute(Constants.USER_TEAM_DETAILS);
+	session.removeAttribute(Constants.USER_DISPENSARY_DETAILS);
 }
 %>
 

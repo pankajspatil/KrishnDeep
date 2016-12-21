@@ -8,9 +8,10 @@
 </head>
 <body>
 <%
+	String contextpath =request.getContextPath();
 	//System.out.println("userId===>" + session.getAttribute(Constants.USER_ID));
 	if(session.getAttribute(Constants.USER_ID) == null){
-		response.sendRedirect(request.getContextPath() + "/pages/login/login.jsp");
+		response.sendRedirect(contextpath + "/pages/login/login.jsp");
 	}
 %>
 </body>

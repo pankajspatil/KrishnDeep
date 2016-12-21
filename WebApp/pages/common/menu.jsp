@@ -14,79 +14,57 @@
 	%>
 <body>
 	<input type="hidden" id="contextPath"
-		value="<%=request.getContextPath()%>" />
+		value="<%=Contextpath %>" />
 	<div id='cssmenu'>
 		<ul>
 			<%
 				if (menulist.contains("Home")) {
 			%>
 			<li><a
-				href='<%=request.getContextPath()%>/pages/common/home.jsp'><span>Home</span></a>
+				href='<%=Contextpath%>/pages/common/home.jsp'><span>Home</span></a>
 			</li>
 			<%}%>
 			<%
 				if (menulist.contains("Search")) {
 			%>
 			<li><a
-				href='<%=request.getContextPath()%>/pages/doctor/searchPatient.jsp'><span>Search</span></a>
+				href='<%=Contextpath %>/pages/doctor/searchPatient.jsp'><span>Search</span></a>
 			</li>
 			<%
 				}
 			%>
 			<%
-				if (menulist.contains("Master")) {
+				if (menulist.contains("Expense")) {
 			%>
-			<li class='has-sub'><a href='#'><span>Master</span></a>
+			<li class='has-sub'><a href='#'><span>Reports</span></a>
 				<ul>
 					<li class='first-child'><a
-						href='<%=request.getContextPath()%>/pages/master/tableMaster.jsp'><span>Table
-								Master</span></a></li>
+						href='<%=Contextpath %>/pages/doctor/expense.jsp'><span>Add
+								Expense</span></a></li>
 					<li class='first-child'><a
-								href='<%=request.getContextPath()%>/pages/master/menuMaster.jsp'><span>Food Menu Master</span></a></li>
-					<%-- <li class='has-sub'><a href='#'><span>Food Menu</span></a>
-						<ul>
-							<li class='first-child'><a
-								href='<%=request.getContextPath()%>/pages/master/menuMaster.jsp'><span>Food Menu</span></a></li>
-							<li>
-								<a href='<%=request.getContextPath()%>/pages/master/addFoodDishes.jsp'>
-									<span>Dishes</span>
-								</a>
-							</li>
-						</ul>
-					</li> --%>
-				</ul>
-			</li>
-			<% } %>
-			<%
-				if (menulist.contains("Cooking")) {
+						href='<%=Contextpath %>/pages/doctor/History.jsp'><span>Expense
+								History</span></a></li>
+				</ul> <%
+				}
 			%>
-			<li><a
-				href='<%=request.getContextPath()%>/pages/order/cookingDashboard.jsp'><span>Cooking</span></a></li>
-			<% } %>
-			<%
-				if (menulist.contains("Parcel")) {
-			%>
-			<li onclick="openOrderPage()"><a
-				href='<%=request.getContextPath()%>/pages/order/orderPlacement.jsp'><span>Parcel</span></a></li>
-			<% } %>
-			<%
+				<%
 				if (menulist.contains("Reports")) {
 			%>
 			<li class='has-sub'><a href='#'><span>Reports</span></a>
 				<ul>
 					<li class='first-child'><a
-						href='<%=request.getContextPath()%>/pages/reports/orderRevenue.jsp'><span>Revenue</span></a>
+						href='<%=Contextpath %>/pages/reports/orderRevenue.jsp'><span>Revenue</span></a>
 					</li>
 					<li><a
-						href='<%=request.getContextPath()%>/pages/reports/orderStatus.jsp'><span>Order
+						href='<%=Contextpath %>/pages/reports/orderStatus.jsp'><span>Order
 								Status</span></a></li>
 				</ul></li>
 			<% } %>
-			
+
 			<li style="float: right; padding-right: 10px;"><a href='#'><span>Account</span></a>
 				<ul>
 					<li><a
-						href='<%=request.getContextPath()%>/pages/login/changePassword.jsp'>Change
+						href='<%=Contextpath %>/pages/login/changePassword.jsp'>Change
 							Password</a></li>
 					<%
 						if (session.getAttribute(Constants.USER_ID) != null) {

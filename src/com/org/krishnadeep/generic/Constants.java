@@ -28,6 +28,12 @@ public class Constants {
 	public static final String LAST_NAME = "LAST_NAME";
 	public static final String ENT_EMAIL = "ENT_EMAIL";
 	
+	public static final String EXPENSE_ID = "expense_id";
+
+	public static final String EXPENSE_DESC = "expense_desc";
+	
+	public static final String EXPENSE_AMOUNT = "expense_amount";
+	
 	//Email constants
 	
 	public static final String TO = "TO";

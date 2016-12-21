@@ -24,3 +24,20 @@ CREATE TABLE `krishnadeep`.`address` (
 
   
   INSERT INTO `krishnadeep`.`role_master` (`role_id`, `role_description`, `created_by`, `created_date`, `is_active`) VALUES ('3', 'Vendor', '1', '2016-12-20 22:40:11', '1');
+
+  CREATE TABLE `krishnadeep`.`expense_accounts` (
+  `account_id` INT NOT NULL AUTO_INCREMENT,
+  `account_name` VARCHAR(45) NULL,
+  `account_type` VARCHAR(45) NULL,
+  `account_type_formatted` VARCHAR(45) NULL,
+  `disable_tax` CHAR(1) NULL,
+  PRIMARY KEY (`account_id`))
+COMMENT = '			';
+
+
+CREATE TABLE `krishnadeep`.`expense_item` (
+  `expense_item_id` INT NOT NULL AUTO_INCREMENT,
+  `expense_item_name` VARCHAR(45) NULL,
+  `expense_item_unit` INT NULL,
+  `expense_item_rate` DOUBLE NULL,
+  PRIMARY KEY (`expense_item_id`));

@@ -68,6 +68,9 @@ public class Search {
 			conn = connectionsUtil.getConnection();
 			String query = "select * from patient_master where dob  = ?";
 			PreparedStatement pst = conn.prepareStatement(query);
+			
+			pst.setString(1, dob);
+			
 			dataRS = pst.executeQuery();
 			
 			query = null;connectionsUtil = null;			

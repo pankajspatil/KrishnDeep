@@ -53,6 +53,9 @@ $(document).ready(function() {
 	if(request.getParameter("searchBtn") != null){
 		%>
 			<br/><br/><br/>
+			<div align="right">
+				<input />
+			</div>
 			<table border="" align="center" id="patientData" class="display" cellspacing="0" width="100%">
 				<thead>
 					<tr>

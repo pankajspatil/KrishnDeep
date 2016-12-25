@@ -62,6 +62,49 @@ public class ConnectionsUtil {
 		
 	}
 	
+	public static void closeRes(ResultSet rs){
+		Statement st;
+		try {
+			if (rs!=null){
+				st = rs.getStatement();
+				closeCon(st);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void closeCon(Statement st){
+		Connection con = null;
+		if (st!=null){
+			try {
+				 con = st.getConnection();
+				ResultSet rs = st.getResultSet();
+				if(rs!=null){
+					rs.close();
+					st.close();
+				}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}finally{
+				if (con != null){
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			
+						
+		}
+	}
+	
 	public void closeConnection(Statement st){
 		Connection con = null;
 		if (st!=null){

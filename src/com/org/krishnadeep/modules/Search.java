@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.org.krishnadeep.generic.ConnectionsUtil;
+import com.org.krishnadeep.generic.Utils;
 import com.org.krishnadeep.models.Patient;
 
 public class Search {
@@ -31,6 +32,9 @@ public class Search {
 		case 4:
 			dataRS = getPatientByDOB(searchValue);
 			break;
+		case 5:
+			dataRS = getPatientByID(searchValue);
+			break;
 		default:
 			dataRS = getAllPatients();
 			
@@ -41,16 +45,15 @@ public class Search {
 			patient = new Patient();
 			
 			patient.setPatientId(dataRS.getInt("patient_id"));
-			patient.setFirstName(dataRS.getString("first_name"));
-			patient.setMiddleName(dataRS.getString("middle_name"));
-			patient.setLastName(dataRS.getString("last_name"));
-			patient.setFirstName(dataRS.getString("first_name"));
-			patient.setEmail(dataRS.getString("email"));
-			patient.setContactNo(dataRS.getString("contact_no"));
-			patient.setSex(dataRS.getString("sex"));
-			patient.setBloodGroup(dataRS.getString("bloodGroup"));
-			patient.setAddress(dataRS.getString("address"));
-			patient.setDob(dataRS.getString("dob"));
+			patient.setFirstName(Utils.getString(dataRS.getString("first_name")));
+			patient.setMiddleName(Utils.getString(dataRS.getString("middle_name")));
+			patient.setLastName(Utils.getString(dataRS.getString("last_name")));
+			patient.setEmail(Utils.getString(dataRS.getString("email")));
+			patient.setContactNo(Utils.getString(dataRS.getString("contact_no")));
+			patient.setSex(Utils.getString(dataRS.getString("sex")));
+			patient.setBloodGroup(Utils.getString(dataRS.getString("bloodGroup")));
+			patient.setAddress(Utils.getString(dataRS.getString("address")));
+			patient.setDob(Utils.getString(dataRS.getString("dob")));
 			patient.setIsActive(dataRS.getBoolean("is_active"));
 			
 			patientList.add(patient);
@@ -134,17 +137,17 @@ public class Search {
 		return dataRS;
 	}
 	
-	public ResultSet getUser(String userId){
+	public ResultSet getPatientByID(String patientId){
 	
 		ResultSet dataRS = null;
 		try{		
 			connectionsUtil= new ConnectionsUtil();
 			conn = connectionsUtil.getConnection();
 			
-			String query = "select * from usermaster where userId = ?";
+			String query = "select * from patient_master where patient_id = ?";
 			
 			PreparedStatement psm = conn.prepareStatement(query);
-			psm.setString(1, userId);
+			psm.setString(1, patientId);
 			
 			dataRS = psm.executeQuery();
 			}catch(Exception ex){

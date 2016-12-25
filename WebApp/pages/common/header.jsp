@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="com.org.krishnadeep.generic.Utils"%>
 <%@page import="com.org.krishnadeep.generic.Constants"%>
 <%@page import="com.org.krishnadeep.generic.ConnectionsUtil"%>
@@ -100,13 +101,14 @@
 	<%-- <%@ include file="/pages/common/menu1.jsp"%> --%>
 	<%
 		}
+		JSONObject configLookup = (JSONObject)getServletContext().getAttribute("config");
 	%>
 	<%
 		ConnectionsUtil connectionsUtil = new ConnectionsUtil();
 	%>
-
-
-
+<script type="text/javascript">
+	var configObj = <%=configLookup%>;
+</script>
 </body>
 
 </html>

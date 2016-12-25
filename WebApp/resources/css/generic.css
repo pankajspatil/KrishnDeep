@@ -349,3 +349,11 @@ table.dataTable tbody tr:nth-child(2n) { background-color:#c0c0c0 } */
   color: white;
   background: #2d9fd0;
 }
+
+.dataValues{
+	letter-spacing: 1px;
+	font-size: larger;
+	font-style: inherit;
+	line-height: 34px;
+	padding-left: 1%;
+}

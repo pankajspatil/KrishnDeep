@@ -27,34 +27,21 @@ function searchKeySelect(selectObj){
 	}
 }
 
-function openPage(oepration, tableMasterId,tableName,tableType,active){
+function openPage(oepration, patientId, appointmentId){
 	
 	var formObj = $(document.createElement('form'));
 	formObj.attr("method", "post");
 	
 	var userIdObj = $(document.createElement('input'));
 	userIdObj.attr("type", "text");
-	userIdObj.attr("value", tableMasterId);
-	userIdObj.attr("name", "userId");
+	userIdObj.attr("value", patientId);
+	userIdObj.attr("name", "patientId");
 	
 	formObj.append(userIdObj);
 	
 	switch (oepration) { 
     case 'edit': 
-
-    	var paramsMap = new Map();
-    	var dataMap = new Map();
-    	
-    	dataMap.put("tableMasterId", tableMasterId);
-    	dataMap.put("tableName", tableName);
-    	dataMap.put("tableType", tableType);
-    	dataMap.put("active", active);    	
-    	dataMap.put(MENU_REQUIRED,false);
-    	
-    	paramsMap.put(WIN_URL, '/AgriTadka/pages/master/tableModify.jsp');
-    	paramsMap.put(DATA, dataMap);
-    	
-    	openWindow(paramsMap);
+        alert('Edit called');
         break;
     case 'delete': 
         alert('Delete called');
@@ -68,7 +55,7 @@ function openPage(oepration, tableMasterId,tableName,tableType,active){
     	dataMap.put(PATIENT_ID, patientId);
     	dataMap.put(MENU_REQUIRED,false);
     	
-    	paramsMap.put(WIN_URL, './pages/master/tableMaster.jsp');
+    	paramsMap.put(WIN_URL, '/Krishnadeep/pages/doctor/visitHistory.jsp');
     	paramsMap.put(DATA, dataMap);
     	
     	openWindow(paramsMap);
@@ -76,14 +63,23 @@ function openPage(oepration, tableMasterId,tableName,tableType,active){
     	break;      
     case 'vNew': 
     	
+    	if(appointmentId !== undefined){
+    		var appointObj = $(document.createElement('input'));
+        	appointObj.attr("type", "text");
+        	appointObj.attr("value", appointmentId);
+        	appointObj.attr("name", "appointmentId");
+        	formObj.append(appointObj);
+    	}
     	
+    	formObj.attr("action", "/Krishnadeep/pages/doctor/newVisit.jsp");
+        formObj.submit();
         break;
     default:
         alert('Something went wrong!');
 }
 }
 	
-/*function openWindow(paramsMap){
+function openWindow(paramsMap){
 	
 	var winName='MyWindow';
 	  var winURL = paramsMap.get(WIN_URL);
@@ -120,7 +116,7 @@ function openPage(oepration, tableMasterId,tableName,tableType,active){
 	  document.body.removeChild(form);
 	  
 	  dataMap = null;paramsMap = null;
-}*/
+}
 
 /*	
 function openWindowWithPostRequest() {

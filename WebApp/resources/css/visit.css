@@ -34,3 +34,19 @@
 table {
 	border-collapse: collapse;
 }
+.clickableLink{
+	text-decoration: none;
+	color: blue;
+	font-weight: bolder;
+	cursor: pointer;
+}
+.clickableToolTip{
+	text-decoration: none;
+	color: green;
+	font-weight: bolder;
+	cursor: pointer;
+}
+
+.displayHide{
+	display: none;
+}

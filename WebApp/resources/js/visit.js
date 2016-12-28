@@ -280,7 +280,7 @@ var allPrescriptions = [];
 		tableObj.append(row);
 			});
 	  }
-	  $('input[type=text], textarea').attr('disabled', true);
+	  $('input[type=text], textarea, select').attr('disabled', true);
   }
   
   	function deleteRow(cellObj){
@@ -301,7 +301,7 @@ function validateForm(){
 		displayNotification(paramMap);
 		
 		return false;
-	}else if(isNaN(fees.trim())){
+	}else if(fees.trim() == '' || isNaN(fees.trim())){
 		paramMap.put(MSG, 'Please Enter valid numbers in visit fees.');
 		displayNotification(paramMap);
 		

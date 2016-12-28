@@ -63,7 +63,7 @@
 
 <!-- Easy Tabs -->
 <script src="<%=contextPath%>/resources/js/jquery.easytabs.min.js" type="text/javascript"></script>
-<!-- <script src="/AgriTadka/resources/js/jquery.hashchange.min.js" type="text/javascript"></script> -->
+<!-- <script src="/<%=contextPath%>/resources/js/jquery.hashchange.min.js" type="text/javascript"></script> -->
 
 <!-- Charts -->
 <script src="<%=contextPath%>/resources/js/fusioncharts.js" type="text/javascript"></script>

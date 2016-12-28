@@ -28,14 +28,11 @@ $(document).ready(function() {
 
 <form action="searchPatient.jsp" name="f1" id="f1" method="post">
 <h1 class="moduleHeader" style="text-align: center;"> Search Patient</h1>
-<table class="mainTable" align="center">
-	<tr class="mainTR">
-		<th>Search By</th>
-		<th>Value</th>
-	</tr>
-	<tr class="mainTR">
+<table class="mainTable" align="center" width="40%" border="1" style="border: 0px solid">
+	<tr>
+		<th class="headerTR" width="50%">Search By</th>
 		<td>
-			<select name="searchKey" id="searchKey" onchange="searchKeySelect(this)">
+			<select name="searchKey" id="searchKey" onchange="searchKeySelect(this)" style="height: 100%;width: 100%">
 				<option value="-1">Please Select</option>
 				<option value="1">Name</option>
 				<option value="2">Mobile No</option>
@@ -43,9 +40,13 @@ $(document).ready(function() {
 				<option value="4">Adhar No</option>
 			</select>
 		</td>
-		<td><input type="text" name="searchValue" id="searchValue" value="" autocomplete="off"> </td>
 	</tr>
 	<tr>
+		<th class="headerTR">Value</th>
+		<td><input type="text" name="searchValue" id="searchValue" value="" autocomplete="off" style="height: 100%;width: 100%"> </td>
+	</tr>
+	
+	<tr style="border: none;">
 		<td colspan="2" class="searchBtn" align="center"><input type="submit" name="searchBtn" id="searchBtn" value="search" /></td>
 	</tr>
 </table>

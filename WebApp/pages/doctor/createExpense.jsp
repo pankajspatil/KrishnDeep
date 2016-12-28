@@ -1,3 +1,4 @@
+<%@page import="com.org.krishnadeep.models.ExpenseModel_old"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Map"%>
@@ -252,7 +253,7 @@ outline: 5px solid #eff4f7;
 		Integer userId = Integer.parseInt(session.getAttribute(Constants.USER_ID)
 				+ "");
 		if (request.getParameter("expenseDesc") != null) {
-			ExpenseModel expenseModel = new ExpenseModel();
+			ExpenseModel_old expenseModel = new ExpenseModel_old();
 			expenseModel.setVendor_id(Integer.parseInt(request
 					.getParameter("vendorId")));
 			expenseModel.setExpense_invoice_no((request

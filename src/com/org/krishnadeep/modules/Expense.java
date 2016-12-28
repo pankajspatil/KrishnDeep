@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 import com.org.krishnadeep.generic.ConnectionsUtil;
 import com.org.krishnadeep.generic.Constants;
 import com.org.krishnadeep.generic.Utils;
-import com.org.krishnadeep.models.ExpenseModel;
+import com.org.krishnadeep.models.ExpenseModel_old;
 
 public class Expense {
 	
@@ -18,7 +18,7 @@ public class Expense {
 	static ResultSet rs = null;
 	static ConnectionsUtil connectionsUtil = null;
 	
-	public static void addExpense(ExpenseModel expenseModel) {
+	public static void addExpense(ExpenseModel_old expenseModel) {
 
 		try {
 			connectionsUtil = new ConnectionsUtil();

@@ -149,24 +149,25 @@ try{
 		%>
 	<h1 align="center"><%=visitId.equals("") ? "Patient New Visit" : "Visit Details"%></h1>
 	
-	<table align="center" width="50%" id="visitDetails" border="1">
+	<table align="center" width="50%" id="visitDetails" border="1" style="border: 0px solid">
 	
 		<tr>
-			<td class="headerTR" width="30%">Date</td>
+			<th class="headerTR" width="30%">Date</th>
 			<td class="dataValues"><%=today %></td>
 		</tr>
 		<tr>
-			<td class="headerTR">Patient Name</td>
+			<th class="headerTR">Patient Name</th>
 			<td class="dataValues"><%=patientName %></td>
 		</tr>
 		<tr>
-			<td class="headerTR">Visit Type</td>
+			<th class="headerTR">Visit Type</th>
 			<td class="dataValues" style="padding-left: 0%">
 				<select name="visitType" id="visitType" style="height: 100%;width: 100%">
 					<option value="-1">Please Select</option>
 					<%
 					String selected = "";
 					for(VisitType visitType : visitTypes){
+						selected = "";
 						if(visitTypeId == visitType.getVisitTypeId()){
 							selected = "selected=selected";
 						}
@@ -178,12 +179,12 @@ try{
 			</td>
 		</tr>
 		<tr>
-			<td class="headerTR">Visit Summary</td>
+			<th class="headerTR">Visit Summary</th>
 			<td class="dataValues" style="padding-left: 0%"><textarea rows="6" cols="1"
 					name="visitSummary" id="visitSummary" style="width: 99%"><%=visitSummary %></textarea></td>
 		</tr>
 		<tr>
-			<td class="headerTR">Fees</td>
+			<th class="headerTR">Fees</th>
 			<td><input type="text" name="fees" id="fees" value="<%=fees%>" style="height: 100%; width: 100%" /></td>
 		</tr>
 	
@@ -239,7 +240,6 @@ try{
 			<div onclick="openSuggestTests()">Suggest Tests</div></td>
 		</tr>
 	</table>--%>
-	<br />
 	<br />
 
 	<%

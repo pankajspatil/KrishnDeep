@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.org.krishnadeep.generic.ConnectionsUtil;
+import com.org.krishnadeep.models.ExpenseItem;
+import com.org.krishnadeep.models.Vendor;
 import com.org.krishnadeep.models.VisitType;
 
 public class Masters {
@@ -39,4 +41,62 @@ public class Masters {
 		
 		return visitTypeList;
 	}
+	
+public List<ExpenseItem> getAllExpenseItems(Boolean isActive) throws SQLException{
+		
+		ConnectionsUtil connectionsUtil = new ConnectionsUtil();
+		Connection conn = connectionsUtil.getConnection();
+		
+		String query = "select * from expense_item_master";
+		if(isActive){
+			query += " where is_active = 1";
+		}
+		
+		ResultSet dataRS = conn.createStatement().executeQuery(query);
+		List<ExpenseItem> itemList = new ArrayList<ExpenseItem>();
+		ExpenseItem item;
+		
+		while(dataRS.next()){
+			item = new ExpenseItem();
+			
+			item.setExpenseItemId(dataRS.getInt("expense_item_id"));
+			item.setExpenseItemName(dataRS.getString("expense_item_name"));
+			item.setIsActive(dataRS.getBoolean("is_active"));
+			
+			itemList.add(item);
+		}
+		
+		connectionsUtil.closeConnection(conn);
+		
+		return itemList;
+}
+
+public List<Vendor> getAllVendors(Boolean isActive) throws SQLException{
+	
+	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
+	Connection conn = connectionsUtil.getConnection();
+	
+	String query = "select * from vendor_master";
+	if(isActive){
+		query += " where is_active = 1";
+	}
+	
+	ResultSet dataRS = conn.createStatement().executeQuery(query);
+	List<Vendor> vendorList = new ArrayList<Vendor>();
+	Vendor vendor;
+	
+	while(dataRS.next()){
+		vendor = new Vendor();
+		
+		vendor.setVendorId(dataRS.getInt("vendor_id"));
+		vendor.setVendorName(dataRS.getString("vendor_name"));
+		vendor.setIsActive(dataRS.getBoolean("is_active"));
+		
+		vendorList.add(vendor);
+	}
+	
+	connectionsUtil.closeConnection(conn);
+	
+	return vendorList;
+}
 }

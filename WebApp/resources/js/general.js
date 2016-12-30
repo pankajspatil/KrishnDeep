@@ -204,6 +204,7 @@ function openFancyBox(obj, paramMap){
 	var url = paramMap.get(URL);
 	var width = paramMap.get(WIDTH) ? paramMap.get(WIDTH) : '50%';
 	var height = paramMap.get(HEIGHT) ? paramMap.get(HEIGHT) : '50%';
+	var data = paramMap.get(DATA);
 	
 	$(obj).fancybox({
 		'href' : url,

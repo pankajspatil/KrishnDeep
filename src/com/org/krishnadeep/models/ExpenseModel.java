@@ -15,6 +15,10 @@ public class ExpenseModel {
 	private String expenseVat;
 	
 	private Boolean isActive;
+	
+	private Double expenseAmt;
+	
+	private Double paidAmt;
 
 	public Integer getExpenseId() {
 		return expenseId;
@@ -72,11 +76,28 @@ public class ExpenseModel {
 		this.isActive = isActive;
 	}
 
+	public Double getExpenseAmt() {
+		return expenseAmt;
+	}
+
+	public void setExpenseAmt(Double expenseAmt) {
+		this.expenseAmt = expenseAmt;
+	}
+
+	public Double getPaidAmt() {
+		return paidAmt;
+	}
+
+	public void setPaidAmt(Double paidAmt) {
+		this.paidAmt = paidAmt;
+	}
+
 	@Override
 	public String toString() {
 		return "ExpenseModel [expenseId=" + expenseId + ", vendor=" + vendor
 				+ ", expenseItem=" + expenseItem + ", expenseQty=" + expenseQty
 				+ ", expenseRemark=" + expenseRemark + ", expenseVat="
-				+ expenseVat + ", isActive=" + isActive + "]";
+				+ expenseVat + ", isActive=" + isActive + ", expenseAmt="
+				+ expenseAmt + ", paidAmt=" + paidAmt + "]";
 	}
 }

@@ -6,16 +6,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import com.org.krishnadeep.generic.ConnectionsUtil;
 import com.org.krishnadeep.generic.Constants;
 import com.org.krishnadeep.generic.Utils;
+import com.org.krishnadeep.models.ExpenseItem;
+import com.org.krishnadeep.models.ExpenseModel;
 import com.org.krishnadeep.models.ExpenseModel_old;
+import com.org.krishnadeep.models.Vendor;
 
 public class Expense {
 	
 	static Connection conn = null;
-	static ResultSet rs = null;
+	static ResultSet dataRS = null;
 	static ConnectionsUtil connectionsUtil = null;
 	
 	public static void addExpense(ExpenseModel_old expenseModel) {
@@ -64,48 +68,53 @@ public class Expense {
 			}
 		}
 
-		rs = null;
+		dataRS = null;
 		conn = null;
 	}
 	
-	public static ArrayList<LinkedHashMap<String, String>> getExpenseList(){
-		ArrayList<LinkedHashMap<String, String>> expenseList = new ArrayList<LinkedHashMap<String, String>>();
-
-		try {
+	public List<ExpenseModel> getExpenseList() throws SQLException{
+			
+		
 			connectionsUtil = new ConnectionsUtil();
 			conn = connectionsUtil.getConnection();
 
-			String query = "SELECT * FROM expenses ex ";				
+			String query = "SELECT e.expense_id, e.expense_item_id, ei.expense_item_name, v.vendor_id, v.vendor_name, " +
+							"e.expense_qty, e.expense_amount, ie.paidAmt, e.expense_remark FROM expenses e "+
+							"inner join expense_item_master ei on e.expense_item_id = ei.expense_item_id "+
+							"inner join vendor_master v on e.vendor_id = v.vendor_id "+
+							"left join (select expense_id, sum(amount) as paidAmt from invoice_expense_map ie "+ 
+							"where is_active = 1 group by expense_id) ie on e.expense_id = ie.expense_id";
 					
 			PreparedStatement preparedStatement = conn.prepareStatement(query);
-			rs = preparedStatement.executeQuery();
+			dataRS = preparedStatement.executeQuery();
 
-			LinkedHashMap<String, String> expenseModel = null;
-			while (rs.next()) {
-				expenseModel = new LinkedHashMap<String, String>();
-				expenseModel.put(Constants.EXPENSE_ID,rs.getString("expenses_id"));
-				expenseModel.put(Constants.EXPENSE_DESC,rs.getString("expense_desc"));
-				expenseModel.put(Constants.EXPENSE_AMOUNT,rs.getString("expense_amount"));
+			List<ExpenseModel> expenseList = new ArrayList<ExpenseModel>();
+			ExpenseModel expenseModel = null;
+			ExpenseItem expenseItem = null;
+			Vendor vendor = null;
+			
+			while (dataRS.next()) {
+				
+				expenseModel = new ExpenseModel();
+				
+				expenseItem = new ExpenseItem();
+				expenseItem.setExpenseItemName(dataRS.getString("expense_item_name"));
+				
+				vendor = new Vendor();
+				vendor.setVendorName(dataRS.getString("vendor_name"));
+				
+				expenseModel.setExpenseId(dataRS.getInt("expense_id"));
+				expenseModel.setExpenseItem(expenseItem);
+				expenseModel.setExpenseQty(dataRS.getInt("expense_qty"));
+				expenseModel.setExpenseAmt(dataRS.getDouble("expense_amount"));
+				expenseModel.setPaidAmt(dataRS.getDouble("paidAmt"));
+				expenseModel.setExpenseRemark(dataRS.getString("expense_remark"));
+				
 				expenseList.add(expenseModel);
 			}
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			try {
-				if (conn != null) {
-					conn.close();
-				}
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		rs = null;
-		conn = null;
-
+			connectionsUtil.closeConnection(conn);
+		
 		return expenseList;
 
 	}

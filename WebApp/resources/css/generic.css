@@ -357,3 +357,8 @@ table.dataTable tbody tr:nth-child(2n) { background-color:#c0c0c0 } */
 	line-height: 34px;
 	padding-left: 1%;
 }
+
+.fullRowElement{
+	width: 100%;
+	height: 100%
+}

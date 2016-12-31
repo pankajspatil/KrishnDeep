@@ -17,11 +17,10 @@ List<ExpenseModel> expenseList = expense.getExpenseList();
 %>
 
 <h2 align="center">Add Expense</h2>
-<div style="float: right;padding-right: 2%">
+<div style="float: right;padding-right: 11%">
 	<!-- <input type="button" name="newExpense" id="newExpense" value=""> -->
 	<button class="btn btn-main btn-2g" name="newExpense" id="newExpense">New Expense</button>
 </div>
-<br />
 <table border="1" class="mainTable" width="100%" id="expenseTable">
 <thead>
 	<tr class="headerTR">

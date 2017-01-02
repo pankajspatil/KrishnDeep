@@ -22,54 +22,28 @@ public class Expense {
 	static ResultSet dataRS = null;
 	static ConnectionsUtil connectionsUtil = null;
 	
-	public static void addExpense(ExpenseModel_old expenseModel) {
+	public void addExpense(ExpenseModel expenseModel) throws SQLException {
 
-		try {
 			connectionsUtil = new ConnectionsUtil();
 			conn = connectionsUtil.getConnection();
 
-			String query = "insert into expenses "
-					+ "(expense_desc,vendor_id,expense_qty,expense_amount, expense_invoice_no,expense_vat,"
-					+ "account_id,expenses_item_id)"
-					+ " VALUES  (?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO `expenses`(`vendor_id`,`expense_item_id`,`expense_qty`,`expense_amount`,"
+						+ "`expense_remark`,`expense_vat`,`created_by`) "+
+							"VALUES(?,?,?,?,?,?,?)";
 
-			PreparedStatement preparedStatement = conn.prepareStatement(query);
-			preparedStatement.setString(1,
-					Utils.getString(expenseModel.getExpense_desc()));
-			preparedStatement.setInt(2,expenseModel.getVendor_id());
-			preparedStatement.setInt(3,expenseModel.getExpense_qty());
-			preparedStatement.setDouble(4,expenseModel.getExpense_amount());
-			preparedStatement.setString(5,
-					Utils.getString(expenseModel.getExpense_invoice_no()));
-			preparedStatement.setFloat(6,expenseModel.getExpense_vat());	
+			PreparedStatement psmt = conn.prepareStatement(query);
 			
-			preparedStatement.setInt(7,expenseModel.getAccount_id());
-			
-			preparedStatement.setInt(8,expenseModel.getExpenses_item_id());
-			
-			//preparedStatement.setTimestamp(4,
-					//expenseModel.getExpense_created_date());
-			//preparedStatement.setString(5,
-					//expenseModel.getExpense_created_by());
-			
+			psmt.setInt(1, expenseModel.getVendor().getVendorId());
+			psmt.setInt(2, expenseModel.getExpenseItem().getExpenseItemId());
+			psmt.setInt(3, expenseModel.getExpenseQty());
+			psmt.setDouble(4, expenseModel.getExpenseAmt());
+			psmt.setString(5, expenseModel.getExpenseRemark());
+			psmt.setDouble(6, expenseModel.getExpenseVat());			
+			psmt.setInt(7, expenseModel.getCreatedBy());
 
-			preparedStatement.executeUpdate();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			try {
-				if (conn != null) {
-					conn.close();
-				}
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		dataRS = null;
-		conn = null;
+			psmt.executeUpdate();
+			
+			connectionsUtil.closeConnection(conn);
 	}
 	
 	public List<ExpenseModel> getExpenseList() throws SQLException{
@@ -104,6 +78,7 @@ public class Expense {
 				vendor.setVendorName(dataRS.getString("vendor_name"));
 				
 				expenseModel.setExpenseId(dataRS.getInt("expense_id"));
+				expenseModel.setVendor(vendor);
 				expenseModel.setExpenseItem(expenseItem);
 				expenseModel.setExpenseQty(dataRS.getInt("expense_qty"));
 				expenseModel.setExpenseAmt(dataRS.getDouble("expense_amount"));

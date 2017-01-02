@@ -16,7 +16,7 @@ Expense expense = new Expense();
 List<ExpenseModel> expenseList = expense.getExpenseList();
 %>
 
-<h2 align="center">Add Expense</h2>
+<h1 align="center">Add Expense</h1>
 <div style="float: right;padding-right: 11%">
 	<!-- <input type="button" name="newExpense" id="newExpense" value=""> -->
 	<button class="btn btn-main btn-2g" name="newExpense" id="newExpense">New Expense</button>
@@ -29,6 +29,7 @@ List<ExpenseModel> expenseList = expense.getExpenseList();
 		<th>Vendor</th>
 		<th>Qty</th>
 		<th>Amount</th>
+		<th>Paid Amount</th>
 		<th>Remarks</th>
 	</tr>
 </thead>

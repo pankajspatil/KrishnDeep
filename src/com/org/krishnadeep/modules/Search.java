@@ -36,7 +36,7 @@ public class Search {
 			dataRS = getPatientByID(searchValue);
 			break;
 		default:
-			dataRS = getAllPatients();
+			dataRS = getAllPatients(false);
 			
 		}
 		
@@ -57,6 +57,10 @@ public class Search {
 			patient.setIsActive(dataRS.getBoolean("is_active"));
 			
 			patientList.add(patient);
+		}
+		
+		if(dataRS != null){
+			ConnectionsUtil.closeRes(dataRS);
 		}
 
 		return patientList;
@@ -83,14 +87,17 @@ public class Search {
 		return dataRS;
 	}
 	
-	private ResultSet getAllPatients() {
+	private ResultSet getAllPatients(Boolean isActive) {
 
 		ResultSet dataRS = null;
 		
 		try{
 			connectionsUtil = new ConnectionsUtil();		
 			conn = connectionsUtil.getConnection();
-			String query = "select * from patient_master where is_active = 1";
+			String query = "select * from patient_master ";
+			if(isActive){
+				query += "where is_active = 1";
+			}
 			PreparedStatement pst = conn.prepareStatement(query);
 			dataRS = pst.executeQuery();
 			
@@ -157,7 +164,7 @@ public class Search {
 		return dataRS;
 	}
 	
-public ResultSet getAllPrescriptions(){
+	public ResultSet getAllPrescriptions(){
 	ResultSet dataRS = null;
 		
 		try{		
@@ -181,6 +188,41 @@ public ResultSet getAllPrescriptions(){
 		return null;
 	}
 	
+	public void createUpdatePatient(Patient patient) throws SQLException{
+
+		connectionsUtil = new ConnectionsUtil();
+		conn = connectionsUtil.getConnection();
+		
+		String query = "";
+		
+		query = "INSERT INTO `patient_master`(`first_name`,`middle_name`,`last_name`,`email`,"
+					+ "`contact_no`,`sex`,`bloodGroup`,`address`,`dob`,`created_by`,`is_active`) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+		
+		if(patient.getPatientId() != null && patient.getPatientId() != 0){
+			query = "UPDATE `patient_master` SET `first_name` = ?,`middle_name` = ?,"
+					+ "`last_name` = ?,`email` = ?,`contact_no` = ?,`sex` = ?,`bloodGroup` = ?,`address` = ?,"
+					+ "`dob` = ?,`created_by` = ?,`is_active` = ? WHERE `patient_id` = ?;";
+		}
+		
+		PreparedStatement psmt = conn.prepareStatement(query);
+		
+		psmt.setString(1, patient.getFirstName());
+		psmt.setString(2, patient.getMiddleName());
+		psmt.setString(3, patient.getLastName());
+		psmt.setString(4, patient.getEmail());
+		psmt.setString(5, patient.getContactNo());
+		psmt.setString(6, patient.getSex());
+		psmt.setString(7, patient.getBloodGroup());
+		psmt.setString(8, patient.getAddress());
+		psmt.setString(9, patient.getDob());
+		psmt.setInt(10, patient.getCreatedBy());
+		psmt.setBoolean(11, patient.getIsActive());
+		
+		if(patient.getPatientId() != null && patient.getPatientId() != 0){
+			psmt.setInt(12, patient.getPatientId());
+		}
+		psmt.executeUpdate();
+	}
 	
 
 }

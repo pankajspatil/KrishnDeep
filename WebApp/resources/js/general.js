@@ -270,7 +270,53 @@ function decodeHTML(escapedHtml) {
 	  return result;
 }
 
-function validateFloatKeyPress(el) {
+function validateFloatKeyPress_old(el) {
     var v = parseFloat(el.value);
     el.value = (isNaN(v)) ? '' : v.toFixed(2);
 }
+
+function validateNumbersKeyPress(el){
+	var v = parseFloat(el.value);
+	el.value = new RegExp(/^[0-9]*$/g).test(el.value) ? el.value : '';
+}
+
+
+function validateFloatKeyDown(event) {
+	   var inputCode = event.which;
+	   var obj = $(event.currentTarget);
+	   var currentValue = $(obj).val();
+	   if(inputCode === 8 || inputCode == 46){
+		   var amt = currentValue.substr(0, getCursorPosition($(obj)) - 1) + currentValue.substr(getCursorPosition($(obj)), currentValue.length);
+		   if(inputCode == 46){
+			   amt = currentValue.substr(0, getCursorPosition($(obj))) + currentValue.substr(getCursorPosition($(obj)) + 1, currentValue.length);
+		   }
+	   }
+}
+
+function validateFloatKeyPress(event) {
+		    var inputCode = event.which;
+		    var obj = $(event.currentTarget);
+		    var currentValue = $(obj).val();
+		    if (inputCode > 0 && (inputCode < 48 || inputCode > 57)) {
+		        if (inputCode == 46) {
+		        	
+		        	if (getCursorPosition($(obj)) == 0 && currentValue.charAt(0) == '-') return false;
+		            if (currentValue.match(/[.]/)) return false;
+		        } 
+		        else if (inputCode == 45) {
+		            if (currentValue.charAt(0) == '-') return false;
+		            if (getCursorPosition($(obj)) != 0) return false;
+		        } 
+		        else if (inputCode == 8){
+		        	return true;
+		        }
+		        else return false;
+		
+		    } 
+		    else if (inputCode > 0 && (inputCode >= 48 && inputCode <= 57)) {
+		        if (currentValue.charAt(0) == '-' && getCursorPosition($(obj)) == 0) return false;
+		    }
+}
+
+
+

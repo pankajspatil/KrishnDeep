@@ -47,20 +47,25 @@ $(document).ready(function() {
 	</tr>
 	
 	<tr style="border: none;">
-		<td colspan="2" class="searchBtn" align="center"><input type="submit" name="searchBtn" id="searchBtn" value="search" /></td>
+		<td colspan="2" class="searchBtn" align="center"><input type="submit" name="searchBtn" id="searchBtn" value="search" class="btn btn-main btn-2g" /></td>
 	</tr>
 </table>
+
 <%
 	if(request.getParameter("searchBtn") != null){
 		%>
-			<br/><br/><br/>
-			<table border="" align="center" id="patientData" class="display" cellspacing="0" width="100%">
+		<div style="float: right; padding-right: 11%">
+			<input type="button" class="btn btn-main btn-2g" name="newPatient" id="newPatient" 
+			value="Add Patient" onclick="openPatientFancyBox(0, 'newPatient', this)">
+		</div>
+		<table border="" align="center" id="patientData" class="display" cellspacing="0" width="100%">
 				<thead>
 					<tr class="headerTR">
 						<th>First Name</th>
 						<th>Middle Name</th>
 						<th>Last Name</th>
 						<th>Phone</th>
+						<th>DOB</th>
 						<th>Operations</th>
 					</tr>
 				</thead>
@@ -77,9 +82,15 @@ $(document).ready(function() {
 			<th><%=patient.getMiddleName() %></th>
 			<th><%=patient.getLastName() %></th>
 			<th><%=patient.getContactNo() %></th>
+			<th><%=patient.getDob() %></th>
 			<th>
-				<input type="button" name="Edit" value="E" onclick="openPage('edit','<%=patient.getPatientId() %>')" />
-				<input type="button" name="Delete" value="D" onclick="openPage('delete','<%=patient.getPatientId() %>')" />
+			
+			<img style="margin-left: 40%" height="22%" src="/Krishnadeep/resources/images/edit.png" 
+									id="editPatient_<%=patient.getPatientId()%>" name="editPatient" 
+									onclick="openPatientFancyBox(<%=patient.getPatientId()%>, 'updatePatient', this)">
+			
+				<!-- <input type="button" name="Edit" value="E" class="editImg" onclick="" /> -->
+				<%-- <input type="button" name="Delete" value="D" onclick="openPage('delete','<%=patient.getPatientId() %>')" /> --%>
 				<input type="button" name="NewVisit" value="NV" onclick="openPage('vNew','<%=patient.getPatientId() %>')" />
 				<input type="button" name="Visit History" value="VH" onclick="openPage('vHistory','<%=patient.getPatientId() %>')" />
 			</th>

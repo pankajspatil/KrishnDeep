@@ -23,6 +23,8 @@ public class Patient {
 	private String dob;
 	
 	private Boolean isActive;
+	
+	private Integer createdBy;
 
 	public Integer getPatientId() {
 		return patientId;
@@ -110,5 +112,27 @@ public class Patient {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public Integer getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	@Override
+	public String toString() {
+		return "Patient [patientId=" + patientId + ", firstName=" + firstName
+				+ ", middleName=" + middleName + ", lastName=" + lastName
+				+ ", email=" + email + ", contactNo=" + contactNo + ", sex="
+				+ sex + ", bloodGroup=" + bloodGroup + ", address=" + address
+				+ ", dob=" + dob + ", isActive=" + isActive + ", createdBy="
+				+ createdBy + "]";
 	}
 }

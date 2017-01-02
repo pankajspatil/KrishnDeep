@@ -145,6 +145,124 @@ function openWindowWithPostRequest() {
 	}*/
 
 
+function openPatientFancyBox(patientId, operation, obj){
+	
+	var paramMap = new Map();
+	
+	var url, btnObj;
+	
+	url = contextPath + '/pages/doctor/createPatient.jsp?menuRequired=false&patientId=' + patientId;
+	
+	paramMap.put(URL, url);
+	paramMap.put(WIDTH, '70%');
+	paramMap.put(HEIGHT, '80%');
+	
+	openFancyBox(obj, paramMap);
+}
+
+$(document).ready(function() {
+	$('#newPatient').click(function(){
+		openPatientFancyBox(0, 'newPatient', this);
+	});
+	
+	$('img[name=editPatient]').click(function(e){
+			openPatientFancyBox($(this).id, 'updatePatient', this);
+		});
+	
+	$( "#dob" ).datepicker({
+		changeMonth: true,
+	    changeYear: true,
+	    dateFormat: 'yy-mm-dd',
+	    maxDate: new Date()
+	});
+});
+
+function displaySuccessCreatePatient(patientId){
+	
+	console.log("patientId==>" + patientId);
+	
+	var msg = "Patient added successfully.";
+	if(patientId !== '' || patientId !== 0){
+		msg = "Patient updated successfully.";
+	}
+	
+	Lobibox.alert("success",{
+		msg : msg,
+		beforeClose: function(lobibox){
+        	parent.location.reload();
+        }
+	});
+	
+}
+
+function validateCreatePatientForm(){
+	
+	var elementIds = [
+		                  ['firstName','first name'], ['lastName','last name'], ['gender', 'gender'], ['dob','DOB'],
+		                  ['contact', 'contact no'], ['address', 'address']
+	                 ];
+	var errorFound = false;
+	var paramMap = new Map();
+	$.each(elementIds, function( index, value ) {
+		if(value[0] == 'gender' && $('#' + value[0]).val() == -1){
+			paramMap.put(MSG, 'Please select ' + value[1]);
+			errorFound = true;
+			return false;
+		}else if($('#' + value[0]).val() == ''){
+			  paramMap.put(MSG, 'Please enter ' + value[1]);
+			  errorFound = true;
+			  return false;
+		  }
+		});
+	if(errorFound){
+		displayNotification(paramMap);
+		return false;
+	}else if($('#email').val() != '' && !isValidEmailAddress($('#email').val())){
+		paramMap.put(MSG, 'Please enter valid email.');
+		displayNotification(paramMap);
+		return false;
+	}
+	
+	var patientId = patientObj.patientId;
+	if(patientId !== undefined){
+		var oldFirstName = patientObj.firstName;
+		var oldLastName = patientObj.lastName;
+		var oldDob = patientObj.dob;
+		
+		var firstName = $('#firstName').val();
+		var lastName = $('#lastName').val()
+		var dob = $('#dob').val();
+		
+		var oldCombineText = (oldFirstName+oldLastName+oldDob).toLowerCase();
+		var combineText = (firstName+lastName+dob).toLowerCase();
+		
+		if(oldCombineText != combineText){
+			var patientTable = parent.$('#patientData');
+			
+			var firstNameArray = $(patientTable).DataTable().column(0).data();	
+			firstNameArray = convertCaseArray(firstNameArray, LOWER_CASE);
+			
+			var lastNameArray = $(patientTable).DataTable().column(2).data();	
+			lastNameArray = convertCaseArray(lastNameArray, LOWER_CASE);
+			
+			var dobArray = $(patientTable).DataTable().column(4).data();	
+			
+			$.each(firstNameArray, function( index, value ) {
+				var cmbText = value + lastNameArray[index] + dobArray[index];
+				if(combineText == cmbText){
+					errorFound = true;
+					paramMap.put(MSG, 'Duplicate combination of first name, last name and dob.');
+					return false;
+				}				
+			});
+		}
+		
+		if(errorFound){
+			displayNotification(paramMap);
+			return false;
+		}
+	}
+}
 
 
 

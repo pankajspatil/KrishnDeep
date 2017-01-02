@@ -42,31 +42,24 @@
 			
 			ExpenseModel expenseModel = new ExpenseModel();
 			
-			
-		}
-		
-		if (request.getParameter("expenseDesc") != null) {
-			ExpenseModel_old expenseModel = new ExpenseModel_old();
-			expenseModel.setVendor_id(Integer.parseInt(request
-					.getParameter("vendorId")));
-			expenseModel.setExpense_invoice_no((request
-					.getParameter("expenseInvoiceNo")));
-			expenseModel.setAccount_id(Integer.parseInt(request
-					.getParameter("accountId")));
-			expenseModel.setExpenses_item_id(Integer.parseInt(request
-					.getParameter("expenseItem")));
-			expenseModel.setExpense_desc(request
-					.getParameter("expenseDesc"));
-			expenseModel.setExpense_qty(Integer.parseInt(request
-					.getParameter("expenseQty")));
-			expenseModel.setExpense_amount(Double.parseDouble(request
-					.getParameter("expenseAmount")));
-			expenseModel.setExpense_vat(Float.parseFloat(request
-					.getParameter("expenseVat")));
-			expenseModel.setUser_id(userId);
-			
-			Expense.addExpense(expenseModel);
+			Vendor vendor = new Vendor();
+			vendor.setVendorId(vendorId);
+			expenseModel.setVendor(vendor);
 
+			ExpenseItem expenseItem = new ExpenseItem();
+			expenseItem.setExpenseItemId(itemId);
+			expenseModel.setExpenseItem(expenseItem);
+			
+			expenseModel.setExpenseQty(expQuantity);
+			expenseModel.setExpenseAmt(expAmount);
+			expenseModel.setExpenseVat(expenseVat);
+			expenseModel.setExpenseRemark(expenseDesc);
+			expenseModel.setCreatedBy(userId);
+			
+			Expense expense = new Expense();
+			
+			expense.addExpense(expenseModel);
+			
 		}
 	%>
 
@@ -99,7 +92,7 @@
 	</tr>
 	<tr>
 		<th class="headerTR">Qty</th>
-		<td><input type="text" id="expenseQty" name="expenseQty" class="fullRowElement"></td>
+		<td><input type="text" id="expenseQty" name="expenseQty" class="fullRowElement" title="Numbers only" onkeyup="validateNumbersKeyPress(this)"></td>
 	</tr>
 	<tr>
 		<th class="headerTR">Amount</th>
@@ -116,11 +109,12 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan=2 align="center"><input class="btn btn-main btn-2g" type="Submit" id="page1" name="page1" value="Submit"></td>
+		<td colspan=2 align="center"><input class="btn btn-main btn-2g" type="Submit" id="page1" name="page1" value="Submit" onclick="return validateCreateExpense()"></td>
 	</tr>
 	
 </table>
 <div id="dialog-confirm"></div>
+<script type="text/javascript" src="<%=contextPath%>/resources/js/expense.js"></script>
 </form>
 </body>
 </html>

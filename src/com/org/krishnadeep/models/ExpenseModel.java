@@ -12,13 +12,15 @@ public class ExpenseModel {
 	
 	private String expenseRemark;
 	
-	private String expenseVat;
+	private Double expenseVat;
 	
 	private Boolean isActive;
 	
 	private Double expenseAmt;
 	
 	private Double paidAmt;
+	
+	private Integer createdBy;
 
 	public Integer getExpenseId() {
 		return expenseId;
@@ -60,11 +62,11 @@ public class ExpenseModel {
 		this.expenseRemark = expenseRemark;
 	}
 
-	public String getExpenseVat() {
+	public Double getExpenseVat() {
 		return expenseVat;
 	}
 
-	public void setExpenseVat(String expenseVat) {
+	public void setExpenseVat(Double expenseVat) {
 		this.expenseVat = expenseVat;
 	}
 
@@ -91,6 +93,15 @@ public class ExpenseModel {
 	public void setPaidAmt(Double paidAmt) {
 		this.paidAmt = paidAmt;
 	}
+	
+
+	public Integer getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
 
 	@Override
 	public String toString() {
@@ -98,6 +109,7 @@ public class ExpenseModel {
 				+ ", expenseItem=" + expenseItem + ", expenseQty=" + expenseQty
 				+ ", expenseRemark=" + expenseRemark + ", expenseVat="
 				+ expenseVat + ", isActive=" + isActive + ", expenseAmt="
-				+ expenseAmt + ", paidAmt=" + paidAmt + "]";
+				+ expenseAmt + ", paidAmt=" + paidAmt + ", createdBy="
+				+ createdBy + "]";
 	}
 }

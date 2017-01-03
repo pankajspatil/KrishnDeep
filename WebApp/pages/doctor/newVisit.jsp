@@ -369,7 +369,10 @@ try{
 	</table>
 	<%} %>
 	<br />
-	<center><input type="submit" value="Submit" name="page1" id="page1" class="mainBGnFont <%=visitId.equals("") ? "" : "displayHide"%>" onclick="return validateForm()"></center>
+	<center>
+		<input type="submit" value="Submit" name="page1" id="page1" class="btn btn-main btn-2g <%=visitId.equals("") ? "" : "displayHide"%>" onclick="return validateForm()">
+		<input type="button" value="Print" name="print" id="<%=visitId %>" class="btn btn-main btn-2g <%=visitId.equals("") ? "displayHide" : ""%>" onclick="printVisitReceipt(this)">
+	</center>
 	<input type="hidden" value='<%=prescriptionData %>' name="prescriptionData" id="prescriptionData">
 	<input type="hidden" value="<%=patientId %>" name="patientId" id="patientId">
 	<input type="hidden" value="<%=appointmentId %>" name="appointmentId" id="appointmentId">
@@ -386,9 +389,13 @@ try{
 	
 	if(returnValue != null){
 		if(returnValue == '-1'){
-			alert('Error while saving data');
+			Lobibox.alert("error",{
+				msg : 'Error while saving data.'
+			});
 		}else{
-			alert('Data has been successfully saved!!');
+			Lobibox.alert("success",{
+				msg : 'Data has been successfully saved!!'
+			});
 			//$('#page1').disabled = true;
 		}			
 	}

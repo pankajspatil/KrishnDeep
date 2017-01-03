@@ -425,3 +425,16 @@ function disableTests(){
 	});
 	$('#submitTests').hide();
 }
+
+function printVisitReceipt(btnObj){
+	
+	var visitId = btnObj.id;
+	var paramsMap = new Map();
+	var dataMap = new Map();
+
+	dataMap.put("visitId", visitId);
+	paramsMap.put(WIN_URL, contextPath + '/pages/doctor/printVisitReceipt.jsp');
+	paramsMap.put(DATA, dataMap);
+	
+	openWindow(paramsMap);
+}

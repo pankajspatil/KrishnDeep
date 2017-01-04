@@ -426,15 +426,31 @@ function disableTests(){
 	$('#submitTests').hide();
 }
 
+$(document).ready(function() {
+	$('input[name=print]').click(function(e){
+		printVisitReceipt(this);
+	});
+});
+
 function printVisitReceipt(btnObj){
 	
 	var visitId = btnObj.id;
-	var paramsMap = new Map();
+	/*var paramsMap = new Map();
 	var dataMap = new Map();
 
 	dataMap.put("visitId", visitId);
 	paramsMap.put(WIN_URL, contextPath + '/pages/doctor/printVisitReceipt.jsp');
 	paramsMap.put(DATA, dataMap);
 	
-	openWindow(paramsMap);
+	openWindow(paramsMap);*/
+	
+	var paramMap = new Map();
+	
+	var url = contextPath + '/pages/doctor/printVisitReceipt.jsp?visitId=' + visitId;
+	
+	paramMap.put(URL, url);
+	paramMap.put(WIDTH, '70%');
+	paramMap.put(HEIGHT, '80%');
+	
+	openFancyBox(btnObj, paramMap);
 }

@@ -151,7 +151,11 @@ function openPatientFancyBox(patientId, operation, obj){
 	
 	var url, btnObj;
 	
-	url = contextPath + '/pages/doctor/createPatient.jsp?menuRequired=false&patientId=' + patientId;
+	if(operation == 'visitHistory'){
+		url = contextPath + '/pages/doctor/visitHistory.jsp?menuRequired=false&patientId=' + patientId;
+	}else{
+		url = contextPath + '/pages/doctor/createPatient.jsp?menuRequired=false&patientId=' + patientId;
+	}
 	
 	paramMap.put(URL, url);
 	paramMap.put(WIDTH, '70%');
@@ -168,6 +172,10 @@ $(document).ready(function() {
 	$('img[name=editPatient]').click(function(e){
 			openPatientFancyBox($(this).id, 'updatePatient', this);
 		});
+	
+	$('input[name=visitHistory]').click(function(e){
+		openPatientFancyBox($(this).id, 'visitHistory', this);
+	});
 	
 	$( "#dob" ).datepicker({
 		changeMonth: true,

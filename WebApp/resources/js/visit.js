@@ -310,10 +310,12 @@ function validateForm(){
 }
 
 function openVisitDetailsPage(visitId){
-	window.opener.location = contextPath + '/pages/doctor/newVisit.jsp?visitId=' +visitId;
+	/*window.opener.location = contextPath + '/pages/doctor/newVisit.jsp?visitId=' +visitId;
 	window.close();
 	window.blur();
-	window.opener.focus();
+	window.opener.focus();*/
+	
+	parent.location = contextPath + '/pages/doctor/newVisit.jsp?visitId=' +visitId;
 }
 
 function displayTooltip(selectedObj, prescriptionStored){

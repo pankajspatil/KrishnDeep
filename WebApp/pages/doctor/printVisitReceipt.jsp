@@ -52,7 +52,7 @@ out.println("VisitId === >" + visitId);
 </table>
 
 <script type="text/javascript">
-//var w = window.print();
+var w = window.print();
 //debugger;
 //this.close();
 

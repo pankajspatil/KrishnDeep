@@ -92,7 +92,8 @@ $(document).ready(function() {
 				<!-- <input type="button" name="Edit" value="E" class="editImg" onclick="" /> -->
 				<%-- <input type="button" name="Delete" value="D" onclick="openPage('delete','<%=patient.getPatientId() %>')" /> --%>
 				<input type="button" name="NewVisit" value="NV" onclick="openPage('vNew','<%=patient.getPatientId() %>')" />
-				<input type="button" name="Visit History" value="VH" onclick="openPage('vHistory','<%=patient.getPatientId() %>')" />
+				<%-- <input type="button" name="visitHistory" value="VH" onclick="openPage('vHistory','<%=patient.getPatientId() %>')" /> --%>
+				<input type="button" name="visitHistory" value="VH" onclick="openPatientFancyBox(<%=patient.getPatientId()%>, 'visitHistory', this)" />
 			</th>
 		</tr><%}
 	}	

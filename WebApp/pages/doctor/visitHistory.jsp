@@ -37,7 +37,7 @@ System.out.println("patientId====>" + patientId);
 <h1 class="moduleHeader" style="text-align: center;"> Visit History</h1>
 <table border="" align="center" id="visitData" class="display" cellspacing="0" width="100%">
 <thead>
-	<tr>
+	<tr class="headerTR">
 		<td>Visit ID</td>
 		<td>Patient Name</td>
 		<td>Visit Date</td>

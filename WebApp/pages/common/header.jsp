@@ -83,7 +83,7 @@
 			<td class="headercol">
 				<div id="header">
 					<!-- <h1>Project Resource Management</h1> -->
-					<img src="<%=contextPath %>/resources/images/header/banner.png" />
+					<img src="<%=contextPath %>/resources/images/header/banner.png" width="643px;" height="95px;" />
 				</div>
 			</td>
 		</tr>

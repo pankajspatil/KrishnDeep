@@ -1,4 +1,4 @@
-<%@page import="com.org.krishnadeep.generic.Constants"%>
+<%-- <%@page import="com.org.krishnadeep.generic.Constants"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="com.org.krishnadeep.modules.Expense"%>
@@ -81,4 +81,4 @@ ArrayList<LinkedHashMap<String, String>> expenseList = Expense.getExpenseList();
 	</table>
 
 </body>
-</html>
+</html> --%>

@@ -41,9 +41,9 @@
 					<li class='first-child'><a
 						href='<%=Contextpath %>/pages/doctor/addExpense.jsp'><span>Add
 								Expense</span></a></li>
-					<%-- <li class='first-child'><a
-						href='<%=Contextpath %>/pages/doctor/History.jsp'><span>Expense
-								History</span></a></li> --%>
+					<li class='first-child'><a
+						href='<%=Contextpath %>/pages/invoice/addVendorInvoice.jsp'><span>Add
+								Invoice</span></a></li>
 				</ul> <%
 				}
 			%>

@@ -24,19 +24,19 @@ List<ExpenseModel> expenseList = expense.getExpenseList();
 <table border="1" class="mainTable" width="100%" id="expenseTable">
 <thead>
 	<tr class="headerTR">
-		<th>Expense No.</th>
-		<th>Item Name</th>
-		<th>Vendor</th>
+		<th width="10%">Expense No.</th>
+		<th width="20%">Item Name</th>
+		<th width="20%">Vendor</th>
 		<th>Qty</th>
 		<th>Amount</th>
 		<th>Paid Amount</th>
-		<th>Remarks</th>
+		<th width="30%">Remarks</th>
 	</tr>
 </thead>
 <tbody>
 	<%for(ExpenseModel expenseModel : expenseList){%>
 		<tr>
-			<td><%=expenseModel.getExpenseId() %></td>
+			<td align="center"><%=expenseModel.getExpenseId() %></td>
 			<td><%=expenseModel.getExpenseItem().getExpenseItemName() %></td>
 			<td><%=expenseModel.getVendor().getVendorName() %></td>
 			<td><%=expenseModel.getExpenseQty() %></td>

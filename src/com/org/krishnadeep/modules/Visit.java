@@ -5,10 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import com.org.krishnadeep.generic.ConnectionsUtil;
 import com.org.krishnadeep.generic.Constants;
+import com.org.krishnadeep.models.Patient;
+import com.org.krishnadeep.models.UserVisit;
+import com.org.krishnadeep.models.VisitType;
 
 public class Visit {
 
@@ -161,4 +166,60 @@ public LinkedHashMap<String, Object> getMedicalTests(){
 	returnMap.put(Constants.NUMBER_OF_ROWS, numberOfRows);
 	return returnMap;
 }
+
+public List<UserVisit> getUserVisitList(Integer visitId) throws SQLException{
+	
+	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
+	Connection conn = connectionsUtil.getConnection();
+	
+	String query = "select uv.user_visit_id, p.first_name as pFirstName, p.last_name pLastName, "+
+			"u.first_name as dFirstName, u.last_name as dLastName, "+ 
+			"uv.created_on, p.dob, CONCAT(TIMESTAMPDIFF( YEAR, dob, now() ),' Years,', "+
+			"TIMESTAMPDIFF( MONTH, dob, now() ) % 12,' Months,', "+
+			"FLOOR( TIMESTAMPDIFF( DAY, dob, now() ) % 30.4375 ),' Days') as age, p.sex, visit_type, fees, summary from user_visit uv "+
+			"inner join patient_master p on uv.patient_id = p.patient_id "+
+			"inner join user_master u on u.user_id = uv.created_by "+
+			"inner join visit_type vt on uv.visit_type_id = vt.visit_type_id";
+	if(visitId != null){
+		query += " where user_visit_id = " + visitId;
+	}
+	
+	ResultSet dataRS = conn.createStatement().executeQuery(query);
+	List<UserVisit> userVisitList = new ArrayList<UserVisit>();
+	UserVisit userVisit;
+	Patient patient;
+	Patient doctor;
+	VisitType visitType; 
+	
+	while(dataRS.next()){
+		userVisit = new UserVisit();
+		patient = new Patient();
+		doctor = new Patient();
+		visitType = new VisitType();
+		
+		userVisit.setUserVisitId(dataRS.getInt("user_visit_id"));
+		userVisit.setFees(dataRS.getDouble("fees"));
+		userVisit.setSummary(dataRS.getString("summary"));
+		userVisit.setCreatedOn(dataRS.getString("created_on"));
+		userVisit.setAge(dataRS.getString("age"));
+		
+		patient.setFirstName(dataRS.getString("pFirstName"));
+		patient.setLastName(dataRS.getString("pLastName"));
+		patient.setSex(dataRS.getString("sex"));
+		userVisit.setPatient(patient);
+		
+		visitType.setVisitType(dataRS.getString("visit_type"));
+		userVisit.setVisitType(visitType);
+		
+		doctor.setFirstName(dataRS.getString("dFirstName"));
+		doctor.setLastName(dataRS.getString("dLastName"));
+		userVisit.setDoctor(doctor);
+		
+		userVisitList.add(userVisit);
+	}
+	
+	
+	return userVisitList;
+}
+
 }

@@ -46,7 +46,7 @@ public class Expense {
 			connectionsUtil.closeConnection(conn);
 	}
 	
-	public List<ExpenseModel> getExpenseList() throws SQLException{
+	public List<ExpenseModel> getExpenseList(Integer vendorId) throws SQLException{
 			
 		
 			connectionsUtil = new ConnectionsUtil();
@@ -55,11 +55,19 @@ public class Expense {
 			String query = "SELECT e.expense_id, e.expense_item_id, ei.expense_item_name, v.vendor_id, v.vendor_name, " +
 							"e.expense_qty, e.expense_amount, ie.paidAmt, e.expense_remark FROM expenses e "+
 							"inner join expense_item_master ei on e.expense_item_id = ei.expense_item_id "+
-							"inner join vendor_master v on e.vendor_id = v.vendor_id "+
-							"left join (select expense_id, sum(amount) as paidAmt from invoice_expense_map ie "+ 
+							"inner join vendor_master v on e.vendor_id = v.vendor_id ";
+							if(vendorId != null){
+								query += "and v.vendor_id = ? ";
+							}
+							
+							query += "left join (select expense_id, sum(ifnull(amount,0)) as paidAmt from invoice_expense_map ie "+ 
 							"where is_active = 1 group by expense_id) ie on e.expense_id = ie.expense_id";
 					
 			PreparedStatement preparedStatement = conn.prepareStatement(query);
+			if(vendorId != null){
+				preparedStatement.setInt(1, vendorId);
+			}
+			
 			dataRS = preparedStatement.executeQuery();
 
 			List<ExpenseModel> expenseList = new ArrayList<ExpenseModel>();

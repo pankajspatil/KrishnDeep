@@ -97,7 +97,7 @@
 	</tr>
 	
 </table>
-<table border="1" class="mainTable" width="100%" id="expenseTable">
+<table border="1" class="mainTable" width="100%" id="invoiceExpenseTable">
 <thead>
 	<tr class="headerTR">
 		<th>Select</th>
@@ -111,7 +111,6 @@
 	</tr>
 </thead>
 <tbody>
-	
 </tbody>
 </table>
 <div id="dialog-confirm"></div>

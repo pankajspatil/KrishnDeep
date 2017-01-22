@@ -167,7 +167,7 @@ public LinkedHashMap<String, Object> getMedicalTests(){
 	return returnMap;
 }
 
-public List<UserVisit> getUserVisitList(Integer visitId) throws SQLException{
+public List<UserVisit> getUserVisitList(Integer visitId, String fromDate, String toDate) throws SQLException{
 	
 	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
 	Connection conn = connectionsUtil.getConnection();
@@ -177,12 +177,19 @@ public List<UserVisit> getUserVisitList(Integer visitId) throws SQLException{
 			"uv.created_on, p.dob, CONCAT(TIMESTAMPDIFF( YEAR, dob, now() ),' Years,', "+
 			"TIMESTAMPDIFF( MONTH, dob, now() ) % 12,' Months,', "+
 			"FLOOR( TIMESTAMPDIFF( DAY, dob, now() ) % 30.4375 ),' Days') as age, p.sex, visit_type, fees, summary from user_visit uv "+
-			"inner join patient_master p on uv.patient_id = p.patient_id "+
-			"inner join user_master u on u.user_id = uv.created_by "+
+			"inner join patient_master p on uv.patient_id = p.patient_id ";
+	
+			if(visitId != null){
+				query += " and user_visit_id = " + visitId;
+			}
+			
+			if(fromDate != null && toDate != null){
+				query += " and uv.created_on between '"+fromDate+" 00:00:00' and '"+toDate+" 23:59:59'";
+			}
+	
+			query += " inner join user_master u on u.user_id = uv.created_by "+
 			"inner join visit_type vt on uv.visit_type_id = vt.visit_type_id";
-	if(visitId != null){
-		query += " where user_visit_id = " + visitId;
-	}
+	
 	
 	ResultSet dataRS = conn.createStatement().executeQuery(query);
 	List<UserVisit> userVisitList = new ArrayList<UserVisit>();

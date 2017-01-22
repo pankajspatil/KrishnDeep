@@ -27,7 +27,7 @@ $(document).ready(function() {
 <body>
 <%
 	String patientId = Utils.getString(request.getParameter("patientId"));
-System.out.println("patientId====>" + patientId);
+	//System.out.println("patientId====>" + patientId);
 	Visit visit = new Visit();
 	
 	ResultSet dataRS = visit.getVisitDetail(patientId, null, null);

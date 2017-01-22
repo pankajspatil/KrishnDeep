@@ -1,3 +1,6 @@
+<%@page import="com.org.krishnadeep.models.InvoiceModel"%>
+<%@page import="java.util.List"%>
+<%@page import="com.org.krishnadeep.modules.Invoice"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ include file="/pages/common/validateSession.jsp"%>
@@ -8,6 +11,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
+<%
+Invoice invoice = new Invoice();
+List<InvoiceModel> invoiceList = invoice.getInvoiceList();
+
+%>
+
 <h1 align="center">Add Invoice</h1>
 <div style="float: right;padding-right: 11%">
 	<!-- <input type="button" name="newExpense" id="newExpense" value=""> -->
@@ -20,10 +29,29 @@
 		<th width="20%">Vendor Name</th>
 		<th width="10%">Amount</th>
 		<th>Comments</th>
+		<th width="10%">Action</th>
 	</tr>
 </thead>
 <tbody>
-
+<%
+if(invoiceList.size() > 0){
+	for(InvoiceModel invoiceModel : invoiceList){
+		%><tr align="center">
+			<td>
+				<a href="#" name="editInsurance" id="<%=invoiceModel.getInvoiceId() %>" 
+				onclick="openInvoiceFancyBox(<%=invoiceModel.getInvoiceId() %>, 'newInvoice', this);"><%=invoiceModel.getInvoiceId() %>
+				</a>
+			</td>
+			<td><%=invoiceModel.getVendor().getVendorName() %></td>
+			<td><%=invoiceModel.getAmount() %></td>
+			<td align="left"><%=invoiceModel.getComments() %></td>
+			<td><img height="18%" name="print" src="<%=contextPath %>/resources/images/print.png"
+							onclick="printVendorReceipt(this)" id="print_<%=invoiceModel.getInvoiceId()%>"></td>
+		</tr>
+		<%
+	}
+}
+%>
 </tbody>
 </table>
 <script type="text/javascript" src="<%=contextPath%>/resources/js/invoice.js"></script>

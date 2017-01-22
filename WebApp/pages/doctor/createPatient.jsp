@@ -30,7 +30,7 @@ Boolean isActive = Boolean.parseBoolean(Utils.getString(request.getParameter("is
 
 String page1 = Utils.getString(request.getParameter("page1"));
 
-System.out.println("page1==>" + page1 + "patientId==>" + patientId);
+//System.out.println("page1==>" + page1 + "patientId==>" + patientId);
 
 String btnText = "add";
 
@@ -53,7 +53,7 @@ if(patientId != 0 && page1.equals("")){
 		address = patient.getAddress();
 		isActive = patient.getIsActive();
 		
-		System.out.println("Before==>" + patient);
+		//System.out.println("Before==>" + patient);
 		
 		btnText = "update";
 	}

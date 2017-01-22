@@ -33,6 +33,19 @@ public class Utils {
 		
 	}
 	
+	public static Integer[] getIntegerArray(Object param){
+		Integer[] intArray = new Integer[0];
+		String[] strArray = (String[])param;
+		
+		if(param != null){
+			intArray = new Integer[((String[])param).length];
+			for(int i=0; i < strArray.length; i++){
+				intArray[i] = Integer.parseInt(strArray[i]); 
+			}
+		}
+		return intArray;
+	}
+	
 	public static String getValidCharge(Object param){
 		return param != null ? (Float.parseFloat(param.toString()) > 0 ? param.toString() : "") : "";
 		

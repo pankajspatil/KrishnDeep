@@ -1,5 +1,7 @@
 package com.org.krishnadeep.models;
 
+import java.util.List;
+
 
 public class InvoiceModel {
 
@@ -11,7 +13,13 @@ public class InvoiceModel {
 	
 	private Boolean expenseExist;
 	
-	private ExpenseModel expenseModel;
+	private List<ExpenseModel> expenseList;
+	
+	private Integer createdBy;
+	
+	private String comments;
+	
+	private String createdOn;
 
 	public Integer getInvoiceId() {
 		return invoiceId;
@@ -45,18 +53,43 @@ public class InvoiceModel {
 		this.expenseExist = expenseExist;
 	}
 
-	public ExpenseModel getExpenseModel() {
-		return expenseModel;
+	public List<ExpenseModel> getExpenseList() {
+		return expenseList;
 	}
 
-	public void setExpenseModel(ExpenseModel expenseModel) {
-		this.expenseModel = expenseModel;
+	public void setExpenseList(List<ExpenseModel> expenseList) {
+		this.expenseList = expenseList;
+	}
+
+	public Integer getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public String getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
 	}
 
 	@Override
 	public String toString() {
-		return "Invoice [invoiceId=" + invoiceId + ", vendor=" + vendor
+		return "InvoiceModel [invoiceId=" + invoiceId + ", vendor=" + vendor
 				+ ", amount=" + amount + ", expenseExist=" + expenseExist
-				+ ", expenseModel=" + expenseModel + "]";
+				+ ", expenseList=" + expenseList + ", createdBy=" + createdBy
+				+ ", comments=" + comments + ", createdOn=" + createdOn + "]";
 	}
 }

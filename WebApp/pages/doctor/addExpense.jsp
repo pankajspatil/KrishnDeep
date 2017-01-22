@@ -13,7 +13,7 @@
 <body>
 <%
 Expense expense = new Expense();
-List<ExpenseModel> expenseList = expense.getExpenseList(null);
+List<ExpenseModel> expenseList = expense.getExpenseList(null, false);
 %>
 
 <h1 align="center">Add Expense</h1>

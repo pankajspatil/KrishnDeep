@@ -5,15 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.org.krishnadeep.generic.ConnectionsUtil;
-import com.org.krishnadeep.generic.Constants;
-import com.org.krishnadeep.generic.Utils;
 import com.org.krishnadeep.models.ExpenseItem;
 import com.org.krishnadeep.models.ExpenseModel;
-import com.org.krishnadeep.models.ExpenseModel_old;
 import com.org.krishnadeep.models.Vendor;
 
 public class Expense {
@@ -46,7 +42,7 @@ public class Expense {
 			connectionsUtil.closeConnection(conn);
 	}
 	
-	public List<ExpenseModel> getExpenseList(Integer vendorId) throws SQLException{
+	public List<ExpenseModel> getExpenseList(Integer vendorId, boolean payableOnly) throws SQLException{
 			
 		
 			connectionsUtil = new ConnectionsUtil();
@@ -62,6 +58,10 @@ public class Expense {
 							
 							query += "left join (select expense_id, sum(ifnull(amount,0)) as paidAmt from invoice_expense_map ie "+ 
 							"where is_active = 1 group by expense_id) ie on e.expense_id = ie.expense_id";
+							
+							if(payableOnly){
+								query += " having (expense_amount - ifnull(ie.paidAmt,0)) > 0";
+							}
 					
 			PreparedStatement preparedStatement = conn.prepareStatement(query);
 			if(vendorId != null){

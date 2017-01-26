@@ -46,7 +46,7 @@ html, body, .container {
     width: 49.8%;
     float: left;
     position: relative;
-    border: 1px solid gray;
+    /* border: 1px solid gray; */
     max-height: 50%;
 }
 </style>
@@ -81,7 +81,7 @@ List<UserVisit> userVisitList = visit.getUserVisitList(null, fromDate, toDate);
 <center><h4>Home</h4></center>
 <div class="container">
 <div class="col-1 scroll blockDiv">
-<center>Today's Visits</center>
+<center style="font-size: larger;font-weight: bolder;">Today's Visits</center>
 <table border="" align="center" id="visitData" class="display" cellspacing="0" width="100%">
 <thead>
 	<tr class="headerTR">
@@ -109,6 +109,7 @@ for(UserVisit userVisit : userVisitList){
 			<script type="text/javascript">
 			$('#<%=visitId%>').on({
 				  "click": function() {
+					  //debugger;
 				    $(this).tooltip({ items: "#<%=visitId%>", content: "<%=summary%>"});
 				    $(this).tooltip("open");
 				  } ,

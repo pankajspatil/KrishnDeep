@@ -39,9 +39,9 @@ List<ExpenseModel> expenseList = expense.getExpenseList(null, false);
 			<td align="center"><%=expenseModel.getExpenseId() %></td>
 			<td><%=expenseModel.getExpenseItem().getExpenseItemName() %></td>
 			<td><%=expenseModel.getVendor().getVendorName() %></td>
-			<td><%=expenseModel.getExpenseQty() %></td>
-			<td><%=expenseModel.getExpenseAmt() %></td>
-			<td><%=expenseModel.getPaidAmt() %></td>
+			<td align="center"><%=expenseModel.getExpenseQty() %></td>
+			<td align="center"><%=expenseModel.getExpenseAmt() %></td>
+			<td align="center"><%=expenseModel.getPaidAmt() %></td>
 			<td><%=expenseModel.getExpenseRemark()%></td>
 		</tr>
 	<%}%>

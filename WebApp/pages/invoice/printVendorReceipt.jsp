@@ -73,12 +73,12 @@ if(invoiceModel != null){
 	}%>
 	
 </table><br />
-<table width="100%" border="1" style="border: 1px solid gray; border-collapse: collapse;">
+<%-- <table width="100%" border="1" style="border: 1px solid gray; border-collapse: collapse;">
 	<tr>
 			<th align="right" width="65%" style="background-color: #D3D3D3; -webkit-print-color-adjust: exact;">Total : </th>
 			<th><%=totalAmount %></th>
 	</tr>
-</table>
+</table> --%>
 
 
 <script type="text/javascript">

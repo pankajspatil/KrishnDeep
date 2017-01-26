@@ -36,7 +36,7 @@
 			<%
 				if (menulist.contains("Expense")) {
 			%>
-			<li class='has-sub'><a href='#'><span>Reports</span></a>
+			<li class='has-sub'><a href='#'><span>Expenses</span></a>
 				<ul>
 					<li class='first-child'><a
 						href='<%=Contextpath %>/pages/doctor/addExpense.jsp'><span>Add
@@ -48,17 +48,17 @@
 				}
 			%>
 				<%
-				if (menulist.contains("Reports")) {
+				if (menulist.contains("Report")) {
 			%>
 			<li class='has-sub'><a href='#'><span>Reports</span></a>
 				<ul>
 					<li class='first-child'><a
-						href='<%=Contextpath %>/pages/reports/orderRevenue.jsp'><span>Revenue</span></a>
+						href='<%=Contextpath %>/pages/reports/visitRevenue.jsp'><span>Revenue</span></a>
 					</li>
-					<li><a
+					<%-- <li><a
 						href='<%=Contextpath %>/pages/reports/orderStatus.jsp'><span>Order
-								Status</span></a></li>
-				</ul></li>
+								Status</span></a></li>--%>
+				</ul></li> 
 			<% } %>
 
 			<li style="float: right; padding-right: 10px;"><a href='#'><span>Account</span></a>

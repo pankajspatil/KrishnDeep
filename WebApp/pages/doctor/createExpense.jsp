@@ -60,6 +60,17 @@
 			
 			expense.addExpense(expenseModel);
 			
+			%>
+			<script type="text/javascript">
+			Lobibox.alert("success",{
+				msg : 'Expense added successfully.',
+				beforeClose: function(lobibox){
+		        	parent.location.reload();
+		        }
+			});
+			</script>
+			<%
+			
 		}
 	%>
 

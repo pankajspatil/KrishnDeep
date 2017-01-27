@@ -61,7 +61,7 @@ if(!page1.equals("")){
 		LinkedHashMap<String, LinkedHashMap<String, String>> chartMap = new LinkedHashMap<String, LinkedHashMap<String, String>>();
 		LinkedHashMap<String, String> dtMap = new LinkedHashMap<String, String>();
 		
-		String chartString = "<chart palette='2' caption='Revenue Comparison' showlabels='1' showvalues='0'  "+
+		String chartString = "<chart palette='2' caption='Revenue Comparison' showlabels='1' showvalues='0'  numberprefix='&#8377;' "+
 							"showsum='1' decimals='0' useroundedges='1' legendborderalpha='0' showborder='0'><categories>";
 		
 		%><br/>

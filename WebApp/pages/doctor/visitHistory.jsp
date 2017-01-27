@@ -58,11 +58,14 @@ while(dataRS.next()){
 		<td><%=dataRS.getString("first_name") + " " + dataRS.getString("last_name") %></td>
 		<td><div class="clickableLink" onclick="openVisitDetailsPage(<%=visitId%>)"><%=dataRS.getString("created_on") %></div></td>
 		<td>
-			<div id="<%=visitId %>" <%=toolTipText %>>Summary</div>
+			<div id="<%=visitId %>" <%=toolTipText %>><%=!summary.equals("") ? "Summary" : "-"%></div>
 			<script type="text/javascript">
+
 			$('#<%=visitId%>').on({
 				  "click": function() {
-				    $(this).tooltip({ items: "#<%=visitId%>", content: "<%=summary%>"});
+					  
+					var summary = '<%=summary.replaceAll("\n|\r", "<br/>")%>';
+				    $(this).tooltip({ items: "#<%=visitId%>", content: summary});
 				    $(this).tooltip("open");
 				  } ,
 				  "mouseout": function() {

@@ -162,7 +162,7 @@ function validateCreateInvoice(){
 			}else{
 				var rowObj = $(paidObj).closest('tr');
 				var totalAmount = rowObj.find('td').eq(5).text();
-				var totalPaid = rowObj.find('td').eq(5).text() == '' ? 0 : rowObj.find('td').eq(5).text();
+				var totalPaid = rowObj.find('td').eq(6).text() == '' ? 0 : rowObj.find('td').eq(6).text();
 				
 				var remainingAmt = totalAmount - totalPaid;
 				

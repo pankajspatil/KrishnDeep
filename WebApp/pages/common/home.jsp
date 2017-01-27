@@ -76,8 +76,6 @@ Visit visit = new Visit();
 
 List<UserVisit> userVisitList = visit.getUserVisitList(null, fromDate, toDate);
 %>
-
-<script src="<%=contextPath%>/resources/js/materialize.js" type="text/javascript"></script>
 <center><h4>Home</h4></center>
 <div class="container">
 <div class="col-1 scroll blockDiv">
@@ -109,9 +107,9 @@ for(UserVisit userVisit : userVisitList){
 			<script type="text/javascript">
 			$('#<%=visitId%>').on({
 				  "click": function() {
-					  //debugger;
-				    $(this).tooltip({ items: "#<%=visitId%>", content: "<%=summary%>"});
-				    $(this).tooltip("open");
+					  var summary = '<%=summary.replaceAll("\n|\r", "<br/>")%>';
+					    $(this).tooltip({ items: "#<%=visitId%>", content: summary});
+					    $(this).tooltip("open");
 				  } ,
 				  "mouseout": function() {
 					  if($(this).tooltip( "instance" ) !== undefined){

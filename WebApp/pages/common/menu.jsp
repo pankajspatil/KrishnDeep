@@ -55,9 +55,8 @@
 					<li class='first-child'><a
 						href='<%=Contextpath %>/pages/reports/visitRevenue.jsp'><span>Revenue</span></a>
 					</li>
-					<%-- <li><a
-						href='<%=Contextpath %>/pages/reports/orderStatus.jsp'><span>Order
-								Status</span></a></li>--%>
+					<li><a
+						href='<%=Contextpath %>/pages/reports/visitCount.jsp'><span>User Visits</span></a></li>
 				</ul></li> 
 			<% } %>
 

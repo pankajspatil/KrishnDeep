@@ -32,7 +32,7 @@ $(document).ready(function() {
 	<tr>
 		<th class="headerTR" width="50%">Search By</th>
 		<td>
-			<select name="searchKey" id="searchKey" onchange="searchKeySelect(this)" style="height: 100%;width: 100%">
+			<select name="searchKey" id="searchKey" onchange="searchKeySelect(this)" class="fullRowElement">
 				<option value="-1">Please Select</option>
 				<option value="1">Name</option>
 				<option value="2">Mobile No</option>
@@ -43,7 +43,7 @@ $(document).ready(function() {
 	</tr>
 	<tr>
 		<th class="headerTR">Value</th>
-		<td><input type="text" name="searchValue" id="searchValue" value="" autocomplete="off" style="height: 100%;width: 100%"> </td>
+		<td><input type="text" name="searchValue" id="searchValue" value="" autocomplete="off" class="fullRowElement"> </td>
 	</tr>
 	
 	<tr style="border: none;">

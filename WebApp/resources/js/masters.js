@@ -40,7 +40,39 @@ $(document).ready(function() {
 			 collapsible: true ,
 			 defaultTab: 'li#mainMenuTab'
 			 });
+	   
+	   $('#newVendor').click(function(){
+		   openVendorFancyBox(0, 'newVendor', this);
+		});
+	   
+	   var vendorTable = $('#vendorTable').DataTable({
+	    	"bSort" : true,
+	    	"paging" : true,
+	    	"order": [[ 0, "asc" ]]/*,
+	    	"pageLength": 15,
+	    	"aLengthMenu": [[10, 15, 25, 35, 50, 100], [10, 15, 25, 35, 50, 100]]*/	
+	    });
+	   
+	   $('img[name=editVendor]').click(function(e){
+		   updateVendorRecord(this);
+		});
 });
+
+function openVendorFancyBox(vendorId, menuType, obj){
+	
+	var paramMap = new Map();
+	
+	var url, btnObj;
+	
+	url = contextPath + '/pages/doctor/createVendor.jsp?menuRequired=false&vendorId=' + vendorId;
+	
+	paramMap.put(URL, url);
+	paramMap.put(WIDTH, '70%');
+	paramMap.put(HEIGHT, '80%');
+	
+	openFancyBox(obj, paramMap);
+}
+
 
 function openMenuFancyBox(menuId, menuType, obj){
 	
@@ -85,7 +117,9 @@ var options = {
 		};
 
 var userList = new List('allSubMenu', options);
-userList.clear();
+if(userList.size() != 0){
+	userList.clear();
+}
 
 //Main menu id
 var mainMenuId;
@@ -323,3 +357,41 @@ function validateSubMenuForm(){
 	
 }
 
+function updateVendorRecord(imgObj){
+	
+	var vendorId =  imgObj.id;
+	openVendorFancyBox(vendorId, 'updateVendor', imgObj);
+}
+
+function validateVendorForm(){
+	
+	var vendorName = $('#vendorName').val();
+	var contactNo = $('#contactNo').val();
+	
+	var paramMap = new Map();
+	if(vendorName.trim() == ''){
+		paramMap.put(MSG, 'Please enter vendor name.');
+		displayNotification(paramMap);
+		
+		return false;
+	}
+	
+	if(contactNo.trim() == ''){
+		paramMap.put(MSG, 'Please enter contact number.');
+		displayNotification(paramMap);
+		
+		return false;
+	}
+	
+	if(vendorName.toLowerCase() !== oldVendorName.toLowerCase()){
+		var vendorNameArray = parent.$('#vendorTable').DataTable().column(0).data();	
+		vendorNameArray = convertCaseArray(vendorNameArray, LOWER_CASE);
+		
+		if(vendorNameArray.includes(vendorName.toLowerCase())){
+			paramMap.put(MSG, 'Duplicate vendor name.');
+			displayNotification(paramMap);
+			return false;
+		}
+	}
+	
+}

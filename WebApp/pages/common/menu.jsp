@@ -49,6 +49,11 @@
 							<span>Add Vendor</span>
 						</a>
 					</li>
+					<li class='first-child'>
+						<a href='<%=request.getContextPath()%>/pages/master/expenseItem.jsp'>
+							<span>Add Item</span>
+						</a>
+					</li>
 				</ul> <%
 				}
 			%>

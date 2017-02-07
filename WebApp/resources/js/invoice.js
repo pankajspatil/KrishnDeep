@@ -6,7 +6,7 @@ $(document).ready(function() {
 	   var invoiceTable = $('#invoiceTable').DataTable({
 	    	"bSort" : true,
 	    	"paging" : true,
-	    	"order": [[ 1, "desc" ]]/*,
+	    	"order": [[ 0, "desc" ]]/*,
 	    	"pageLength": 15,
 	    	"aLengthMenu": [[10, 15, 25, 35, 50, 100], [10, 15, 25, 35, 50, 100]]*/	
 	    });
@@ -31,7 +31,25 @@ $(document).ready(function() {
 		});
 	   
 	   $('#expenseExist').change(function(){
-		   displayExpenseTable();
+		   var vendorId = $('#vendorInvoice').val();
+		   var expenseExist = $('#expenseExist').is(":checked");
+		   
+		   if(expenseExist){
+				if(vendorId == '-1'){
+					var paramMap = new Map();
+					  paramMap.put(MSG, 'Please select vendor.');
+					  displayNotification(paramMap);
+					  $('#expenseExist').prop('checked', false);
+					return false;
+				}
+				$('#invoiceAmount').val('0.0');
+				$('#invoiceAmount').closest('tr').hide();
+				displayExpenseTable();
+			}else{
+				$('#invoiceAmount').closest('tr').show();
+				$('#invoiceExpenseTable').DataTable().clear().draw();
+			}
+		   
 		});
 	   
 });
@@ -83,7 +101,7 @@ function displayExpenseTable(){
 			    		  
 			    		  var rowObj = $("<tr align = 'center' id = '"+value.expenseId+"'></tr>");
 			    		  
-			    		  rowObj.append($("<td><input style='width: 100%; height:100%' class='fullRowElement' type='checkbox' name='selectedExpenses' id='select_"+value.expenseId+"' value='"+value.expenseId+"'  /></td>"));
+			    		  rowObj.append($("<td><input class='fullRowElement' type='checkbox' name='selectedExpenses' id='select_"+value.expenseId+"' value='"+value.expenseId+"'  /></td>"));
 			    		  
 			    		  rowObj.append($("<td>"+value.expenseId+"</td>"));
 			    		  rowObj.append($("<td>"+value.expenseItem.expenseItemName+"</td>"));

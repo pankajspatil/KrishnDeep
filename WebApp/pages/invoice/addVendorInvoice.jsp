@@ -18,7 +18,7 @@ List<InvoiceModel> invoiceList = invoice.getInvoiceList();
 %>
 
 <h1 align="center">Add Invoice</h1>
-<div style="float: right;padding-right: 11%">
+<div style="float: right;padding-right: 11%; padding-bottom: 0.3%">
 	<!-- <input type="button" name="newExpense" id="newExpense" value=""> -->
 	<button class="btn btn-main btn-2g" name="newInvoice" id="newInvoice" onclick="openInvoiceFancyBox(0, 'newInvoice', this);">New Invoice</button>
 </div><br />
@@ -37,11 +37,12 @@ List<InvoiceModel> invoiceList = invoice.getInvoiceList();
 if(invoiceList.size() > 0){
 	for(InvoiceModel invoiceModel : invoiceList){
 		%><tr align="center">
-			<td>
+			<th>
 				<a href="#" name="editInsurance" id="<%=invoiceModel.getInvoiceId() %>" 
+				style="text-decoration: none; color: #2d9fd0"
 				onclick="openInvoiceFancyBox(<%=invoiceModel.getInvoiceId() %>, 'newInvoice', this);"><%=invoiceModel.getInvoiceId() %>
 				</a>
-			</td>
+			</th>
 			<td><%=invoiceModel.getVendor().getVendorName() %></td>
 			<td><%=invoiceModel.getAmount() %></td>
 			<td align="left"><%=invoiceModel.getComments() %></td>

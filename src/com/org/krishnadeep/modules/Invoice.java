@@ -82,7 +82,7 @@ public class Invoice {
 					+ "expense_exist from invoice_master i "
 					+ "inner join vendor_master v on i.vendor_id = v.vendor_id "
 					+ "left join (select invoice_id, sum(ifnull(amount,0)) as expAmount from invoice_expense_map ie "
-					+ "where is_active = 1 group by invoice_id) ie on i.invoice_id = ie.invoice_id";
+					+ "where is_active = 1 group by invoice_id) ie on i.invoice_id = ie.invoice_id order by i.invoice_id desc";
 		
 		ResultSet dataRS = conn.createStatement().executeQuery(query);
 		List<InvoiceModel> invoiceList = new ArrayList<InvoiceModel>();
@@ -118,7 +118,7 @@ public class Invoice {
 		Connection conn = connectionsUtil.getConnection();
 		
 		String query = "select i.invoice_id, v.vendor_id, expense_exist, comments, e.expense_id, "+ 
-						"expense_item_name, vendor_name, expense_qty, ie.amount, i.created_on from invoice_master i "+
+						"expense_item_name, vendor_name, expense_qty, i.amount as tAmount, ie.amount as eAmount, i.created_on from invoice_master i "+
 						"inner join vendor_master v on i.vendor_id = v.vendor_id and i.invoice_id = ? "+
 						"inner join invoice_expense_map ie on i.invoice_id = ie.invoice_id "+
 						"inner join expenses e on ie.expense_id = e.expense_id "+
@@ -145,7 +145,7 @@ public class Invoice {
 			if(count == 0){
 				invoiceModel = new InvoiceModel();
 				invoiceModel.setInvoiceId(dataRS.getInt("invoice_id"));
-				invoiceModel.setAmount(dataRS.getDouble("amount"));
+				invoiceModel.setAmount(dataRS.getDouble("tAmount"));
 				invoiceModel.setVendor(vendor);
 				invoiceModel.setExpenseExist(dataRS.getBoolean("expense_exist"));
 				invoiceModel.setCreatedOn(dataRS.getString("created_on"));
@@ -159,7 +159,7 @@ public class Invoice {
 			expenseModel.setExpenseItem(expenseItem);
 			expenseModel.setVendor(vendor);
 			expenseModel.setExpenseQty(dataRS.getInt("expense_qty"));
-			expenseModel.setPaidAmt(dataRS.getDouble("amount"));
+			expenseModel.setPaidAmt(dataRS.getDouble("eAmount"));
 			
 			expenseList.add(expenseModel);
 			

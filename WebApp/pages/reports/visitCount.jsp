@@ -155,7 +155,13 @@ if(!page1.equals("")){
 		</script>
 	<%
 	//chartString += "</chart>";
-	}	
+	}else{
+		%><script type="text/javascript">
+		Lobibox.alert("info",{
+			msg : 'No record found between selected dates.'
+		});
+		</script><%
+	}
 }
 %>
 <script src="<%=contextPath%>/resources/js/reports.js" type="text/javascript"></script></body>

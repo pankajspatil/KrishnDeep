@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.org.krishnadeep.generic.ConnectionsUtil;
+import com.org.krishnadeep.generic.Utils;
 import com.org.krishnadeep.models.ExpenseItem;
+import com.org.krishnadeep.models.ItemCategory;
 import com.org.krishnadeep.models.Vendor;
 import com.org.krishnadeep.models.VisitType;
 
@@ -44,26 +46,40 @@ public List<VisitType> getAllVisitTypes(Boolean isActive) throws SQLException{
 		return visitTypeList;
 	}
 	
-public List<ExpenseItem> getAllExpenseItems(Boolean isActive) throws SQLException{
+public List<ExpenseItem> getAllExpenseItems(Boolean isActive, Integer expenseItemId) throws SQLException{
 		
 		ConnectionsUtil connectionsUtil = new ConnectionsUtil();
 		Connection conn = connectionsUtil.getConnection();
 		
-		String query = "select * from expense_item_master";
-		if(isActive){
-			query += " where is_active = 1";
+		String query = "select * from expense_item_master i inner join item_category ic on i.item_category_id = ic.item_category_id ";
+		
+		if(isActive && expenseItemId != 0){
+			query += " where i.is_active = 1 and expense_item_id = "+ expenseItemId;
+		}else if(isActive){
+			query += " where i.is_active = 1";
+		}else if(expenseItemId != 0){
+			query += " where expense_item_id = "+ expenseItemId;
 		}
 		
 		ResultSet dataRS = conn.createStatement().executeQuery(query);
 		List<ExpenseItem> itemList = new ArrayList<ExpenseItem>();
 		ExpenseItem item;
+		ItemCategory itemCategory;
 		
 		while(dataRS.next()){
 			item = new ExpenseItem();
+			itemCategory = new ItemCategory();
+			
+			itemCategory.setItemCategoryId(dataRS.getInt("ic.item_category_id"));
+			itemCategory.setItemCategoryName(Utils.getString(dataRS.getString("item_category_name")));
 			
 			item.setExpenseItemId(dataRS.getInt("expense_item_id"));
-			item.setExpenseItemName(dataRS.getString("expense_item_name"));
-			item.setIsActive(dataRS.getBoolean("is_active"));
+			item.setExpenseItemName(Utils.getString(dataRS.getString("expense_item_name")));
+			item.setExpenseItemDescription(Utils.getString(dataRS.getString("expense_item_description")));
+			item.setIsActive(dataRS.getBoolean("i.is_active"));
+			item.setCreatedBy(dataRS.getInt("created_by"));
+			item.setCreatedOn(dataRS.getString("created_on"));
+			item.setItemCategory(itemCategory);
 			
 			itemList.add(item);
 		}
@@ -71,6 +87,43 @@ public List<ExpenseItem> getAllExpenseItems(Boolean isActive) throws SQLExceptio
 		connectionsUtil.closeConnection(conn);
 		
 		return itemList;
+}
+
+public List<ItemCategory> getAllItemCategories(Boolean isActive, Integer itemCategoryId) throws SQLException{
+	
+	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
+	Connection conn = connectionsUtil.getConnection();
+	
+	String query = "select * from item_category";
+	
+	if(isActive && itemCategoryId != 0){
+		query += " where is_active = 1 and item_category_id = "+ itemCategoryId;
+	}else if(isActive){
+		query += " where is_active = 1";
+	}else if(itemCategoryId != 0){
+		query += " where item_category_id = "+ itemCategoryId;
+	}
+	
+	ResultSet dataRS = conn.createStatement().executeQuery(query);
+	List<ItemCategory> itemCategoryList = new ArrayList<ItemCategory>();
+	ItemCategory itemCategory;
+	
+	while(dataRS.next()){
+		itemCategory = new ItemCategory();
+		
+		itemCategory.setItemCategoryId(dataRS.getInt("item_category_id"));
+		itemCategory.setItemCategoryName(Utils.getString(dataRS.getString("item_category_name")));
+		itemCategory.setItemCategoryDescription(Utils.getString(dataRS.getString("item_category_description")));
+		itemCategory.setIsActive(dataRS.getBoolean("is_active"));
+		itemCategory.setCreatedBy(dataRS.getInt("created_by"));
+		itemCategory.setCreatedOn(dataRS.getString("created_on"));
+		
+		itemCategoryList.add(itemCategory);
+	}
+	
+	connectionsUtil.closeConnection(conn);
+	
+	return itemCategoryList;
 }
 
 /*public List<Vendor> getAllVendors(Boolean isActive) throws SQLException{
@@ -187,6 +240,112 @@ public Vendor updateVendor(Vendor vendor, String userId) throws SQLException{
 	connectionsUtil.closeConnection(conn);
 	
 	return vendor;
+}
+
+/**
+ * Methods to add item categories
+ * */
+
+public ItemCategory insertItemCategory(ItemCategory itemCategory, String userId) throws SQLException{
+	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
+	Connection conn = connectionsUtil.getConnection();
+	
+	String query = "insert into item_category(item_category_name, item_category_description, is_active, created_by) values(?,?,?,?)";
+	
+	PreparedStatement psmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+	
+	
+	psmt.setString(1, itemCategory.getItemCategoryName());
+	psmt.setString(2, itemCategory.getItemCategoryDescription());
+	psmt.setBoolean(3, itemCategory.getIsActive());
+	psmt.setString(4, userId);
+	
+	psmt.executeUpdate();
+	
+	ResultSet dataRS = psmt.getGeneratedKeys();
+	if(dataRS.next()){
+		itemCategory.setItemCategoryId(dataRS.getInt(1));
+	}
+	
+	connectionsUtil.closeConnection(dataRS);
+	
+	return itemCategory;
+}
+
+public ItemCategory updateItemCategory(ItemCategory itemCategory, String userId) throws SQLException{
+	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
+	Connection conn = connectionsUtil.getConnection();
+	
+	String query = "update item_category set item_category_name = ?, item_category_description = ?, is_active = ?, created_by = ? where item_category_id = ?";
+	
+	PreparedStatement psmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+	
+	
+	psmt.setString(1, itemCategory.getItemCategoryName());
+	psmt.setString(2, itemCategory.getItemCategoryDescription());
+	psmt.setBoolean(3, itemCategory.getIsActive());
+	psmt.setString(4, userId);
+	psmt.setInt(5, itemCategory.getItemCategoryId());
+	
+	psmt.executeUpdate();
+	
+	connectionsUtil.closeConnection(conn);
+	
+	return itemCategory;
+}
+
+/**
+ * Methods to add Expense items
+ * */
+
+public ExpenseItem insertExpenseItem(ExpenseItem expenseItem, String userId) throws SQLException{
+	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
+	Connection conn = connectionsUtil.getConnection();
+	
+	String query = "insert into expense_item_master(expense_item_name, expense_item_description, item_category_id, is_active, created_by) values(?,?,?,?,?)";
+	
+	PreparedStatement psmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+	
+	
+	psmt.setString(1, expenseItem.getExpenseItemName());
+	psmt.setString(2, expenseItem.getExpenseItemDescription());
+	psmt.setInt(3, expenseItem.getItemCategory().getItemCategoryId());
+	psmt.setBoolean(4, expenseItem.getIsActive());
+	psmt.setString(5, userId);
+	
+	psmt.executeUpdate();
+	
+	ResultSet dataRS = psmt.getGeneratedKeys();
+	if(dataRS.next()){
+		expenseItem.setExpenseItemId(dataRS.getInt(1));
+	}
+	
+	connectionsUtil.closeConnection(dataRS);
+	
+	return expenseItem;
+}
+
+public ExpenseItem updateExpenseItem(ExpenseItem expenseItem, String userId) throws SQLException{
+	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
+	Connection conn = connectionsUtil.getConnection();
+	
+	String query = "update expense_item_master set expense_item_name = ?, expense_item_description = ?, item_category_id = ?, is_active = ?, created_by = ? where expense_item_id = ?";
+	
+	PreparedStatement psmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+	
+	
+	psmt.setString(1, expenseItem.getExpenseItemName());
+	psmt.setString(2, expenseItem.getExpenseItemDescription());
+	psmt.setInt(3, expenseItem.getItemCategory().getItemCategoryId());
+	psmt.setBoolean(4, expenseItem.getIsActive());
+	psmt.setString(5, userId);
+	psmt.setInt(6, expenseItem.getExpenseItemId());
+	
+	psmt.executeUpdate();
+	
+	connectionsUtil.closeConnection(conn);
+	
+	return expenseItem;
 }
 
 }

@@ -33,7 +33,7 @@ function openPage(oepration, patientId, appointmentId){
 	formObj.attr("method", "post");
 	
 	var userIdObj = $(document.createElement('input'));
-	userIdObj.attr("type", "text");
+	userIdObj.attr("type", "hidden");
 	userIdObj.attr("value", patientId);
 	userIdObj.attr("name", "patientId");
 	
@@ -65,13 +65,14 @@ function openPage(oepration, patientId, appointmentId){
     	
     	if(appointmentId !== undefined){
     		var appointObj = $(document.createElement('input'));
-        	appointObj.attr("type", "text");
+        	appointObj.attr("type", "hidden");
         	appointObj.attr("value", appointmentId);
         	appointObj.attr("name", "appointmentId");
         	formObj.append(appointObj);
     	}
     	
     	formObj.attr("action", "/Krishnadeep/pages/doctor/newVisit.jsp");
+    	formObj.appendTo('body');
         formObj.submit();
         break;
     default:

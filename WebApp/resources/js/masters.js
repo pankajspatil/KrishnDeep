@@ -56,6 +56,43 @@ $(document).ready(function() {
 	   $('img[name=editVendor]').click(function(e){
 		   updateVendorRecord(this);
 		});
+	   
+	   
+	   /**
+	    * Methods for Item master screen
+	    * */
+	   
+	   $('#itemCategoryBtn').click(function(){
+		   openItemFancyBox(0, 'itemCategory', this);
+		});
+	   
+	   $('#expenseItemBtn').click(function(){
+		   openItemFancyBox(0, 'expenseItem', this);
+		});
+	   
+	   $('img[name=editItem]').click(function(e){
+		   updateItem(this);
+		});
+	   	   
+	   var itemCategoryTable = $('#itemCategoryTable').DataTable({
+	    	"bSort" : true,
+	    	"paging" : true/*,
+	    	"pageLength": 15,
+	    	"aLengthMenu": [[10, 15, 25, 35, 50, 100], [10, 15, 25, 35, 50, 100]]*/	
+	    });
+	   
+	   var expenseItemTable = $('#expenseItemTable').DataTable({
+	    	"bSort" : true,
+	    	"paging" : true/*,
+	    	"pageLength": 15,
+	    	"aLengthMenu": [[10, 15, 25, 35, 50, 100], [10, 15, 25, 35, 50, 100]]*/	
+	    });
+	   
+	   $('#item-container').easytabs({
+			uiTabs: true, 
+			 collapsible: true ,
+			 defaultTab: 'li#itemCategoryTab'
+			 });
 });
 
 function openVendorFancyBox(vendorId, menuType, obj){
@@ -73,7 +110,6 @@ function openVendorFancyBox(vendorId, menuType, obj){
 	openFancyBox(obj, paramMap);
 }
 
-
 function openMenuFancyBox(menuId, menuType, obj){
 	
 	var paramMap = new Map();
@@ -90,6 +126,32 @@ function openMenuFancyBox(menuId, menuType, obj){
 	paramMap.put(HEIGHT, '80%');
 	
 	openFancyBox(obj, paramMap);
+}
+
+function openItemFancyBox(itemId, itemType, obj){
+	
+	var paramMap = new Map();
+	
+	var url, btnObj;
+	if(itemType == 'itemCategory'){
+		url = '/Krishnadeep/pages/master/addItemCategory.jsp?menuRequired=false&itemCategoryId=' + itemId;
+	}else{
+		url = '/Krishnadeep/pages/master/addExpenseItem.jsp?menuRequired=false&expenseItemId=' + itemId;
+	}
+	
+	paramMap.put(URL, url);
+	paramMap.put(WIDTH, '70%');
+	paramMap.put(HEIGHT, '80%');
+	
+	openFancyBox(obj, paramMap);
+}
+
+function updateItem(imgObj){
+	
+	var itemId =  imgObj.id.split('_')[1];
+	var itemType = imgObj.id.split('_')[0];
+	
+	openItemFancyBox(itemId, itemType, imgObj);
 }
 
 function updateMenuRecord(imgObj){
@@ -307,6 +369,67 @@ function validateMainMenuForm(){
 	}
 	
 }
+
+
+function validateItemCategoryForm(){
+	
+	var itemCategoryName = $('#itemCategoryName').val();
+	
+	var paramMap = new Map();
+	if(itemCategoryName.trim() == ''){
+		paramMap.put(MSG, 'Please enter category name.');
+		displayNotification(paramMap);
+		
+		return false;
+	}
+	
+	if(itemCategoryName.toLowerCase() !== oldItemCategoryName.toLowerCase()){
+		var itemCategoryNameArray = parent.$('#itemCategoryTable').DataTable().column(0).data();	
+		itemCategoryNameArray = convertCaseArray(itemCategoryNameArray, LOWER_CASE);
+		
+		if(itemCategoryNameArray.includes(itemCategoryName.toLowerCase())){
+			paramMap.put(MSG, 'Duplicate category name.');
+			displayNotification(paramMap);
+			
+			return false;
+		}
+	}
+	
+}
+
+function validateExpenseItemForm(){
+	
+	var expenseItemName = $('#expenseItemName').val();
+	var itemCategory = $('#itemCategoryId').val();
+	
+	var paramMap = new Map();
+	if(expenseItemName.trim() == ''){
+		paramMap.put(MSG, 'Please enter expense item name.');
+		displayNotification(paramMap);
+		
+		return false;
+	}
+	
+	if(itemCategory.trim() == ''){
+		paramMap.put(MSG, 'Please select item category');
+		displayNotification(paramMap);
+		
+		return false;
+	}
+	
+	if(expenseItemName.toLowerCase() !== oldExpenseItemName.toLowerCase()){
+		var expenseItemNameArray = parent.$('#expenseItemTable').DataTable().column(0).data();	
+		expenseItemNameArray = convertCaseArray(expenseItemNameArray, LOWER_CASE);
+		
+		if(expenseItemNameArray.includes(expenseItemName.toLowerCase())){
+			paramMap.put(MSG, 'Duplicate expense item name.');
+			displayNotification(paramMap);
+			return false;
+		}
+	}
+	
+}
+
 
 function validateSubMenuForm(){
 	

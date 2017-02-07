@@ -162,7 +162,7 @@ try{
 		<tr>
 			<th class="headerTR">Visit Type</th>
 			<td class="dataValues" style="padding-left: 0%">
-				<select name="visitType" id="visitType" style="height: 100%;width: 100%">
+				<select name="visitType" id="visitType" class="fullRowElement">
 					<option value="-1">Please Select</option>
 					<%
 					String selected = "";
@@ -185,7 +185,7 @@ try{
 		</tr>
 		<tr>
 			<th class="headerTR">Fees</th>
-			<td><input type="text" name="fees" id="fees" value="<%=fees%>" style="height: 100%; width: 100%" /></td>
+			<td><input type="text" name="fees" id="fees" value="<%=fees%>" class="fullRowElement" /></td>
 		</tr>
 	
 	</table>

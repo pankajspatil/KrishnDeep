@@ -28,8 +28,8 @@
 	Masters masters = new Masters();
 	Invoice invoice = new Invoice();
 	
-	List<Vendor> vendorList = masters.getAllVendors(true);
-	List<ExpenseItem> itemList = masters.getAllExpenseItems(true);
+	List<Vendor> vendorList = masters.getAllVendors(true, 0);
+	List<ExpenseItem> itemList = masters.getAllExpenseItems(true, 0);
 	
 	List<ExpenseModel> expenseList = new ArrayList<ExpenseModel>();
 	
@@ -110,6 +110,7 @@
 				<option value="-1">Please Select</option>
 				<%String selected = "";
 				for(Vendor vendor : vendorList){
+					selected = "";
 					if(vendor.getVendorId() == vendorId){
 						selected = "selected";
 					}
@@ -118,15 +119,15 @@
 			</select>
 	</tr>
 	<tr>
-		<th class="headerTR">Amount</th>
-		<td><input type="text" id="invoiceAmount" name="invoiceAmount" class="fullRowElement" value="<%=invoiceAmount%>"></td>
-	</tr>
-	<tr>
 		<th class="headerTR">Expense Exist</th>
 		<td align="left">
 			<input style="width: 10%" type="checkbox" id="expenseExist" name="expenseExist" class="fullRowElement" value="true"
 			<%=expenseExist ? "checked=checked" : "" %>>
 		</td>
+	</tr>
+	<tr>
+		<th class="headerTR">Amount</th>
+		<td><input type="text" id="invoiceAmount" name="invoiceAmount" class="fullRowElement" value="<%=invoiceAmount%>"></td>
 	</tr>
 	<tr>
 		<th class="headerTR">Remarks</th>
@@ -159,8 +160,6 @@
 </thead>
 <tbody>
 <%if(expenseList.size() > 0 ){
-	
-	System.out.println("expenseList==>" + expenseList);
 	
 	for(ExpenseModel expenseModel : expenseList){
 	%><tr>

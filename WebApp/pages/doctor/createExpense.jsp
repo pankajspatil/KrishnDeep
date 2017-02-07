@@ -25,8 +25,8 @@
 	<%
 	Masters masters = new Masters();
 	
-	List<Vendor> vendorList = masters.getAllVendors(true);
-	List<ExpenseItem> itemList = masters.getAllExpenseItems(true);
+	List<Vendor> vendorList = masters.getAllVendors(true, 0);
+	List<ExpenseItem> itemList = masters.getAllExpenseItems(true, 0);
 	
 		Integer userId = Integer.parseInt(session.getAttribute(Constants.USER_ID).toString());
 		String page1 = Utils.getString(request.getParameter("page1"));

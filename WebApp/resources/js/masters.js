@@ -116,9 +116,9 @@ function openMenuFancyBox(menuId, menuType, obj){
 	
 	var url, btnObj;
 	if(menuType == 'mainMenu'){
-		url = '/Krishnadeep/pages/master/addFoodCategories.jsp?menuRequired=false&mainMenuId=' + menuId;
+		url = contextPath + '/pages/master/addFoodCategories.jsp?menuRequired=false&mainMenuId=' + menuId;
 	}else{
-		url = '/Krishnadeep/pages/master/addFoodDishes.jsp?menuRequired=false&menuMapperId=' + menuId;
+		url = contextPath + '/pages/master/addFoodDishes.jsp?menuRequired=false&menuMapperId=' + menuId;
 	}
 	
 	paramMap.put(URL, url);
@@ -134,9 +134,9 @@ function openItemFancyBox(itemId, itemType, obj){
 	
 	var url, btnObj;
 	if(itemType == 'itemCategory'){
-		url = '/Krishnadeep/pages/master/addItemCategory.jsp?menuRequired=false&itemCategoryId=' + itemId;
+		url = contextPath + '/pages/master/addItemCategory.jsp?menuRequired=false&itemCategoryId=' + itemId;
 	}else{
-		url = '/Krishnadeep/pages/master/addExpenseItem.jsp?menuRequired=false&expenseItemId=' + itemId;
+		url = contextPath + '/pages/master/addExpenseItem.jsp?menuRequired=false&expenseItemId=' + itemId;
 	}
 	
 	paramMap.put(URL, url);
@@ -410,7 +410,7 @@ function validateExpenseItemForm(){
 		return false;
 	}
 	
-	if(itemCategory.trim() == ''){
+	if(itemCategory.trim() == '-1'){
 		paramMap.put(MSG, 'Please select item category');
 		displayNotification(paramMap);
 		

@@ -24,16 +24,18 @@
 				href='<%=Contextpath%>/pages/common/home.jsp'><span>Home</span></a>
 			</li>
 			<%}%>
+			
 			<%
-				if (menulist.contains("Search")) {
+				if (menulist.contains("Patient")) {
 			%>
-			<li><a
-				href='<%=Contextpath %>/pages/doctor/searchPatient.jsp'><span>Search</span></a>
-			</li>
-			<%
+			<li class='has-sub'><a href='#'><span>Patient</span></a>
+				<ul>
+					<li class='first-child'><a
+						href='<%=Contextpath %>/pages/doctor/searchPatient.jsp'><span>Search</span></a></li>
+					<li class='first-child'><a
+						href='<%=Contextpath %>/pages/doctor/appointment.jsp'><span>Appointment</span></a></li>
+				</ul> <%
 				}
-			%>
-			<%
 				if (menulist.contains("Expense")) {
 			%>
 			<li class='has-sub'><a href='#'><span>Expenses</span></a>

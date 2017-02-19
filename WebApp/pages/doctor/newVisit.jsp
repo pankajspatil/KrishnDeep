@@ -170,18 +170,21 @@ try{
 						selected = "";
 						if(visitTypeId == visitType.getVisitTypeId()){
 							selected = "selected=selected";
+						}else if (visitType.getVisitTypeId() == 1){
+							selected = "selected=selected";
 						}
 						
 						%><option <%=selected %> value="<%=visitType.getVisitTypeId()%>"><%=visitType.getVisitType()%></option><%
 					}
 					%>
 				</select>
+				
 			</td>
 		</tr>
 		<tr>
 			<th class="headerTR">Visit Summary</th>
 			<td class="dataValues" style="padding-left: 0%"><textarea rows="6" cols="1"
-					name="visitSummary" id="visitSummary" style="width: 99%"><%=visitSummary %></textarea></td>
+					name="visitSummary" id="visitSummary" style="width: 99%">Paid/ Unpaid<%=visitSummary %></textarea></td>
 		</tr>
 		<tr>
 			<th class="headerTR">Fees</th>

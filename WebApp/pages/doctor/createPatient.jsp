@@ -112,19 +112,19 @@ genderArray[2][1] = "Others";
 <table class="mainTable" align="center" width="60%" border="1" style="border: 0px solid">
 
 	<tr>
-		<th class="headerTR">First Name</th>
+		<th class="headerTR">First Name *</th>
 		<td><input type="text" name="firstName" id="firstName" value="<%=firstName %>" autocomplete="off" class="fullRowElement"> </td>
 	</tr>
 	<tr>
-		<th class="headerTR">Middle Name</th>
+		<th class="headerTR">Middle Name </th>
 		<td><input type="text" name="middleName" id="middleName" value="<%=middleName %>" autocomplete="off" class="fullRowElement"> </td>
 	</tr>
 	<tr>
-		<th class="headerTR">Last Name</th>
+		<th class="headerTR">Last Name *</th>
 		<td><input type="text" name="lastName" id="lastName" value="<%=lastName %>" autocomplete="off" class="fullRowElement"> </td>
 	</tr>
 	<tr>
-		<th class="headerTR">Gender</th>
+		<th class="headerTR">Gender *</th>
 		<td>
 			<select name="gender" id="gender" class="fullRowElement">
 				<option value="-1">Please Select</option>
@@ -144,7 +144,7 @@ genderArray[2][1] = "Others";
 		</td>
 	</tr>
 	<tr>
-		<th class="headerTR">DOB</th>
+		<th class="headerTR">DOB(YYYY/MM/DD) *</th>
 		<td><input type="text" name="dob" id="dob" value="<%=dob %>" autocomplete="off" class="fullRowElement"> </td>
 	</tr>
 	<tr>
@@ -152,7 +152,7 @@ genderArray[2][1] = "Others";
 		<td><input type="text" name="bloodGroup" id="bloodGroup" value="<%=bloodGroup %>" autocomplete="off" class="fullRowElement"> </td>
 	</tr>
 	<tr>
-		<th class="headerTR">Contact</th>
+		<th class="headerTR">Contact *</th>
 		<td><input type="text" name="contact" id="contact" value="<%=contact %>" autocomplete="off" class="fullRowElement"> </td>
 	</tr>
 	<tr>
@@ -160,7 +160,7 @@ genderArray[2][1] = "Others";
 		<td><input type="text" name="email" id="email" value="<%=email %>" autocomplete="off" class="fullRowElement"> </td>
 	</tr>
 	<tr>
-		<th class="headerTR">Address</th>
+		<th class="headerTR">Address *</th>
 		<td>
 			<textarea rows="4" cols="" name="address" id="address" class="fullRowElement"><%=address %></textarea>
 		</td>
@@ -168,7 +168,7 @@ genderArray[2][1] = "Others";
 	<tr>
 		<th class="headerTR">Active</th>
 		<td>
-			<input type="checkbox" name="isActive" id="isActive" value="true" <%=isActive ? "checked=checked" : "" %>
+			<input type="checkbox" name="isActive" id="isActive" value="true" <%=(btnText.equals("add")||isActive) ? "checked=checked" : "" %>
 			autocomplete="off" class="fullRowElement" style="width: 10%">
 		</td>
 	</tr>

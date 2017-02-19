@@ -39,7 +39,7 @@ if(userVisit != null){
 <center>
 	<div style="font-size: xx-large; font-weight: bolder;">KRISHNADEEP HOSPITAL</div>
 	<div style="font-size: larger; font-weight: bold;">MATERNITY &amp; EYE CARE CENTER</div>
-	<span>Kini Arcade, C Wing, 2<sup>nd</sup> Floor, Near Stella Petrol Pump, Stella, Vasai(W).<br/> Mobile : 9960509773 / 7507119030</span><br/>
+	<span>Kini Arcade, C Wing, 2<sup>nd</sup> Floor, Near Stella Petrol Pump, Stella, Vasai(W).<br/> Mobile : 9960509773 / 7507119030 </br> Reg No. VVMC/C-H-20/2012</span><br/> 
 	
 </center>
 <!-- <hr/> --> <br />
@@ -72,7 +72,7 @@ if(userVisit != null){
 		<td colspan="4" style="font-weight: bold;font-size: large; ">Patient Details</td>
 	</tr>
 	<tr>
-		<th width="15%">Visit No.</th>
+		<th width="15%">OPD No.</th>
 		<td width="35%" style="padding-left: 1%"><%=userVisit.getUserVisitId() %></td>
 		<th width="15%">Bill Date / Time</th>
 		<td width="35%" style="padding-left: 1%"><%=userVisit.getCreatedOn() %></td>
@@ -101,6 +101,9 @@ if(userVisit != null){
 	</tr>
 </table>
 
+<div align="left">
+	This is computer generated receipt no signature required.
+</div>
 
 <script type="text/javascript">
 var w = window.print();

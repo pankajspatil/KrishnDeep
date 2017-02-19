@@ -85,15 +85,15 @@ $(document).ready(function() {
 			<th><%=patient.getDob() %></th>
 			<th>
 			
-			<img style="margin-left: 40%" height="22%" src="/Krishnadeep/resources/images/edit.png" 
+			<img style="margin-left: 40%" height="22%" title="Change Patient Details" src="/Krishnadeep/resources/images/edit.png" 
 									id="editPatient_<%=patient.getPatientId()%>" name="editPatient" 
-									onclick="openPatientFancyBox(<%=patient.getPatientId()%>, 'updatePatient', this)">
+									onclick="openPatientFancyBox(<%=patient.getPatientId()%>, 'updatePatient', this)">&nbsp;
 			
 				<!-- <input type="button" name="Edit" value="E" class="editImg" onclick="" /> -->
 				<%-- <input type="button" name="Delete" value="D" onclick="openPage('delete','<%=patient.getPatientId() %>')" /> --%>
-				<input type="button" name="NewVisit" value="NV" onclick="openPage('vNew','<%=patient.getPatientId() %>')" />
+				<input type="button" name="NewVisit" value="NV" title="NewVisit" onclick="openPage('vNew','<%=patient.getPatientId() %>')" />
 				<%-- <input type="button" name="visitHistory" value="VH" onclick="openPage('vHistory','<%=patient.getPatientId() %>')" /> --%>
-				<input type="button" name="visitHistory" value="VH" onclick="openPatientFancyBox(<%=patient.getPatientId()%>, 'visitHistory', this)" />
+				<input type="button" name="visitHistory" value="VH" title="Visit History" onclick="openPatientFancyBox(<%=patient.getPatientId()%>, 'visitHistory', this)" />
 			</th>
 		</tr><%}
 	}	

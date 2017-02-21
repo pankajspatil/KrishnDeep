@@ -94,7 +94,7 @@ if(!page1.equals("")){
 				<thead>
 					<tr class="headerTR">
 						<td>Date</td>
-						<td>Revenue</td>
+						<td>Visits</td>
 					</tr>
 				</thead>
 				<tbody>

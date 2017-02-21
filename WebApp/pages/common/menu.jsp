@@ -34,6 +34,8 @@
 						href='<%=Contextpath %>/pages/doctor/searchPatient.jsp'><span>Search</span></a></li>
 					<li class='first-child'><a
 						href='<%=Contextpath %>/pages/doctor/appointment.jsp'><span>Appointment</span></a></li>
+					<li class='first-child'><a
+						href='<%=Contextpath %>/pages/doctor/addWeeklyCounts.jsp'><span>Weekly Counts</span></a></li>
 				</ul> <%
 				}
 				if (menulist.contains("Expense")) {

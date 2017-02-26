@@ -3,9 +3,11 @@ package com.org.krishnadeep.generic;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.json.JSONObject;
 
@@ -63,12 +65,14 @@ public class Utils {
 		return ids;
 	}
 	
-	public static String getWeekStartDate(Integer weekNumber){
+	public static String getWeekStartDate(Integer weekNumber, Integer year){
 		
 		String weekDate;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yy");
 		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, year);
+		
 		cal.set(Calendar.WEEK_OF_YEAR, weekNumber);        
 		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);		
 		weekDate = sdf.format(cal.getTime());
@@ -77,7 +81,23 @@ public class Utils {
 		return weekDate;
 	}
 	
-	public static Integer getWeekNumner(String date){
+	public static String getFormattedDate(Date date, String format){
+		
+		format = format.equals("") ? "dd-MMM-yy" : format;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yy");
+		String formattedDate = sdf.format(date);
+		
+		return formattedDate;
+	}
+	
+	public static Date parseDate(String date, String format) throws ParseException
+	{
+	    SimpleDateFormat formatter = new SimpleDateFormat(format);
+	    return formatter.parse(date);
+	}
+	
+	public static Integer getWeekNumber(String date){
 		
 		Integer weekNumber = 0;
 		
@@ -90,6 +110,8 @@ public class Utils {
 		Date passedDate = formatter.parse(date);
 
 		Calendar cal = Calendar.getInstance();
+		cal.setMinimalDaysInFirstWeek(4);
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);	
 		cal.setTime(passedDate);
 		weekNumber = cal.get(Calendar.WEEK_OF_YEAR);
 		}catch(Exception ex){
@@ -97,6 +119,28 @@ public class Utils {
 			System.out.println("Error While fetching week number for " + date);
 		}
 		return weekNumber;
+	}
+	
+public static Integer getYear(String date){
+		
+		Integer year = 0;
+		
+		try{
+		if(date.equals("")){
+			return year;
+		}
+			
+		DateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
+		Date passedDate = formatter.parse(date);
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(passedDate);
+		year = cal.get(Calendar.YEAR) % 100;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			System.out.println("Error While fetching year number for " + date);
+		}
+		return year;
 	}
 
 	public static JsonObject getJSONObjectFromString(String data){

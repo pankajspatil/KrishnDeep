@@ -11,9 +11,11 @@ import java.util.List;
 import com.org.krishnadeep.generic.ConnectionsUtil;
 import com.org.krishnadeep.generic.Utils;
 import com.org.krishnadeep.models.ExpenseItem;
+import com.org.krishnadeep.models.ExpenseModel;
 import com.org.krishnadeep.models.ItemCategory;
 import com.org.krishnadeep.models.Vendor;
 import com.org.krishnadeep.models.VisitType;
+import com.org.krishnadeep.models.WeeklyData;
 
 public class Masters {
 
@@ -346,6 +348,113 @@ public ExpenseItem updateExpenseItem(ExpenseItem expenseItem, String userId) thr
 	connectionsUtil.closeConnection(conn);
 	
 	return expenseItem;
+}
+
+/******Methods to add weekly data******/
+
+public List<WeeklyData> getWeeklyCountsData(Integer weeklyCountsId, boolean isActive) throws SQLException{
+	
+	
+	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
+	Connection conn = connectionsUtil.getConnection();
+
+	String query = "select * from weekly_counts w";
+	if(isActive && weeklyCountsId != 0){
+		query += " where w.is_active = 1 and weekly_counts_id = "+ weeklyCountsId;
+	}else if(isActive){
+		query += " where w.is_active = 1";
+	}else if(weeklyCountsId != 0){
+		query += " where weekly_counts_id = "+ weeklyCountsId;
+	}
+			
+	PreparedStatement preparedStatement = conn.prepareStatement(query);
+	ResultSet dataRS = preparedStatement.executeQuery();
+
+	List<WeeklyData> weeklyDataList = new ArrayList<WeeklyData>();
+	WeeklyData weeklyData;
+	
+	while (dataRS.next()) {
+		
+		weeklyData = new WeeklyData();
+		
+		weeklyData.setWeeklyDataId(dataRS.getInt("weekly_counts_id"));
+		weeklyData.setWeekYearNo(dataRS.getInt("week_year_no"));
+		weeklyData.setPatientCount(Utils.getInt(dataRS.getInt("patient_count")));
+		weeklyData.setPatientAmount(Utils.getDouble(dataRS.getInt("patient_amount")));
+		weeklyData.setPatientCountClaim(Utils.getInt(dataRS.getInt("patient_count_claim")));
+		weeklyData.setPatientAmountClaim(Utils.getDouble(dataRS.getInt("patient_amount_claim")));
+		weeklyData.setPatientCountNonClaim(Utils.getInt(dataRS.getInt("patient_count_non_claim")));
+		weeklyData.setPatientAmountNonClaim(Utils.getDouble(dataRS.getInt("patient_amount_non_claim")));
+		weeklyData.setWeekStartDate(Utils.getString(dataRS.getString("week_start_date")));
+		
+		weeklyDataList.add(weeklyData);
+	}
+
+	connectionsUtil.closeConnection(conn);
+
+return weeklyDataList;
+
+}
+
+public WeeklyData insertWeeklyData(WeeklyData weeklyData) throws SQLException{
+	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
+	Connection conn = connectionsUtil.getConnection();
+	
+	String query = "insert into weekly_counts(week_year_no, created_by, patient_count, patient_amount, patient_count_claim, "+
+				"patient_amount_claim, patient_count_non_claim, patient_amount_non_claim, week_start_date ) values(?,?,?,?,?,?,?,?,?)";
+	
+	PreparedStatement psmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+	
+	psmt.setInt(1, weeklyData.getWeekYearNo());
+	psmt.setInt(2, weeklyData.getCreatedBy());
+	psmt.setInt(3, weeklyData.getPatientCount());
+	psmt.setDouble(4, weeklyData.getPatientAmount());
+	psmt.setInt(5, weeklyData.getPatientCountClaim());
+	psmt.setDouble(6, weeklyData.getPatientAmountClaim());
+	psmt.setInt(7, weeklyData.getPatientCountNonClaim());
+	psmt.setDouble(8, weeklyData.getPatientAmountNonClaim());
+	psmt.setString(9, weeklyData.getWeekStartDate());
+	//psmt.setBoolean(9, weeklyData.getIsActive());
+	
+	psmt.executeUpdate();
+	
+	ResultSet dataRS = psmt.getGeneratedKeys();
+	if(dataRS.next()){
+		weeklyData.setWeeklyDataId(dataRS.getInt(1));
+	}
+	
+	connectionsUtil.closeConnection(dataRS);
+	
+	return weeklyData;
+}
+
+public WeeklyData updateWeeklyData(WeeklyData weeklyData) throws SQLException{
+	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
+	Connection conn = connectionsUtil.getConnection();
+	
+	String query = "update weekly_counts set week_year_no = ?, created_by = ?, patient_count = ?, patient_amount = ?, patient_count_claim = ?, "+
+					"patient_amount_claim = ?, patient_count_non_claim = ?, patient_amount_non_claim = ?, week_start_date = ? " + 
+					"where weekly_counts_id = ?";
+	
+	PreparedStatement psmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+	
+	psmt.setInt(1, weeklyData.getWeekYearNo());
+	psmt.setInt(2, weeklyData.getCreatedBy());
+	psmt.setInt(3, weeklyData.getPatientCount());
+	psmt.setDouble(4, weeklyData.getPatientAmount());
+	psmt.setInt(5, weeklyData.getPatientCountClaim());
+	psmt.setDouble(6, weeklyData.getPatientAmountClaim());
+	psmt.setInt(7, weeklyData.getPatientCountNonClaim());
+	psmt.setDouble(8, weeklyData.getPatientAmountNonClaim());
+	psmt.setString(9, weeklyData.getWeekStartDate());
+	//psmt.setBoolean(9, weeklyData.getIsActive());
+	psmt.setInt(10, weeklyData.getWeeklyDataId());
+	
+	psmt.executeUpdate();
+	
+	connectionsUtil.closeConnection(conn);
+	
+	return weeklyData;
 }
 
 }

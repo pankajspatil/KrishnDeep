@@ -468,7 +468,7 @@ public WeeklyData updateWeeklyData(WeeklyData weeklyData) throws SQLException{
 
 public List<WeeklyData> getConsolidatedWeeklyCountsData(Integer weeklyCountsId, boolean isActive,SessionModel sessionModel,String fromDate, String toDate) throws SQLException{
 	
-	
+	 
 	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
 	Connection conn = connectionsUtil.getConnection();
 

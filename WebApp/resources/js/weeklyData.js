@@ -57,6 +57,37 @@ $(document).ready(function() {
 		       }
 		});
 	   
+	   $( "#endweek" ).datepicker({
+			changeMonth: true,
+		    changeYear: true,
+		    dateFormat: 'yy-mm-dd',
+		    maxDate: new Date(),
+		    firstDay: 1,
+		    onSelect: function(date){
+			        var d = new Date(date);
+			        var index = d.getDay();
+		          // console.log(index)
+		           if(index == 0) {
+		            d.setDate(d.getDate() - 6);   
+		           }
+		           else if(index == 1) {
+		            d.setDate(d.getDate());
+		           }
+		           else if(index != 1 && index > 0) {
+		             d.setDate(d.getDate() - (index - 1));
+		               //console.log(d.getDate() - (index - 1))        
+		           }
+		           
+		           var weekYear = $.datepicker.iso8601Week(new Date(d)) + '' + new Date(d).getFullYear() % 100;
+		           $('#weekYear').val(weekYear);
+		           $(this).val($.datepicker.formatDate("yy-mm-dd", new Date(d)));
+
+		           //console.log('Week number::'+$.datepicker.iso8601Week(new Date(d)));
+		           //console.log("start date::"+d)
+		           //$(this).val(d);
+		       }
+		});
+	   
 	   $("#patientAmount").keydown(function (event) {
 		   return validateFloatKeyDown(event);
 	   });

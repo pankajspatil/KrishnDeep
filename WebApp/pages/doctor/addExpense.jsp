@@ -12,8 +12,9 @@
 </head>
 <body>
 <%
+SessionModel sessionModel = (SessionModel)session.getAttribute(Constants.SESSION_MODEL);
 Expense expense = new Expense();
-List<ExpenseModel> expenseList = expense.getExpenseList(null, false);
+List<ExpenseModel> expenseList = expense.getExpenseList(null, false,sessionModel); 
 %>
 
 <h1 align="center">Add Expense</h1>
@@ -47,6 +48,6 @@ List<ExpenseModel> expenseList = expense.getExpenseList(null, false);
 	<%}%>
 </tbody>
 </table>
-<script type="text/javascript" src="<%=contextPath%>/resources/js/expense.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/resources/js/expense.js"></script> 
 </body>
 </html>

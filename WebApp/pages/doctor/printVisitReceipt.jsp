@@ -25,7 +25,7 @@ Integer visitId = Utils.getInt(request.getParameter("visitId"));
 //out.println("VisitId === >" + visitId);
 Visit visit = new Visit();
 
-List<UserVisit> userVisitList = visit.getUserVisitList(visitId, null, null);
+List<UserVisit> userVisitList = visit.getUserVisitList(visitId, null, null,null);
 UserVisit userVisit = null;
 if(userVisitList.size() > 0 ){
 	userVisit = userVisitList.get(0);

@@ -10,6 +10,7 @@ import java.util.List;
 import com.org.krishnadeep.generic.ConnectionsUtil;
 import com.org.krishnadeep.generic.Utils;
 import com.org.krishnadeep.models.Patient;
+import com.org.krishnadeep.models.SessionModel;
 
 public class Search {
 
@@ -17,26 +18,26 @@ public class Search {
 	ResultSet rs = null;
 	ConnectionsUtil connectionsUtil = null;
 
-	public List<Patient> searchPatient(Integer searchKey, String searchValue) throws SQLException {
+	public List<Patient> searchPatient(Integer searchKey, String searchValue,SessionModel sessionModel) throws SQLException {
 
 		ResultSet dataRS = null;
 		List<Patient> patientList = new ArrayList<Patient>();
 		
 		switch (searchKey) {
 		case 1:
-			dataRS = getPatientByName(searchValue);
+			dataRS = getPatientByName(searchValue,sessionModel);
 			break;
 		case 2:
-			dataRS = getPatientByMobileNo(searchValue);
+			dataRS = getPatientByMobileNo(searchValue,sessionModel);
 			break;
 		case 4:
-			dataRS = getPatientByDOB(searchValue);
+			dataRS = getPatientByDOB(searchValue,sessionModel);
 			break;
 		case 5:
-			dataRS = getPatientByID(searchValue);
+			dataRS = getPatientByID(searchValue,sessionModel);
 			break;
 		default:
-			dataRS = getAllPatients(false);
+			dataRS = getAllPatients(false); 
 			
 		}
 		
@@ -66,17 +67,21 @@ public class Search {
 		return patientList;
 	}
 
-	private ResultSet getPatientByDOB(String dob) {
+	private ResultSet getPatientByDOB(String dob,SessionModel sessionModel) {
 
 		ResultSet dataRS = null;
 		
 		try{
 			connectionsUtil = new ConnectionsUtil();		
 			conn = connectionsUtil.getConnection();
-			String query = "select * from patient_master where dob  = ?";
+			String query = "select * from patient_master pm inner join user_master um inner join dispensary_user_map dm "
+					+ "where um.user_id=dm.user_id and um.user_id=pm.created_by "
+					+ "and pm.created_by = ? and dm.dispensary_id = ? and dob  = ?";
 			PreparedStatement pst = conn.prepareStatement(query);
 			
-			pst.setString(1, dob);
+			pst.setInt(1, sessionModel.getSessionUserId());
+			pst.setInt(2, sessionModel.getSessionDipensaryId());
+			pst.setString(3, dob);
 			
 			dataRS = pst.executeQuery();
 			
@@ -94,7 +99,7 @@ public class Search {
 		try{
 			connectionsUtil = new ConnectionsUtil();		
 			conn = connectionsUtil.getConnection();
-			String query = "select * from patient_master ";
+			String query = "select * from patient_master  ";
 			if(isActive){
 				query += "where is_active = 1";
 			}
@@ -108,15 +113,24 @@ public class Search {
 		return dataRS;
 	}
 
-	public ResultSet getPatientByName(String searchValue) {
+	public ResultSet getPatientByName(String searchValue,SessionModel sessionModel) {
 		
 		ResultSet dataRS = null;
 		
 		try{
 			connectionsUtil = new ConnectionsUtil();		
 			conn = connectionsUtil.getConnection();
-			String query = "select * from patient_master where first_name like '%"+searchValue+"%' or last_name like '%"+searchValue+"%'";
-			dataRS = conn.createStatement().executeQuery(query);
+			String query = "select * from patient_master pm "
+					+ "inner join user_master um inner join dispensary_user_map dm  "
+					+ "where um.user_id=dm.user_id and um.user_id=pm.created_by and "
+					+ "pm.created_by = ? and dispensary_id = ? first_name like '%"+searchValue+"%' or"
+							+ " last_name like '%"+searchValue+"%'";
+			
+			PreparedStatement pst = conn.prepareStatement(query);
+			pst.setInt(1, sessionModel.getSessionUserId());
+			pst.setInt(2, sessionModel.getSessionDipensaryId());
+			
+			dataRS = pst.executeQuery();
 			
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -124,15 +138,21 @@ public class Search {
 		return dataRS;
 	}
 
-	public ResultSet getPatientByMobileNo(String phone) {
+	public ResultSet getPatientByMobileNo(String phone,SessionModel sessionModel) {
 
 		ResultSet dataRS = null;
 		try{
 			connectionsUtil = new ConnectionsUtil();		
 			conn = connectionsUtil.getConnection();
-			String query = "select * from patient_master where contact_no = ?";
+			String query = "select * from patient_master pm  "
+					+ "inner join user_master um inner join dispensary_user_map dm  "
+					+ "where um.user_id=dm.user_id and um.user_id=pm.created_by and "
+					+ "pm.created_by = ? and dispensary_id = ? and contact_no = ?";
+			
 			PreparedStatement pst = conn.prepareStatement(query);
-			pst.setString(1, phone);
+			pst.setInt(1, sessionModel.getSessionUserId());
+			pst.setInt(2, sessionModel.getSessionDipensaryId());
+			pst.setString(3, phone);
 			dataRS = pst.executeQuery();
 			
 			query = null;connectionsUtil = null;
@@ -144,19 +164,24 @@ public class Search {
 		return dataRS;
 	}
 	
-	public ResultSet getPatientByID(String patientId){
+	public ResultSet getPatientByID(String patientId,SessionModel sessionModel){
 	
 		ResultSet dataRS = null;
 		try{		
 			connectionsUtil= new ConnectionsUtil();
 			conn = connectionsUtil.getConnection();
 			
-			String query = "select * from patient_master where patient_id = ?";
+			String query = "select * from patient_master pm "
+					+ "inner join user_master um inner join dispensary_user_map dm  "
+					+ "where um.user_id=dm.user_id and um.user_id=pm.created_by and "
+					+ "pm.created_by = ? and dispensary_id = ? and patient_id = ?";
 			
-			PreparedStatement psm = conn.prepareStatement(query);
-			psm.setString(1, patientId);
+			PreparedStatement pst = conn.prepareStatement(query);
+			pst.setInt(1, sessionModel.getSessionUserId());
+			pst.setInt(2, sessionModel.getSessionDipensaryId());
+			pst.setString(3, patientId);
 			
-			dataRS = psm.executeQuery();
+			dataRS = pst.executeQuery();
 			}catch(Exception ex){
 				ex.printStackTrace();
 			}

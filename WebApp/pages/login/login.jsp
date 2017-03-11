@@ -1,6 +1,8 @@
 <%@page import="java.util.LinkedHashMap"%>
 <%@page import="com.org.krishnadeep.generic.Constants"%>
 <%@page import="com.org.krishnadeep.login.Login"%>
+<%@page import="com.org.krishnadeep.models.SessionModel"%>
+
 <%@page import="java.sql.Connection,java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -25,7 +27,7 @@
 	Integer userId = null;
 	LinkedHashMap<String, String> userDispensaryMap = null;
 
-	if(page1 != null && page1.equals("submit")){
+	if(page1 != null && page1.equals("submit")){ 
 		Login login = new Login();
 		userId = login.verifyUser(userName, password);	
 		if(userId != 0){
@@ -39,6 +41,11 @@
 					
 					List<String> list = login.getUserMenu(userDispensaryId);
 					session.setAttribute("menu", list);
+					
+					SessionModel sessionModel = new SessionModel(); 
+					sessionModel.setSessionDipensaryId(Integer.parseInt(dispensaryDetails.split("##")[0]));
+					sessionModel.setSessionUserId(userId);
+					session.setAttribute(Constants.SESSION_MODEL, sessionModel);
 				}
 				response.sendRedirect(request.getContextPath()+"/pages/common/home.jsp");
 			}else if(userDispensaryMap.size() > 1){

@@ -12,6 +12,7 @@ import java.util.List;
 import com.org.krishnadeep.generic.ConnectionsUtil;
 import com.org.krishnadeep.generic.Constants;
 import com.org.krishnadeep.models.Patient;
+import com.org.krishnadeep.models.SessionModel;
 import com.org.krishnadeep.models.UserVisit;
 import com.org.krishnadeep.models.VisitType;
 
@@ -103,7 +104,7 @@ public ResultSet getVisitDetail(String patientId, String doctorId, String visitI
 			query += " where uv.user_visit_id = " + visitId;
 		}
 		
-		System.out.println("visitQuery ==>" + query);
+		//System.out.println("visitQuery ==>" + query);
 		
 		Statement stmt = conn.createStatement();
 		dataRS = stmt.executeQuery(query);
@@ -167,7 +168,7 @@ public LinkedHashMap<String, Object> getMedicalTests(){
 	return returnMap;
 }
 
-public List<UserVisit> getUserVisitList(Integer visitId, String fromDate, String toDate) throws SQLException{
+public List<UserVisit> getUserVisitList(Integer visitId, String fromDate, String toDate, SessionModel sessionModel) throws SQLException{
 	
 	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
 	Connection conn = connectionsUtil.getConnection();
@@ -188,7 +189,13 @@ public List<UserVisit> getUserVisitList(Integer visitId, String fromDate, String
 			}
 	
 			query += " inner join user_master u on u.user_id = uv.created_by "+
-			"inner join visit_type vt on uv.visit_type_id = vt.visit_type_id";
+			"inner join visit_type vt on uv.visit_type_id = vt.visit_type_id ";
+			
+			if (sessionModel != null){
+				query += "and u.user_id = "+sessionModel.getSessionUserId();
+			}
+			
+			
 	
 	
 	ResultSet dataRS = conn.createStatement().executeQuery(query);

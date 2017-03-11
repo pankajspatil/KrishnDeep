@@ -10,6 +10,7 @@ import java.util.List;
 import com.org.krishnadeep.generic.ConnectionsUtil;
 import com.org.krishnadeep.models.ExpenseItem;
 import com.org.krishnadeep.models.ExpenseModel;
+import com.org.krishnadeep.models.SessionModel;
 import com.org.krishnadeep.models.Vendor;
 
 public class Expense {
@@ -42,7 +43,7 @@ public class Expense {
 			connectionsUtil.closeConnection(conn);
 	}
 	
-	public List<ExpenseModel> getExpenseList(Integer vendorId, boolean payableOnly) throws SQLException{
+	public List<ExpenseModel> getExpenseList(Integer vendorId, boolean payableOnly,SessionModel sessionModel) throws SQLException{
 			
 		
 			connectionsUtil = new ConnectionsUtil();
@@ -52,12 +53,15 @@ public class Expense {
 							"e.expense_qty, e.expense_amount, ie.paidAmt, e.expense_remark FROM expenses e "+
 							"inner join expense_item_master ei on e.expense_item_id = ei.expense_item_id "+
 							"inner join vendor_master v on e.vendor_id = v.vendor_id ";
+			
+					query += " inner join user_master u on u.user_id = e.created_by and u.user_id ="+ sessionModel.getSessionUserId()+" ";
+					
 							if(vendorId != null){
 								query += "and v.vendor_id = ? ";
 							}
 							
 							query += "left join (select expense_id, sum(ifnull(amount,0)) as paidAmt from invoice_expense_map ie "+ 
-							"where is_active = 1 group by expense_id) ie on e.expense_id = ie.expense_id";
+							" where is_active = 1 group by expense_id) ie on e.expense_id = ie.expense_id";
 							
 							if(payableOnly){
 								query += " having (expense_amount - ifnull(ie.paidAmt,0)) > 0";

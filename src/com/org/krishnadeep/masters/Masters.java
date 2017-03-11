@@ -13,6 +13,7 @@ import com.org.krishnadeep.generic.Utils;
 import com.org.krishnadeep.models.ExpenseItem;
 import com.org.krishnadeep.models.ExpenseModel;
 import com.org.krishnadeep.models.ItemCategory;
+import com.org.krishnadeep.models.SessionModel;
 import com.org.krishnadeep.models.Vendor;
 import com.org.krishnadeep.models.VisitType;
 import com.org.krishnadeep.models.WeeklyData;
@@ -352,20 +353,28 @@ public ExpenseItem updateExpenseItem(ExpenseItem expenseItem, String userId) thr
 
 /******Methods to add weekly data******/
 
-public List<WeeklyData> getWeeklyCountsData(Integer weeklyCountsId, boolean isActive) throws SQLException{
+public List<WeeklyData> getWeeklyCountsData(Integer weeklyCountsId, boolean isActive,SessionModel sessionModel) throws SQLException{
 	
 	
 	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
 	Connection conn = connectionsUtil.getConnection();
 
-	String query = "select * from weekly_counts w";
+	String query = "select * from weekly_counts w "
+			+ "inner join user_master um inner join dispensary_user_map dm  "
+			+ "where um.user_id=dm.user_id and um.user_id=w.created_by and ";
+	
+	query+= "  um.user_id = " + sessionModel.getSessionUserId();
+	query+= " and dm.dispensary_id = " + sessionModel.getSessionDipensaryId();
+	
 	if(isActive && weeklyCountsId != 0){
-		query += " where w.is_active = 1 and weekly_counts_id = "+ weeklyCountsId;
+		query += " and w.is_active = 1 and weekly_counts_id = "+ weeklyCountsId;
 	}else if(isActive){
-		query += " where w.is_active = 1";
+		query += " and w.is_active = 1";
 	}else if(weeklyCountsId != 0){
-		query += " where weekly_counts_id = "+ weeklyCountsId;
+		query += " and weekly_counts_id = "+ weeklyCountsId;
 	}
+	
+	
 			
 	PreparedStatement preparedStatement = conn.prepareStatement(query);
 	ResultSet dataRS = preparedStatement.executeQuery();
@@ -455,6 +464,57 @@ public WeeklyData updateWeeklyData(WeeklyData weeklyData) throws SQLException{
 	connectionsUtil.closeConnection(conn);
 	
 	return weeklyData;
+}
+
+public List<WeeklyData> getConsolidatedWeeklyCountsData(Integer weeklyCountsId, boolean isActive,SessionModel sessionModel,String fromDate, String toDate) throws SQLException{
+	
+	
+	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
+	Connection conn = connectionsUtil.getConnection();
+
+	String query = "select * from weekly_counts w "
+			+ "inner join user_master um inner join dispensary_user_map dm  "
+			+ "where um.user_id=dm.user_id and um.user_id=w.created_by  ";
+	
+	if (sessionModel != null){
+		query+= " and um.user_id = " + sessionModel.getSessionUserId();
+		query+= " and dm.dispensary_id = " + sessionModel.getSessionDipensaryId();
+	}
+	
+	
+	 if(isActive){
+		query += " and w.is_active = 1";
+	}
+	
+			
+	PreparedStatement preparedStatement = conn.prepareStatement(query);
+	ResultSet dataRS = preparedStatement.executeQuery();
+
+	List<WeeklyData> weeklyDataList = new ArrayList<WeeklyData>();
+	WeeklyData weeklyData;
+	
+	while (dataRS.next()) {
+		
+		weeklyData = new WeeklyData();
+		
+		weeklyData.setWeeklyDataId(dataRS.getInt("weekly_counts_id"));
+		weeklyData.setDoctorName(dataRS.getString("first_name") + " " + dataRS.getString("last_name"));
+		weeklyData.setWeekYearNo(dataRS.getInt("week_year_no"));
+		weeklyData.setPatientCount(Utils.getInt(dataRS.getInt("patient_count")));
+		weeklyData.setPatientAmount(Utils.getDouble(dataRS.getInt("patient_amount")));
+		weeklyData.setPatientCountClaim(Utils.getInt(dataRS.getInt("patient_count_claim")));
+		weeklyData.setPatientAmountClaim(Utils.getDouble(dataRS.getInt("patient_amount_claim")));
+		weeklyData.setPatientCountNonClaim(Utils.getInt(dataRS.getInt("patient_count_non_claim")));
+		weeklyData.setPatientAmountNonClaim(Utils.getDouble(dataRS.getInt("patient_amount_non_claim")));
+		weeklyData.setWeekStartDate(Utils.getString(dataRS.getString("week_start_date")));
+		
+		weeklyDataList.add(weeklyData);
+	}
+
+	connectionsUtil.closeConnection(conn);
+
+return weeklyDataList;
+
 }
 
 }

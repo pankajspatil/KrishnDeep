@@ -100,4 +100,6 @@ public class Constants {
 	public static final String VISIT_TYPE_ID = "VISIT_TYPE_ID";
 	public static final String VISIT_FEES = "VISIT_FEES";
 	
+	public static final String SESSION_MODEL = "SESSION_MODEL";
+	
 }

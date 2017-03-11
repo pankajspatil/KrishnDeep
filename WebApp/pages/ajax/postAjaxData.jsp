@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="com.org.krishnadeep.generic.Constants"%>
 <%@page import="com.org.krishnadeep.generic.Utils"%>
+<%@page import="com.org.krishnadeep.models.SessionModel"%>
 <%@page import="com.google.gson.JsonParser"%>
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="com.google.gson.Gson"%>
@@ -14,6 +15,8 @@
 
 <%
 String action = null;
+
+SessionModel sessionModel = (SessionModel)session.getAttribute(Constants.SESSION_MODEL);
 try{
 	
 	response.setCharacterEncoding("UTF-8");
@@ -27,7 +30,7 @@ try{
 	Expense expense = new Expense();
 	
 	if(action.equals("fetchExpenseByVendor")){
-			List<ExpenseModel> expenseList = invoice.getExpenseListByVendor(data);
+			List<ExpenseModel> expenseList = invoice.getExpenseListByVendor(data,sessionModel);
 			Gson gson = new Gson();
 			String returnStr = gson.toJson(expenseList);
 			out.println(returnStr);

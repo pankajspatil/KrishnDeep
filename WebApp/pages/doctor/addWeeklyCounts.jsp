@@ -14,8 +14,10 @@
 </head>
 <body>
 <%
+SessionModel sessionModel = null;
+sessionModel = (SessionModel)session.getAttribute(Constants.SESSION_MODEL);
 Masters master = new Masters();
-List<WeeklyData> weeklyDataList = master.getWeeklyCountsData(0, false);
+List<WeeklyData> weeklyDataList = master.getWeeklyCountsData(0, false,sessionModel); 
 
 %>
 

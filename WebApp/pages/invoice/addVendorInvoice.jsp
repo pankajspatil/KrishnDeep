@@ -12,8 +12,10 @@
 </head>
 <body>
 <%
+SessionModel sessionModel = null;
+sessionModel = (SessionModel)session.getAttribute(Constants.SESSION_MODEL);
 Invoice invoice = new Invoice();
-List<InvoiceModel> invoiceList = invoice.getInvoiceList();
+List<InvoiceModel> invoiceList = invoice.getInvoiceList(sessionModel);
 
 %>
 

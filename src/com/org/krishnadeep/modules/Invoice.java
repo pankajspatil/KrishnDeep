@@ -14,11 +14,12 @@ import com.org.krishnadeep.generic.Utils;
 import com.org.krishnadeep.models.ExpenseItem;
 import com.org.krishnadeep.models.ExpenseModel;
 import com.org.krishnadeep.models.InvoiceModel;
+import com.org.krishnadeep.models.SessionModel;
 import com.org.krishnadeep.models.Vendor;
 
 public class Invoice {
 
-	public List<ExpenseModel> getExpenseListByVendor(String data) throws SQLException{
+	public List<ExpenseModel> getExpenseListByVendor(String data,SessionModel sessionModel) throws SQLException{
 
 		Expense expense = new Expense();
 		
@@ -26,7 +27,7 @@ public class Invoice {
 		
 		Integer vendorId = jsonObject.get("vendorId").getAsInt();
 
-		List<ExpenseModel> expenseList = expense.getExpenseList(vendorId, true);
+		List<ExpenseModel> expenseList = expense.getExpenseList(vendorId, true,sessionModel);
 		
 		return expenseList;
 	}
@@ -73,7 +74,7 @@ public class Invoice {
 		
 }
 
-	public List<InvoiceModel> getInvoiceList() throws SQLException{
+	public List<InvoiceModel> getInvoiceList(SessionModel sessionModel) throws SQLException{
 		
 		ConnectionsUtil connectionsUtil = new ConnectionsUtil();
 		Connection conn = connectionsUtil.getConnection();
@@ -81,6 +82,7 @@ public class Invoice {
 		String query = "select i.invoice_id, ifnull(expAmount,amount) as amount,vendor_name, v.vendor_id, comments, "
 					+ "expense_exist from invoice_master i "
 					+ "inner join vendor_master v on i.vendor_id = v.vendor_id "
+					+ " inner join user_master u on u.user_id = i.created_by and u.user_id ="+ sessionModel.getSessionUserId()+" "
 					+ "left join (select invoice_id, sum(ifnull(amount,0)) as expAmount from invoice_expense_map ie "
 					+ "where is_active = 1 group by invoice_id) ie on i.invoice_id = ie.invoice_id order by i.invoice_id desc";
 		

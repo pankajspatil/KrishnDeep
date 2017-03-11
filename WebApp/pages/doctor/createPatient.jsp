@@ -38,7 +38,7 @@ Search search = new Search();
 Patient patient = new Patient();
 
 if(patientId != 0 && page1.equals("")){
-	List<Patient> patientList = search.searchPatient(Constants.SINGLE_PATIENT, patientId.toString());
+	List<Patient> patientList = search.searchPatient(Constants.SINGLE_PATIENT, patientId.toString(),sessionModel);
 	if(patientList.size() > 0){
 		patient = patientList.get(0);
 		

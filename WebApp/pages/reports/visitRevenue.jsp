@@ -2,6 +2,8 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.LinkedHashMap"%>
 <%@page import="com.org.krishnadeep.reports.Reports"%>
+<%@page import="com.org.krishnadeep.models.SessionModel"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ include file="/pages/common/header.jsp"%>
@@ -16,6 +18,9 @@
 String fromDate = Utils.getString(request.getParameter("fromDate"));
 String toDate = Utils.getString(request.getParameter("toDate"));
 String reportType = Utils.getString(request.getParameter("reportType"));
+
+SessionModel sessionModel = (SessionModel)session.getAttribute(Constants.SESSION_MODEL);
+
 
 String page1 = Utils.getString(request.getParameter("page1"));
 if (fromDate.equals("") && page1.equals("")){
@@ -61,7 +66,7 @@ if (fromDate.equals("") && page1.equals("")){
 if(!page1.equals("")){
 	
 	Reports reports = new Reports();
-	LinkedHashMap<String, LinkedHashMap<String, String>> dateMap = reports.getVisitRevenueData(fromDate, toDate, reportType);
+	LinkedHashMap<String, LinkedHashMap<String, String>> dateMap = reports.getVisitRevenueData(fromDate, toDate, reportType,sessionModel);
 	LinkedHashMap<String, String> orderCountMap = new LinkedHashMap<String, String>();
 	LinkedHashMap<String, String> visitTypeMap = reports.getActiveVisitTypes();
 	

@@ -35,7 +35,8 @@ try{
 	<br />
 	<form method="post" name="newVisitForm" id="newVisitForm">
 	<%
-	
+	SessionModel sessionModel = null;
+	sessionModel = (SessionModel)session.getAttribute(Constants.SESSION_MODEL);
 	Search search = new Search();
 	Masters masters = new Masters();
 	
@@ -102,7 +103,7 @@ try{
 	
 	if(patientId != null){
 		
-		List<Patient> patientList = search.searchPatient(Constants.SINGLE_PATIENT, patientId.toString());
+		List<Patient> patientList = search.searchPatient(Constants.SINGLE_PATIENT, patientId.toString(),sessionModel);
 		if(patientList.size() != 0){
 
 			Patient patient = patientList.get(0);

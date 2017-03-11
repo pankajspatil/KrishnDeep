@@ -66,6 +66,9 @@ $(document).ready(function() {
 <body>
 <%
 
+
+SessionModel sessionModel = (SessionModel)session.getAttribute(Constants.SESSION_MODEL);
+
 String pattern = "yyyy-MM-dd"; 
 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern); 
 String date = simpleDateFormat.format(new Date());
@@ -74,7 +77,7 @@ String toDate = date;
 
 Visit visit = new Visit();
 
-List<UserVisit> userVisitList = visit.getUserVisitList(null, fromDate, toDate);
+List<UserVisit> userVisitList = visit.getUserVisitList(null, fromDate, toDate,sessionModel); 
 %>
 <center><h4>Home</h4></center>
 <div class="container">

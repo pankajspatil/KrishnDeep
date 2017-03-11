@@ -71,10 +71,11 @@ $(document).ready(function() {
 				</thead>
 				<tbody>
 		<%
+		SessionModel sessionModel = null;
 	Search searchPatient = new Search();
 	Integer searchKey = Integer.parseInt(request.getParameter("searchKey"));
 	String searchValue = request.getParameter("searchValue");
-	List<Patient> patientList = searchPatient.searchPatient(searchKey, searchValue);
+	List<Patient> patientList = searchPatient.searchPatient(searchKey, searchValue,sessionModel);
 	if(patientList.size() != 0){
 		for(Patient patient : patientList){
 			%><tr>

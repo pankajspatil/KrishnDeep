@@ -26,6 +26,16 @@ public class WeeklyData {
 	
 	String weekStartDate;
 	
+	String doctorName;
+	
+	public String getDoctorName() {
+		return doctorName;
+	}
+
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
+	}
+
 	public Integer getWeeklyDataId() {
 		return weeklyDataId;
 	}

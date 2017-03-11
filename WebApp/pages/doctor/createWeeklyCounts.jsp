@@ -19,7 +19,8 @@ h2.theme-blue-title-bar a{
 </head>
 <body>
 <%
-
+SessionModel sessionModel = null;
+sessionModel = (SessionModel)session.getAttribute(Constants.SESSION_MODEL);
 Integer weeklyCountId = Utils.getInt(request.getParameter("weeklyCountId"));
 Integer userId = Integer.parseInt(session.getAttribute(Constants.USER_ID).toString());
 
@@ -37,7 +38,7 @@ Masters master = new Masters();
 if(page1.equals("") && weeklyCountId != 0){
 	
 	
-	List<WeeklyData> weeklyDataList = master.getWeeklyCountsData(weeklyCountId, false);
+	List<WeeklyData> weeklyDataList = master.getWeeklyCountsData(weeklyCountId, false,sessionModel);
 	
 	if(!weeklyDataList.isEmpty()){
 		

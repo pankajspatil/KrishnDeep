@@ -14,16 +14,37 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script src="<%=contextPath%>/resources/js/reports.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('img[name=print]').click(function(e){
+		printWeeklyReceipt(this);
+	});
+});
+</script>
+<script type="text/javascript">
 
+function printWeeklyReceipt(btnObj){
+	
+	var fromdate = document.getElementById( 'week' ).value;
+	var todate = document.getElementById( 'endweek' ).value;
+	
+	var paramMap = new Map();
+	
+	var url = contextPath + '/pages/invoice/printWeeklyReceipt.jsp?fromdate=' + fromdate+'&toDate='+todate;
+	
+	paramMap.put(URL, url);
+	paramMap.put(WIDTH, '70%');
+	paramMap.put(HEIGHT, '80%');
+	
+	openFancyBox(btnObj, paramMap);
+}
+
+</script>
 </head>
 <body>
 	<%
-		SessionModel sessionModel = null;
-		sessionModel = (SessionModel) session
-				.getAttribute(Constants.SESSION_MODEL);
-
-		String fromDate = Utils.getString(request.getParameter("fromDate"));
-		String toDate = Utils.getString(request.getParameter("toDate"));
+		String fromDate = Utils.getString(request.getParameter("week"));
+		String toDate = Utils.getString(request.getParameter("endweek"));
 		String page1 = Utils.getString(request.getParameter("page1"));
 
 		if (fromDate.equals("") && page1.equals("")) {
@@ -40,11 +61,11 @@
 		<table align="center" border="0" width="30%">
 			<tr align="center">
 				<th>Select Start Week : <input style="height: 33px;"
-					type="text" name="week" id="week" readonly="readonly">
+					type="text" name="week" id="week" readonly="readonly" value="<%=fromDate %>">
 				</th>
 				
 				<th>Select End Week : <input style="height: 33px;" type="text"
-					name="endweek" id="endweek" readonly="readonly"> 
+					name="endweek" id="endweek" readonly="readonly" value="<%=toDate %>"> 
 				</th>
 				
 			</tr>
@@ -52,7 +73,7 @@
 			<tr align="center">
 				<td colspan="2"><input class="btn btn-main btn-2g"
 					type="submit" name="page1" id="page1" value="Submit"
-					onclick="return validateStatusForm()"></td>
+					onclick="return validateWeeklyStatusForm()"></td>
 			</tr>
 		</table>
 	</form>
@@ -70,9 +91,8 @@
 
 	<div style="float: right; padding-right: 11%">
 		<!-- <input type="button" name="newExpense" id="newExpense" value=""> -->
-		<button class="btn btn-main btn-2g" name="newWeeklyData"
-			id="newWeeklyData"
-			onclick="openWeeklyDataPrint(0, 'newWeeklyData', this);">Print</button>
+		<img height="10%" name="print" src="<%=contextPath %>/resources/images/print.png" name="print"
+			id="print" onclick="printWeeklyReceipt(this);"/>
 	</div>
 	<table border="1" class="mainTable" width="100%" id="weeklyDataTable">
 		<thead>
@@ -138,8 +158,7 @@
 			<td><%=totalPatientsCalim%></td>
 			<td><%=totalAmountPatientsCalim%></td>
 			<td><%=totalPatientsNonCalim%></td>
-			<td><%=totalAmountPatientsNonCalim%></td>
-
+			<td><%=totalAmountPatientsNonCalim%></td>			
 		</tr>
 	</table>
 	<% } %>

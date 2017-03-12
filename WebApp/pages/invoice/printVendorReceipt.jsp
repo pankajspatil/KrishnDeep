@@ -54,7 +54,7 @@ if(invoiceModel != null){
 		<td colspan="2"><%=invoiceModel.getVendor().getVendorName() %></td>
 	</tr>
 	<tr style="background-color: #D3D3D3; -webkit-print-color-adjust: exact;">
-		<th colspan="2">PERTICULARS</th>
+		<th colspan="2">PARTICULARS</th>
 		<th>RS.</th>
 	</tr>
 	<%if(invoiceModel.getExpenseList().size() > 0){

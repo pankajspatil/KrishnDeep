@@ -176,3 +176,4 @@ function updateWeeklyCounts(imgObj){
 	var weeklyCountId =  imgObj.id;
 	openWeeklyDataFancyBox(weeklyCountId, 'updateWeeklyCounts', imgObj);
 }
+

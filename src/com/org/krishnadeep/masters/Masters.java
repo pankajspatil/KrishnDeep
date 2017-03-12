@@ -476,6 +476,10 @@ public List<WeeklyData> getConsolidatedWeeklyCountsData(Integer weeklyCountsId, 
 			+ "inner join user_master um inner join dispensary_user_map dm  "
 			+ "where um.user_id=dm.user_id and um.user_id=w.created_by  ";
 	
+	if(fromDate != null && toDate != null){
+		query += " and w.week_start_date between CAST('"+fromDate+" 00:00:00' as DATE) and CAST('"+toDate+" 23:59:59' AS DATE)";
+	}
+	
 	if (sessionModel != null){
 		query+= " and um.user_id = " + sessionModel.getSessionUserId();
 		query+= " and dm.dispensary_id = " + sessionModel.getSessionDipensaryId();
@@ -486,7 +490,7 @@ public List<WeeklyData> getConsolidatedWeeklyCountsData(Integer weeklyCountsId, 
 		query += " and w.is_active = 1";
 	}
 	
-			
+	
 	PreparedStatement preparedStatement = conn.prepareStatement(query);
 	ResultSet dataRS = preparedStatement.executeQuery();
 
@@ -500,6 +504,64 @@ public List<WeeklyData> getConsolidatedWeeklyCountsData(Integer weeklyCountsId, 
 		weeklyData.setWeeklyDataId(dataRS.getInt("weekly_counts_id"));
 		weeklyData.setDoctorName(dataRS.getString("first_name") + " " + dataRS.getString("last_name"));
 		weeklyData.setWeekYearNo(dataRS.getInt("week_year_no"));
+		weeklyData.setPatientCount(Utils.getInt(dataRS.getInt("patient_count")));
+		weeklyData.setPatientAmount(Utils.getDouble(dataRS.getInt("patient_amount")));
+		weeklyData.setPatientCountClaim(Utils.getInt(dataRS.getInt("patient_count_claim")));
+		weeklyData.setPatientAmountClaim(Utils.getDouble(dataRS.getInt("patient_amount_claim")));
+		weeklyData.setPatientCountNonClaim(Utils.getInt(dataRS.getInt("patient_count_non_claim")));
+		weeklyData.setPatientAmountNonClaim(Utils.getDouble(dataRS.getInt("patient_amount_non_claim")));
+		weeklyData.setWeekStartDate(Utils.getString(dataRS.getString("week_start_date")));
+		
+		weeklyDataList.add(weeklyData);
+	}
+
+	connectionsUtil.closeConnection(conn);
+
+return weeklyDataList;
+
+}
+
+public List<WeeklyData> getConsolidatedWeeklyCountsPrintData(Integer weeklyCountsId, boolean isActive,SessionModel sessionModel,String fromDate, String toDate) throws SQLException{
+	
+	 
+	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
+	Connection conn = connectionsUtil.getConnection();
+
+		String query = "select week_start_date,first_name,last_name,sum(patient_count) patient_count,sum(patient_amount) patient_amount,"
+				+ "  sum(patient_count_claim) patient_count_claim,sum(patient_amount_claim) patient_amount_claim,"
+				+ "  sum(patient_count_non_claim) patient_count_non_claim,"
+				+ "sum(patient_amount_non_claim) patient_amount_non_claim "
+				+ " from weekly_counts w "
+				+ "inner join user_master um inner join dispensary_user_map dm  "
+				+ "where um.user_id=dm.user_id and um.user_id=w.created_by  ";
+	
+	if(fromDate != null && toDate != null){
+		query += " and w.week_start_date between CAST('"+fromDate+" 00:00:00' as DATE) and CAST('"+toDate+" 23:59:59' AS DATE)";
+	}
+	
+	if (sessionModel != null){
+		query+= " and um.user_id = " + sessionModel.getSessionUserId();
+		query+= " and dm.dispensary_id = " + sessionModel.getSessionDipensaryId();
+	}
+	
+	
+	 if(isActive){
+		query += " and w.is_active = 1 ";
+	}
+	
+	 query +=" group by first_name";
+	
+	PreparedStatement preparedStatement = conn.prepareStatement(query);
+	ResultSet dataRS = preparedStatement.executeQuery();
+
+	List<WeeklyData> weeklyDataList = new ArrayList<WeeklyData>();
+	WeeklyData weeklyData;
+	
+	while (dataRS.next()) {
+		
+		weeklyData = new WeeklyData();
+		
+		weeklyData.setDoctorName(dataRS.getString("first_name") + " " + dataRS.getString("last_name"));
 		weeklyData.setPatientCount(Utils.getInt(dataRS.getInt("patient_count")));
 		weeklyData.setPatientAmount(Utils.getDouble(dataRS.getInt("patient_amount")));
 		weeklyData.setPatientCountClaim(Utils.getInt(dataRS.getInt("patient_count_claim")));

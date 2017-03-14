@@ -32,7 +32,7 @@ $(document).ready(function() {
 		    dateFormat: 'yy-mm-dd',
 		    maxDate: new Date(),
 		    firstDay: 1,
-		    onSelect: function(date){
+		   /* onSelect: function(date){
 			        var d = new Date(date);
 			        var index = d.getDay();
 		          // console.log(index)
@@ -54,7 +54,7 @@ $(document).ready(function() {
 		           //console.log('Week number::'+$.datepicker.iso8601Week(new Date(d)));
 		           //console.log("start date::"+d)
 		           //$(this).val(d);
-		       }
+		       }*/
 		});
 	   
 	   $( "#endweek" ).datepicker({
@@ -63,7 +63,7 @@ $(document).ready(function() {
 		    dateFormat: 'yy-mm-dd',
 		    maxDate: new Date(),
 		    firstDay: 1,
-		    onSelect: function(date){
+		    /*onSelect: function(date){
 			        var d = new Date(date);
 			        var index = d.getDay();
 		          // console.log(index)
@@ -86,7 +86,7 @@ $(document).ready(function() {
 		           //console.log("start date::"+d)
 		           //$(this).val(d);
 		       }
-		});
+*/		});
 	   
 	   $("#patientAmount").keydown(function (event) {
 		   return validateFloatKeyDown(event);
@@ -155,7 +155,7 @@ if(errorFound){
 	return false;
 }else{
 	
-	var weekYear = $('#weekYear').val();
+	/*var weekYear = $('#weekYear').val();
 	
 	if(weekYear.toLowerCase() !== oldWeekYear.toLowerCase()){
 		var weekYearArray = parent.$('#weeklyDataTable').DataTable().column(0).data();	
@@ -167,6 +167,7 @@ if(errorFound){
 			return false;
 		}
 	}
+	*/
 }
 	
 }

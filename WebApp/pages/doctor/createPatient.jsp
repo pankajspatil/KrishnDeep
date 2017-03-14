@@ -15,6 +15,10 @@
 </head>
 <body>
 <%
+
+SessionModel sessionModel = null;
+sessionModel = (SessionModel)session.getAttribute(Constants.SESSION_MODEL);
+
 String firstName = Utils.getString(request.getParameter("firstName"));
 String middleName = Utils.getString(request.getParameter("middleName"));
 String lastName = Utils.getString(request.getParameter("lastName"));

@@ -85,8 +85,8 @@ function printWeeklyReceipt(btnObj){
 		List<WeeklyData> weeklyDataList = master
 				.getConsolidatedWeeklyCountsData(0, false, null,fromDate,toDate);
 
-		Integer totalPatientCount = 0, totalPatientsCalim = 0, totalPatientsNonCalim = 0;
-		Double totalPatientAmount = 0.0, totalAmountPatientsCalim = 0.0, totalAmountPatientsNonCalim = 0.0;
+		Integer totalPatientCount = 0;
+		Double totalPatientAmount = 0.0, totalAmountPatientsCalim = 0.0, totalChequeAmountCalim = 0.0, totalChequeAmountNonCalim = 0.0,totalAmountPatientsNonCalim = 0.0;
 	%>
 
 	<div style="float: right; padding-right: 11%">
@@ -102,10 +102,10 @@ function printWeeklyReceipt(btnObj){
 				<th width="15%">Doctor</th>
 				<th width="15%">Patients</th>
 				<th width="15%">Amount</th>
-				<th width="15%">Patients-Claim</th>
-				<th width="15%">Amount-Claim</th>
-				<th width="15%">Patients-NonClaim</th>
-				<th width="15%">Amount-NonClaim</th>
+				<th width="15%">Cash Amount-Claim</th>
+				<th width="15%">Cheque Amount-Claim</th>
+				<th width="15%">Cash Amount-NonClaim</th>
+				<th width="15%">Cheque Amount-NonClaim</th>
 
 			</tr>
 		</thead>
@@ -117,20 +117,20 @@ function printWeeklyReceipt(btnObj){
 				<td><%=weeklyData.getWeekYearNo()%></td>
 				<td align="center"><%=Utils.getFormattedDate(Utils.parseDate(
 						weeklyData.getWeekStartDate(), "yy-MM-dd"), "")%></td>
-				<td><%=weeklyData.getDoctorName()%></td>
-				<td><%=weeklyData.getPatientCount()%></td>
-				<td><%=weeklyData.getPatientAmount()%></td>
-				<td><%=weeklyData.getPatientCountClaim()%></td>
-				<td><%=weeklyData.getPatientAmountClaim()%></td>
-				<td><%=weeklyData.getPatientCountNonClaim()%></td>
+				<td><%=weeklyData.getDoctorName() %></td>
+				<td><%=weeklyData.getPatientCount() %></td>
+				<td><%=weeklyData.getPatientAmount() %></td>
+				<td><%=weeklyData.getPatientAmountClaim() %></td>
+				<td><%=weeklyData.getPatientChequeAmountClaim()%></td>
 				<td><%=weeklyData.getPatientAmountNonClaim()%></td>
+				<td><%=weeklyData.getPatientChequeAmountNonClaim()%></td>
 
 				<%
 					totalPatientCount += weeklyData.getPatientCount();
 						totalPatientAmount += weeklyData.getPatientAmount();
-						totalPatientsCalim += weeklyData.getPatientCountClaim();
+						totalChequeAmountCalim += weeklyData.getPatientChequeAmountClaim();
 						totalAmountPatientsCalim += weeklyData.getPatientAmountClaim();
-						totalPatientsNonCalim += weeklyData.getPatientCountNonClaim();
+						totalChequeAmountNonCalim += weeklyData.getPatientChequeAmountNonClaim();
 						totalAmountPatientsNonCalim += weeklyData
 								.getPatientAmountNonClaim();
 				%>
@@ -146,19 +146,19 @@ function printWeeklyReceipt(btnObj){
 		<tr>
 			<th width="15%">Total Patient</th>
 			<th width="15%">Total Amount</th>
-			<th width="15%">Total Patients-Claim</th>
-			<th width="15%">Total Amount-Claim</th>
-			<th width="15%">Total Patients-NonClaim</th>
-			<th width="15%">Total Amount-NonClaim</th>
+			<th width="15%">Total Cash Amount-Claim</th>
+			<th width="15%">Total Cheque Amount-Claim</th>
+			<th width="15%">Total Cash Amount -NonClaim</th>
+			<th width="15%">Total Cheque Amount -NonClaim</th>
 
 		</tr>
 		<tr>
 			<td><%=totalPatientCount%></td>
 			<td><%=totalPatientAmount%></td>
-			<td><%=totalPatientsCalim%></td>
-			<td><%=totalAmountPatientsCalim%></td>
-			<td><%=totalPatientsNonCalim%></td>
-			<td><%=totalAmountPatientsNonCalim%></td>			
+			<td><%=totalAmountPatientsCalim %></td>
+			<td><%=totalChequeAmountCalim%></td>	
+			<td><%=totalAmountPatientsNonCalim %></td>
+			<td><%=totalChequeAmountNonCalim%></td>			
 		</tr>
 	</table>
 	<% } %>

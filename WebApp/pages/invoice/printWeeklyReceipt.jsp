@@ -36,8 +36,9 @@
 		List<WeeklyData> weeklyDataList = master
 				.getConsolidatedWeeklyCountsPrintData(0, false, null,fromDate,toDate); 
 
-		Integer totalPatientCount = 0, totalPatientsCalim = 0, totalPatientsNonCalim = 0;
-		Double totalPatientAmount = 0.0, totalAmountPatientsCalim = 0.0, totalAmountPatientsNonCalim = 0.0;
+		Integer totalPatientCount = 0;
+		Double totalPatientsChequeAmountCalim = 0.0, totalPatientsChequeAmountNonCalim = 0.0;
+		Double totalPatientAmount = 0.0, totalPatientsAmountCalim = 0.0, totalPatientsAmountNonCalim = 0.0;
 	%>  
 	<div>
 	Consolidated Weekly report from <%=fromDate %> to <%=toDate %>
@@ -85,8 +86,8 @@
 
 		</thead>
 		<tbody>
-			<%totalPatientCount = 0;
-			totalPatientAmount = 0.0;
+			<%totalPatientAmount = 0.0;
+			totalPatientsChequeAmountCalim = 0.0;
 			int totalPatientNonCount = 0;
 			double totalPatientNonAmount = 0.0;
 				for (WeeklyData weeklyData : weeklyDataList) {
@@ -94,15 +95,15 @@
 			<tr class="headerTR">
 				<th width="15%" >Doctor Name</th><td colspan=2><%=weeklyData.getDoctorName()%></td>
 			</tr>
-			<tr><th width="30%">Patients-Claim</th><td><%=weeklyData.getPatientCountClaim() %></td></tr>
-			<tr><th width="30%">Amount-Claim</th><td><%=weeklyData.getPatientAmountClaim() %></td></tr>
-			<tr><th width="30%">Patients- Non Claim</th><td><%=weeklyData.getPatientCountNonClaim()%></td></tr>
-			<tr><th width="30%">Amount-Non Claim</th><td><%=weeklyData.getPatientAmountNonClaim()%></td></tr>
+			<tr><th width="30%">Cash Amount-Claim</th><td><%=weeklyData.getPatientAmountClaim() %></td></tr>
+			<tr><th width="30%">Cheque Amount-Claim</th><td><%=weeklyData.getPatientChequeAmountClaim() %></td></tr>
+			<tr><th width="30%">Cash Amount- Non Claim</th><td><%=weeklyData.getPatientAmountNonClaim()%></td></tr>
+			<tr><th width="30%">Cheque Amount-Non Claim</th><td><%=weeklyData.getPatientChequeAmountNonClaim()%></td></tr>
 				<%
-						totalPatientCount += weeklyData.getPatientCountClaim();
-						totalPatientAmount += weeklyData.getPatientAmount();
-						totalPatientNonCount += weeklyData.getPatientCountNonClaim();
-						totalPatientNonAmount += weeklyData.getPatientAmountNonClaim();
+						totalPatientAmount += weeklyData.getPatientAmountClaim();
+						totalPatientsChequeAmountCalim += weeklyData.getPatientChequeAmountClaim();
+						totalPatientsAmountNonCalim += weeklyData.getPatientAmountNonClaim();
+						totalPatientsChequeAmountNonCalim += weeklyData.getPatientChequeAmountNonClaim();
 				%>
 			
 			<%
@@ -114,16 +115,16 @@
 	</table>
 	<table border="1" align="center" class="mainTable" width="60%">
 		<tr><br><br>
-			<th width="30%">Total Claim  Patient</th>
-			<th width="30%">Total Claim Amount</th>
-			<th width="30%">Total Non Claim Patient</th>
-			<th width="30%">Total Non Claim Amount</th>
+			<th width="30%">Total Cash Amount</th>
+			<th width="30%">Total Cheque Amount Claim</th>
+			<th width="30%">Total Cash Amount Non Claim</th>
+			<th width="30%">Total Cheque Amount Non Claim </th>
 	</tr>
 		<tr>
-			<td><%=totalPatientCount%></td>
-			<td><%=totalPatientAmount%></td>
-			<td><%=totalPatientNonCount%></td>
-			<td><%=totalPatientNonAmount%></td>
+			<td><%=totalPatientAmount %></td>
+			<td><%=totalPatientsChequeAmountCalim %></td>
+			<td><%=totalPatientsAmountNonCalim %></td>
+			<td><%=totalPatientsChequeAmountNonCalim %></td>
 		</tr>
 	</table>
 	<script type="text/javascript">

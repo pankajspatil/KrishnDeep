@@ -33,10 +33,10 @@ List<WeeklyData> weeklyDataList = master.getWeeklyCountsData(0, false,sessionMod
 		<th width="10%">Week</th>
 		<th width="15%">Patients</th>
 		<th width="15%">Amount</th>
-		<th width="15%">Patients-Claim</th>
-		<th width="15%">Amount-Claim</th>
-		<th width="15%">Patients-NonClaim</th>
-		<th width="15%">Amount-NonClaim</th>
+		<th width="15%">Cash Amount-Claim</th>
+		<th width="15%">Cheque Amount-Claim</th>
+		<th width="15%">Cash Amount -NonClaim</th>
+		<th width="15%">Cheque Amount-NonClaim</th>
 		<th width="10%">Action</th>
 	</tr>
 </thead>
@@ -49,10 +49,10 @@ List<WeeklyData> weeklyDataList = master.getWeeklyCountsData(0, false,sessionMod
 			<td align="center"><%=Utils.getFormattedDate(Utils.parseDate(weeklyData.getWeekStartDate(), "yy-MM-dd"), "") %></td>
 			<td><%=weeklyData.getPatientCount() %></td>
 			<td><%=weeklyData.getPatientAmount() %></td>
-			<td><%=weeklyData.getPatientCountClaim() %></td>
 			<td><%=weeklyData.getPatientAmountClaim() %></td>
-			<td><%=weeklyData.getPatientCountNonClaim() %></td>
+			<td><%=weeklyData.getPatientChequeAmountClaim() %></td>
 			<td><%=weeklyData.getPatientAmountNonClaim() %></td>
+			<td><%=weeklyData.getPatientChequeAmountNonClaim() %></td>
 			<td>
 				<img style="margin-left: 40%" height="22%" src="<%=contextPath%>/resources/images/edit.png" 
 				id="<%=weeklyData.getWeeklyDataId()%>" name="editWeeklyCounts" onclick="updateWeeklyCounts(this)">

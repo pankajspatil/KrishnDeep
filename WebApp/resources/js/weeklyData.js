@@ -137,9 +137,9 @@ function validateWeeklyCountsForm(){
 	
 	var elementIds = [
 	                  ['week','Week'],
-	                  ['patientCount','Patient Count'], ['patientAmount','Patient amount'], ['patientCountClaim', 'With Claim Patient Count'], 
-	                  ['patientAmountClaim','With Claim Patient Amount'],
-	                  ['patientCountNonClaim', 'With Non Claim Patient Count'], ['patientAmountNonClaim', 'With Non Claim Patient Amount']
+	                  ['patientCount','Patient Count'], ['patientAmount','Patient amount'], ['patientAmountClaim', 'With Claim Patient Amount'], 
+	                  ['patientChequeAmountClaim','With Claim Patient Cheque Amount'],
+	                  ['patientAmountNonClaim', 'With Non Claim Patient Amount'], ['patientChequeAmountNonClaim', 'With Non Claim Patient Cheque Amount']
                  ];
 var errorFound = false;
 var paramMap = new Map();

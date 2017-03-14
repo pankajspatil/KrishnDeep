@@ -18,12 +18,18 @@ public class WeeklyData {
 	
 	Double patientAmountNonClaim;
 	
+	Double patientChequeAmountClaim;
+	
+	Double patientChequeAmountNonClaim;
+	
 	Integer createdBy;
 	
 	String createdOn;
 	
 	Boolean isActive;
 	
+	
+
 	String weekStartDate;
 	
 	String doctorName;
@@ -106,6 +112,22 @@ public class WeeklyData {
 
 	public void setPatientAmountNonClaim(Double patientAmountNonClaim) {
 		this.patientAmountNonClaim = patientAmountNonClaim;
+	}
+	
+	public Double getPatientChequeAmountClaim() {
+		return patientChequeAmountClaim;
+	}
+
+	public void setPatientChequeAmountClaim(Double patientChequeAmountClaim) {
+		this.patientChequeAmountClaim = patientChequeAmountClaim;
+	}
+
+	public Double getPatientChequeAmountNonClaim() {
+		return patientChequeAmountNonClaim;
+	}
+
+	public void setPatientChequeAmountNonClaim(Double patientChequeAmountNonClaim) {
+		this.patientChequeAmountNonClaim = patientChequeAmountNonClaim;
 	}
 
 	public Integer getCreatedBy() {

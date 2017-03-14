@@ -392,8 +392,10 @@ public List<WeeklyData> getWeeklyCountsData(Integer weeklyCountsId, boolean isAc
 		weeklyData.setPatientAmount(Utils.getDouble(dataRS.getInt("patient_amount")));
 		weeklyData.setPatientCountClaim(Utils.getInt(dataRS.getInt("patient_count_claim")));
 		weeklyData.setPatientAmountClaim(Utils.getDouble(dataRS.getInt("patient_amount_claim")));
+		weeklyData.setPatientChequeAmountClaim(Utils.getDouble(dataRS.getInt("patient_cheque_amount_claim")));
 		weeklyData.setPatientCountNonClaim(Utils.getInt(dataRS.getInt("patient_count_non_claim")));
 		weeklyData.setPatientAmountNonClaim(Utils.getDouble(dataRS.getInt("patient_amount_non_claim")));
+		weeklyData.setPatientChequeAmountNonClaim(Utils.getDouble(dataRS.getInt("patient_cheque_amount_non_claim")));
 		weeklyData.setWeekStartDate(Utils.getString(dataRS.getString("week_start_date")));
 		
 		weeklyDataList.add(weeklyData);
@@ -409,8 +411,11 @@ public WeeklyData insertWeeklyData(WeeklyData weeklyData) throws SQLException{
 	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
 	Connection conn = connectionsUtil.getConnection();
 	
-	String query = "insert into weekly_counts(week_year_no, created_by, patient_count, patient_amount, patient_count_claim, "+
-				"patient_amount_claim, patient_count_non_claim, patient_amount_non_claim, week_start_date ) values(?,?,?,?,?,?,?,?,?)";
+	String query = "insert into weekly_counts(week_year_no, "
+			+ "created_by, patient_count, "
+			+ "patient_amount, patient_cheque_amount_claim,"
+			+ " patient_amount_claim, patient_cheque_amount_non_claim,"
+			+ " patient_amount_non_claim, week_start_date ) values(?,?,?,?,?,?,?,?,?)";
 	
 	PreparedStatement psmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 	
@@ -418,9 +423,9 @@ public WeeklyData insertWeeklyData(WeeklyData weeklyData) throws SQLException{
 	psmt.setInt(2, weeklyData.getCreatedBy());
 	psmt.setInt(3, weeklyData.getPatientCount());
 	psmt.setDouble(4, weeklyData.getPatientAmount());
-	psmt.setInt(5, weeklyData.getPatientCountClaim());
+	psmt.setDouble(5, weeklyData.getPatientChequeAmountClaim());
 	psmt.setDouble(6, weeklyData.getPatientAmountClaim());
-	psmt.setInt(7, weeklyData.getPatientCountNonClaim());
+	psmt.setDouble(7, weeklyData.getPatientChequeAmountNonClaim());
 	psmt.setDouble(8, weeklyData.getPatientAmountNonClaim());
 	psmt.setString(9, weeklyData.getWeekStartDate());
 	//psmt.setBoolean(9, weeklyData.getIsActive());
@@ -441,9 +446,12 @@ public WeeklyData updateWeeklyData(WeeklyData weeklyData) throws SQLException{
 	ConnectionsUtil connectionsUtil = new ConnectionsUtil();
 	Connection conn = connectionsUtil.getConnection();
 	
-	String query = "update weekly_counts set week_year_no = ?, created_by = ?, patient_count = ?, patient_amount = ?, patient_count_claim = ?, "+
-					"patient_amount_claim = ?, patient_count_non_claim = ?, patient_amount_non_claim = ?, week_start_date = ? " + 
-					"where weekly_counts_id = ?";
+		String query = "update weekly_counts "
+				+ "set week_year_no = ?, created_by = ?, patient_count = ?, "
+				+ "patient_amount = ?, patient_cheque_amount_claim = ?, "
+				+ "patient_amount_claim = ?, patient_cheque_amount_non_claim = ?, "
+				+ "patient_amount_non_claim = ?, week_start_date = ? "
+				+ "where weekly_counts_id = ?";
 	
 	PreparedStatement psmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 	
@@ -451,9 +459,9 @@ public WeeklyData updateWeeklyData(WeeklyData weeklyData) throws SQLException{
 	psmt.setInt(2, weeklyData.getCreatedBy());
 	psmt.setInt(3, weeklyData.getPatientCount());
 	psmt.setDouble(4, weeklyData.getPatientAmount());
-	psmt.setInt(5, weeklyData.getPatientCountClaim());
+	psmt.setDouble(5, weeklyData.getPatientChequeAmountClaim());
 	psmt.setDouble(6, weeklyData.getPatientAmountClaim());
-	psmt.setInt(7, weeklyData.getPatientCountNonClaim());
+	psmt.setDouble(7, weeklyData.getPatientChequeAmountNonClaim());
 	psmt.setDouble(8, weeklyData.getPatientAmountNonClaim());
 	psmt.setString(9, weeklyData.getWeekStartDate());
 	//psmt.setBoolean(9, weeklyData.getIsActive());
@@ -506,9 +514,9 @@ public List<WeeklyData> getConsolidatedWeeklyCountsData(Integer weeklyCountsId, 
 		weeklyData.setWeekYearNo(dataRS.getInt("week_year_no"));
 		weeklyData.setPatientCount(Utils.getInt(dataRS.getInt("patient_count")));
 		weeklyData.setPatientAmount(Utils.getDouble(dataRS.getInt("patient_amount")));
-		weeklyData.setPatientCountClaim(Utils.getInt(dataRS.getInt("patient_count_claim")));
 		weeklyData.setPatientAmountClaim(Utils.getDouble(dataRS.getInt("patient_amount_claim")));
-		weeklyData.setPatientCountNonClaim(Utils.getInt(dataRS.getInt("patient_count_non_claim")));
+		weeklyData.setPatientChequeAmountClaim(Utils.getDouble(dataRS.getInt("patient_cheque_amount_claim")));
+		weeklyData.setPatientChequeAmountNonClaim(Utils.getDouble(dataRS.getInt("patient_cheque_amount_non_claim")));
 		weeklyData.setPatientAmountNonClaim(Utils.getDouble(dataRS.getInt("patient_amount_non_claim")));
 		weeklyData.setWeekStartDate(Utils.getString(dataRS.getString("week_start_date")));
 		
@@ -528,8 +536,8 @@ public List<WeeklyData> getConsolidatedWeeklyCountsPrintData(Integer weeklyCount
 	Connection conn = connectionsUtil.getConnection();
 
 		String query = "select week_start_date,first_name,last_name,sum(patient_count) patient_count,sum(patient_amount) patient_amount,"
-				+ "  sum(patient_count_claim) patient_count_claim,sum(patient_amount_claim) patient_amount_claim,"
-				+ "  sum(patient_count_non_claim) patient_count_non_claim,"
+				+ "  sum(patient_cheque_amount_claim) patient_cheque_amount_claim,sum(patient_amount_claim) patient_amount_claim,"
+				+ "  sum(patient_cheque_amount_non_claim) patient_cheque_amount_non_claim,"
 				+ "sum(patient_amount_non_claim) patient_amount_non_claim "
 				+ " from weekly_counts w "
 				+ "inner join user_master um inner join dispensary_user_map dm  "
@@ -564,9 +572,9 @@ public List<WeeklyData> getConsolidatedWeeklyCountsPrintData(Integer weeklyCount
 		weeklyData.setDoctorName(dataRS.getString("first_name") + " " + dataRS.getString("last_name"));
 		weeklyData.setPatientCount(Utils.getInt(dataRS.getInt("patient_count")));
 		weeklyData.setPatientAmount(Utils.getDouble(dataRS.getInt("patient_amount")));
-		weeklyData.setPatientCountClaim(Utils.getInt(dataRS.getInt("patient_count_claim")));
+		weeklyData.setPatientChequeAmountClaim(Utils.getDouble(dataRS.getInt("patient_cheque_amount_claim")));
 		weeklyData.setPatientAmountClaim(Utils.getDouble(dataRS.getInt("patient_amount_claim")));
-		weeklyData.setPatientCountNonClaim(Utils.getInt(dataRS.getInt("patient_count_non_claim")));
+		weeklyData.setPatientChequeAmountNonClaim(Utils.getDouble(dataRS.getInt("patient_cheque_amount_non_claim")));
 		weeklyData.setPatientAmountNonClaim(Utils.getDouble(dataRS.getInt("patient_amount_non_claim")));
 		weeklyData.setWeekStartDate(Utils.getString(dataRS.getString("week_start_date")));
 		

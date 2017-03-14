@@ -25,7 +25,7 @@ Integer weeklyCountId = Utils.getInt(request.getParameter("weeklyCountId"));
 Integer userId = Integer.parseInt(session.getAttribute(Constants.USER_ID).toString());
 
 Integer patientCount = 0, patientCountClaim = 0, patientCountNonClaim = 0;
-Double patientAmount = 0.0, patientAmountClaim = 0.0, patientAmountNonClaim = 0.0;
+Double patientAmount = 0.0, patientAmountClaim = 0.0, patientAmountNonClaim = 0.0,patientChequeAmountClaim = 0.0, patientChequeAmountNonClaim = 0.0;
 Integer weekYear = 0;
 String weekStartDate = "";
 
@@ -45,12 +45,14 @@ if(page1.equals("") && weeklyCountId != 0){
 		weeklyData = weeklyDataList.get(0);
 		
 		patientCount = Utils.getInt(weeklyData.getPatientCount());
-		patientCountClaim = Utils.getInt(weeklyData.getPatientCountClaim());
-		patientCountNonClaim = Utils.getInt(weeklyData.getPatientCountNonClaim());
+		//patientCountClaim = Utils.getInt(weeklyData.getPatientCountClaim());
+		//patientCountNonClaim = Utils.getInt(weeklyData.getPatientCountNonClaim());
 
 		patientAmount = Utils.getDouble(weeklyData.getPatientAmount());
 		patientAmountClaim = Utils.getDouble(weeklyData.getPatientAmountClaim());
 		patientAmountNonClaim = Utils.getDouble(weeklyData.getPatientAmountNonClaim());
+		patientChequeAmountClaim = Utils.getDouble(weeklyData.getPatientChequeAmountClaim());
+		patientChequeAmountNonClaim = Utils.getDouble(weeklyData.getPatientChequeAmountNonClaim());
 		weekYear = Utils.getInt(weeklyData.getWeekYearNo());
 		
 		weekStartDate = Utils.getString(weeklyData.getWeekStartDate());
@@ -61,21 +63,25 @@ if(page1.equals("") && weeklyCountId != 0){
 	String message = "Record Added Successfully.";
 	
 	patientCount = Utils.getInt(request.getParameter("patientCount"));
-	patientCountClaim = Utils.getInt(request.getParameter("patientCountClaim"));
-	patientCountNonClaim = Utils.getInt(request.getParameter("patientCountNonClaim"));
+	//patientCountClaim = Utils.getInt(request.getParameter("patientCountClaim"));
+	//patientCountNonClaim = Utils.getInt(request.getParameter("patientCountNonClaim"));
 
 	patientAmount = Utils.getDouble(request.getParameter("patientAmount"));
 	patientAmountClaim = Utils.getDouble(request.getParameter("patientAmountClaim"));
 	patientAmountNonClaim = Utils.getDouble(request.getParameter("patientAmountNonClaim"));
+	patientChequeAmountClaim = Utils.getDouble(request.getParameter("patientChequeAmountClaim"));
+	patientChequeAmountNonClaim = Utils.getDouble(request.getParameter("patientChequeAmountNonClaim"));
 	weekYear = Utils.getInt(request.getParameter("weekYear"));
 	weekStartDate = Utils.getString(request.getParameter("week"));
 	
 	weeklyData = new WeeklyData();	
 	weeklyData.setPatientCount(patientCount);
 	weeklyData.setPatientAmount(patientAmount);
-	weeklyData.setPatientCountClaim(patientCountClaim);
+	//weeklyData.setPatientCountClaim(patientCountClaim);
+	//weeklyData.setPatientCountNonClaim(patientCountNonClaim);
 	weeklyData.setPatientAmountClaim(patientAmountClaim);
-	weeklyData.setPatientCountNonClaim(patientCountNonClaim);
+	weeklyData.setPatientChequeAmountClaim(patientChequeAmountClaim);	
+	weeklyData.setPatientChequeAmountNonClaim(patientChequeAmountNonClaim);
 	weeklyData.setPatientAmountNonClaim(patientAmountNonClaim);
 	weeklyData.setWeekYearNo(weekYear);
 	weeklyData.setWeekStartDate(weekStartDate);
@@ -112,7 +118,7 @@ if(page1.equals("") && weeklyCountId != 0){
 	<th align="left" colspan="2">Select Week : <input style="height: 33px;" type="text" name="week" id="week" value="<%=weekStartDate %>" readonly="readonly"> </th>
 </tr>
 	<tr align="center">
-		<td width="50%" valign="top">
+		<td width="30%" valign="top">
 			<h3>No. of patient's seen</h3>
 			<table width="100%" border="1" class="mainTable" border="1" style="border: 0px solid">
 				<tr>
@@ -131,7 +137,7 @@ if(page1.equals("") && weeklyCountId != 0){
 				</tr>
 			</table>
 		</td>
-		<td valign="top">
+		<td width="40%" valign="top">
 			<h3>No. of operations</h3>
 			<div class="bwl_acc_container scroll accordionDiv" id="accordion_1" style="width: 98%; /* border:1px solid black; */">
 					<section>
@@ -141,14 +147,14 @@ if(page1.equals("") && weeklyCountId != 0){
 					<div class="acc_container">
 						<table width="100%" border="1" class="mainTable" border="1" style="border: 0px solid">
 							<tr>
-								<th class="headerTR">No of patients : </th>
+								<th class="headerTR">Cheque Amount</th>
 								<td>
-									<input class="fullRowElement" type="text" name="patientCountClaim" id="patientCountClaim" 
-									value="<%=patientCountClaim%>" onkeyup="validateNumbersKeyPress(this)"> 
+									<input class="fullRowElement" type="text" name="patientChequeAmountClaim" id="patientChequeAmountClaim" 
+									value="<%=patientChequeAmountClaim%>">
 								</td>
 							</tr>
 							<tr>
-								<th class="headerTR">Amount</th>
+								<th class="headerTR">Cash Amount</th>
 								<td>
 									<input class="fullRowElement" type="text" name="patientAmountClaim" id="patientAmountClaim" 
 									value="<%=patientAmountClaim%>">
@@ -164,14 +170,14 @@ if(page1.equals("") && weeklyCountId != 0){
 					<div class="acc_container">
 						<table width="100%" border="1" class="mainTable" border="1" style="border: 0px solid">
 							<tr>
-								<th class="headerTR">No of patients : </th>
+								<th class="headerTR">Cheque Amount</th>
 								<td>
-									<input class="fullRowElement" type="text" name="patientCountNonClaim" id="patientCountNonClaim" 
-									value="<%=patientCountNonClaim%>" onkeyup="validateNumbersKeyPress(this)">
+									<input class="fullRowElement" type="text" name="patientChequeAmountNonClaim" id="patientChequeAmountNonClaim" 
+									value="<%=patientChequeAmountNonClaim%>">
 								</td>
 							</tr>
 							<tr>
-								<th class="headerTR">Amount</th>
+								<th class="headerTR">Cash Amount</th>
 								<td>
 									<input class="fullRowElement" type="text" name="patientAmountNonClaim" id="patientAmountNonClaim" 
 									value="<%=patientAmountNonClaim%>">

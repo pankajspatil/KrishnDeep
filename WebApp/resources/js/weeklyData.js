@@ -11,7 +11,12 @@ $("#accordion_1").bwlAccordion({
 
 
 $(document).ready(function() {
-	   var weeklyDataDashboard = $('#weeklyDataTable').DataTable({
+	
+	$('img[name=editWeeklyCounts]').click(function(e){
+		   updateWeeklyCounts(this);
+		});
+	
+	   var weeklyDataDashboard1 = $('#weeklyDataTable').DataTable({
 	    	"bSort" : true,
 	    	"paging" : true,
 	    	"order": [[ 1, "desc" ]]/*,
@@ -111,10 +116,6 @@ $(document).ready(function() {
 	   $("#patientAmountNonClaim").keypress(function (event) {
 		   return validateFloatKeyPress(event)
 	   });
-	   
-	   $('img[name=editWeeklyCounts]').click(function(e){
-		   updateWeeklyCounts(this);
-		});
 	   	   
 	} );
 

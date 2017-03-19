@@ -21,6 +21,14 @@ $(document).ready(function() {
 		   deleteMenuRecord(this);
 		});
 	   
+	   $('img[name=editVendor]').click(function(e){
+		   updateVendorRecord(this);
+		});
+	   
+	   $('img[name=editItem]').click(function(e){
+		   updateItem(this);
+		});
+	   
 	   var mainMenuTable = $('#mainMenuTable').DataTable({
 	    	"bSort" : true,
 	    	"paging" : true/*,
@@ -53,10 +61,6 @@ $(document).ready(function() {
 	    	"aLengthMenu": [[10, 15, 25, 35, 50, 100], [10, 15, 25, 35, 50, 100]]*/	
 	    });
 	   
-	   $('img[name=editVendor]').click(function(e){
-		   updateVendorRecord(this);
-		});
-	   
 	   
 	   /**
 	    * Methods for Item master screen
@@ -70,10 +74,6 @@ $(document).ready(function() {
 		   openItemFancyBox(0, 'expenseItem', this);
 		});
 	   
-	   $('img[name=editItem]').click(function(e){
-		   updateItem(this);
-		});
-	   	   
 	   var itemCategoryTable = $('#itemCategoryTable').DataTable({
 	    	"bSort" : true,
 	    	"paging" : true/*,
